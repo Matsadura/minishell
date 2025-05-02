@@ -22,7 +22,7 @@ int	main(void)
 		if (cmd == NULL)
 		{
 			printf("exit\n");
-			return (EXIT_SUCCESS);
+			return (EXIT_FAILURE);
 		}
 		if (*cmd != 0)
 			add_history(cmd);
