@@ -18,10 +18,14 @@ int	main(void)
 
 	while (1)
 	{
-		cmd = readline("> ");
+		cmd = readline("minishell$ ");
 		if (cmd == NULL)
-			exit(2);
+		{
+			printf("exit\n");
+			return (EXIT_SUCCESS);
+		}
 		if (*cmd != 0)
 			add_history(cmd);
 	}
+	return (EXIT_SUCCESS);
 }
