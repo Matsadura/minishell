@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 15:08:36 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/05/21 15:18:37 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/05/21 16:45:27 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,22 @@ void	pwd(char **env)
 			printf("%s\n", dir);
 			break ;
 		}
+		i++;
+	}
+}
+
+/**
+ * print_env - Prints environmental variables to STDOUT
+ * @env: 2D Array contains the environment
+ */
+void	print_env(char **env)
+{
+	int	i;
+
+	i = 0;
+	while (env[i] != NULL)
+	{
+		printf("%s\n", env[i]);
 		i++;
 	}
 }

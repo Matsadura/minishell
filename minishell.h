@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aberkass <aberkass@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 21:26:06 by aberkass          #+#    #+#             */
-/*   Updated: 2025/05/01 21:26:13 by aberkass         ###   ########.fr       */
+/*   Updated: 2025/05/21 16:44:32 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 
 /* Builtins */
 
+void	print_env(char **env);
 void	pwd(char **env);
 
 #endif
