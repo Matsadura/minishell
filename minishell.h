@@ -14,16 +14,22 @@
 # define MINISHELL_H
 
 /* Libraries */
+
 # include "libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 
 /* Macros */
+
 # define TRUE 1
 # define FALSE 0
 
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
+
+/* Builtins */
+
+void	pwd(char **env);
 
 #endif
