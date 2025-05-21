@@ -1,6 +1,6 @@
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -lreadline
-SRC = main.c
+SRC = main.c builtin.c
 NAME = minishell
 LIBFT = libft/libft.a
 
