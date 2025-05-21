@@ -28,9 +28,23 @@
 # define STDOUT 1
 # define STDERR 2
 
+/* Structures */
+
+typedef struct s_env
+{
+	char			*var;
+	struct s_env	*next;
+}	t_env;
+
 /* Builtins */
 
 void	print_env(char **env);
 void	pwd(char **env);
+
+/* Env helpers */
+
+t_env   *create_env(char **env);
+void	print_list(t_env env_list);
+
 
 #endif
