@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 21:25:52 by aberkass          #+#    #+#             */
-/*   Updated: 2025/05/21 16:44:59 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/05/22 14:21:35 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int	main(int ac, char **av, char **env)
 {
-	(void) ac;
-	(void) av;
 	char	*cmd;
 	t_env	*env_list;
 
+	(void) ac;
+	(void) av;
 	while (1)
 	{
 		cmd = readline("minishell$ ");

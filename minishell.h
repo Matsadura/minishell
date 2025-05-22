@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 21:26:06 by aberkass          #+#    #+#             */
-/*   Updated: 2025/05/21 16:44:32 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/05/22 14:07:22 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,11 @@ typedef struct s_env
 
 /* Builtins */
 
-void	print_env(char **env);
+void	print_list(t_env *env_list);
 void	pwd(char **env);
 
 /* Env helpers */
 
-t_env   *create_env(char **env);
-void	print_list(t_env *env_list);
-
+t_env	*create_env(char **env);
 
 #endif
