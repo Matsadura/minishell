@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 21:25:52 by aberkass          #+#    #+#             */
-/*   Updated: 2025/05/22 14:21:35 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/05/22 16:09:02 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,13 @@ int	main(int ac, char **av, char **env)
 		// TO RMV
 		env_list = create_env(env);
 		if (strcmp(cmd, "env") == 0)
-			print_list(env_list);
+			print_env(env_list);
 		if (strcmp(cmd, "pwd") == 0)
-			pwd(env);
+			pwd(env_list);
+		char *p = getenv("PATH");
+		if (strcmp(cmd, "path") == 0)
+			printf("%s\n", p);
+
 	}
 	return (EXIT_SUCCESS);
 }

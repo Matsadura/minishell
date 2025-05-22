@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 15:08:36 by zzaoui            #+#    #+#             */
-/*   Updated: 2025/05/22 14:08:30 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/05/22 15:58:19 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,31 @@
  * pwd - Prints the current working directory
  * @env: 2D array clone of environ
  */
-void	pwd(char **env)
+void	pwd(t_env *env)
 {
 	char	*dir;
-	int		i;
+	t_env	*current;
 
+	dir = getcwd(NULL, 0);
+	if (dir)
+	{
+		printf("%s\n", dir);
+		return ;
+	}
 	if (env == NULL)
 		return ;
-	i = 0;
+	current = env;
 	dir = NULL;
-	while (env[i] != NULL)
+	while (current != NULL)
 	{
-		dir = ft_strnstr(env[i], "PWD=", 4);
+		dir = ft_strnstr(current->var, "PWD=", 4);
 		if (dir != NULL)
 		{
 			dir += 4;
 			printf("%s\n", dir);
 			break ;
 		}
-		i++;
+		current = current->next;
 	}
 }
 
