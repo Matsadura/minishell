@@ -6,7 +6,7 @@
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 21:25:52 by aberkass          #+#    #+#             */
-/*   Updated: 2025/05/22 16:09:02 by zzaoui           ###   ########.fr       */
+/*   Updated: 2025/05/22 17:33:57 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	main(int ac, char **av, char **env)
 
 	(void) ac;
 	(void) av;
+	env_list = create_env(env);
 	while (1)
 	{
 		cmd = readline("minishell$ ");
@@ -30,7 +31,6 @@ int	main(int ac, char **av, char **env)
 		if (*cmd != 0)
 			add_history(cmd);
 		// TO RMV
-		env_list = create_env(env);
 		if (strcmp(cmd, "env") == 0)
 			print_env(env_list);
 		if (strcmp(cmd, "pwd") == 0)
@@ -38,6 +38,8 @@ int	main(int ac, char **av, char **env)
 		char *p = getenv("PATH");
 		if (strcmp(cmd, "path") == 0)
 			printf("%s\n", p);
+		if (strcmp(cmd, "export") == 0)
+			export_var(&env_list, "TEST_VAR", "TEST_VALUE");
 
 	}
 	return (EXIT_SUCCESS);

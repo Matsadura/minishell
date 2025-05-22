@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft/libft.h"
 #include "minishell.h"
 
 /**
@@ -58,4 +59,42 @@ void	print_env(t_env *env_list)
 		printf("%s\n", curr->var);
 		curr = curr->next;
 	}
+}
+
+/**
+ *
+ */
+void	export_var(t_env **env_list, char *key, char *value)
+{
+	char	*var;
+	size_t	var_size;
+	t_env	*current;
+	t_env	*var_to_add;
+
+	if (*env_list == NULL || key == NULL || value == NULL)
+		return ;
+	// if Variable already exists -> delete it -> strjoin a new value -> add to env_list
+	// else if variable doesn't exist -> add to env_list
+	var_size = ft_strlen(key) + ft_strlen(value) + 2;
+	var = malloc(var_size); // Add to garbage collector later
+	if (var == NULL)
+		return ;
+	ft_strlcpy(var, key, var_size);
+	ft_strlcat(var, "=", var_size);
+	printf("var after strlcat1: %s\n", var);
+	current = *env_list;
+	while (current != NULL)
+	{
+		if (ft_strnstr(current->var, var, ft_strlen(var)) != NULL)
+			// delete previous variable node
+		{
+			printf("Variable already exists (REMOVE THIS PRINTF LATER)\n");
+			break ;
+		}
+		current = current->next;
+	}
+	ft_strlcat(var, value, var_size);
+	printf("var after strlcat2: %s\n", var);
+	var_to_add = add_var(var);
+	add_var_back(env_list, var_to_add);
 }
