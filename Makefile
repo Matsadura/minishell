@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -lreadline
+CFLAGS = -Wall -Werror -Wextra 
 SRC = main.c builtin.c env_func.c
 NAME = minishell
 LIBFT = libft/libft.a
@@ -7,7 +7,7 @@ LIBFT = libft/libft.a
 all: $(NAME)
 
 $(NAME): $(SRC) $(LIBFT)
-	$(CC) $(CFLAGS) $(SRC) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(SRC) $(LIBFT) -lreadline -o $(NAME)
 
 $(LIBFT):
 	make -C libft

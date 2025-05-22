@@ -31,9 +31,9 @@ t_env   *add_var(char *var)
 /**
  * 
  */
-void	add_var_back(t_env **lst, char *var)
+void	add_var_back(t_env **lst, t_env *var)
 {
-	t_list	*current;
+	t_env	*current;
 
 	if (var == NULL)
 		return ;
@@ -62,7 +62,7 @@ t_env   *create_env(char **env)
     while (env[i] != NULL)
     {
 		node = add_var(env[i]);
-		add_var_back(env_list, node->var);
+		add_var_back(&env_list, node);
 		i++;
     }
 	return (env_list);

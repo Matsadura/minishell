@@ -44,7 +44,7 @@ void	pwd(char **env);
 /* Env helpers */
 
 t_env   *create_env(char **env);
-void	print_list(t_env env_list);
+void	print_list(t_env *env_list);
 
 
 #endif

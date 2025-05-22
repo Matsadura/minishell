@@ -32,7 +32,7 @@ int	main(int ac, char **av, char **env)
 		// TO RMV
 		env_list = create_env(env);
 		if (strcmp(cmd, "env") == 0)
-			print_list(*env_list);
+			print_list(env_list);
 		if (strcmp(cmd, "pwd") == 0)
 			pwd(env);
 	}
