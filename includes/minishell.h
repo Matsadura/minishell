@@ -14,7 +14,10 @@
 # define MINISHELL_H
 
 /* Libraries */
-# include "libft/libft.h"
+# include "../libft/libft.h"
+# include "../garbage_collector/gc_header.h"
+# include "lexer.h"
+# include "tokeniser.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 
