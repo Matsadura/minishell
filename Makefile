@@ -2,7 +2,7 @@ CC      = cc
 CFLAGS  = -Wall -Werror -Wextra
 LDFLAGS = -lreadline
 SRC        = main.c
-GC_SRC = garbage\ collector/gc_alloc.c garbage\ collector/gc_utils.c
+GC_SRC = garbage_collector/gc_alloc.c garbage_collector/gc_utils.c
 PARS_FILES = parsing/lexer/char_check.c parsing/lexer/lexer_utils.c parsing/lexer/lexer.c \
 			parsing/tokeniser/tokeniser_utils.c parsing/tokeniser/tokeniser.c
 LIBFT      = libft/libft.a
