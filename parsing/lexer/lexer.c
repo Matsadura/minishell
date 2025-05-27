@@ -12,6 +12,11 @@
 
 #include "../../includes/minishell.h"
 
+/**
+ * init_lexer - initialises a new lexer structure for given input
+ * @input: the input string to be lexed
+ * return: pointer to initialized lexer or NULL on failure
+ */
 t_lexer	*init_lexer(const char *input)
 {
 	t_lexer	*lexer;
@@ -26,6 +31,10 @@ t_lexer	*init_lexer(const char *input)
 	return (lexer);
 }
 
+/**
+ * process_lexeme - processes a single lexeme based on its first character
+ * @lexer: pointer to the lexer structure
+ */
 void	process_lexeme(t_lexer *lexer)
 {
 	char	c;
@@ -40,6 +49,11 @@ void	process_lexeme(t_lexer *lexer)
 		words(lexer);
 }
 
+/**
+ * lex_input - main lexing function that tokenises the entire input string
+ * @input: the input string to be lexed and tokenised
+ * return: pointer to the token list or NULL on failure
+ */
 t_token	*lex_input(const char *input)
 {
 	t_lexer		*lexer;

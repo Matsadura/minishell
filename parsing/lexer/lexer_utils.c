@@ -12,6 +12,10 @@
 
 #include "../../includes/minishell.h"
 
+/**
+ * skip_whitespaces - advances lexer position past all whitespace characters
+ * @lexer: pointer to the lexer structure
+ */
 void	skip_whitespaces(t_lexer *lexer)
 {
 	while (lexer->current < lexer->input_len
@@ -19,6 +23,10 @@ void	skip_whitespaces(t_lexer *lexer)
 		lexer->current++;
 }
 
+/**
+ * quotes - processes quoted strings by finding the matching closing quote
+ * @lexer: pointer to the lexer structure
+ */
 void	quotes(t_lexer *lexer)
 {
 	char	quote;
@@ -31,6 +39,10 @@ void	quotes(t_lexer *lexer)
 		lexer->current++;
 }
 
+/**
+ * operators - processes operators including double operators (>>, <<)
+ * @lexer: pointer to the lexer structure
+ */
 void	operators(t_lexer *lexer)
 {
 	lexer->current++;
@@ -41,15 +53,14 @@ void	operators(t_lexer *lexer)
 		lexer->current++;
 }
 
+/**
+ * words - processes word tokens until whitespace or operator is encountered
+ * @lexer: pointer to the lexer structure
+ */
 void	words(t_lexer *lexer)
 {
 	while (lexer->current < lexer->input_len
 		&&!is_white_space(lexer->input[lexer->current])
 		&& !is_operator(lexer->input[lexer->current]))
 		lexer->current++;
-}
-
-void	print_lexemes(const char *str)
-{
-	printf("lexeme: %s\n", str);
 }

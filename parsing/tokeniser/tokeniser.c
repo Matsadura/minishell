@@ -12,6 +12,12 @@
 
 #include "../../includes/minishell.h"
 
+/**
+ * tokeniser - creates a token from lexeme and adds it to the token list
+ * @lexeme: the lexeme string to tokenize
+ * @token_list: the existing token list to add to
+ * return: updated token list with new token added
+ */
 t_token	*tokeniser(const char *lexeme, t_token *token_list)
 {
 	t_token			*new_token;

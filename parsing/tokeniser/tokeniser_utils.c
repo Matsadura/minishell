@@ -12,6 +12,12 @@
 
 #include "../../includes/minishell.h"
 
+/**
+ * get_token_type - determines the token type based on lexeme value and length
+ * @value: the lexeme string
+ * @len: the length of the lexeme
+ * return: the appropriate token type
+ */
 t_token_type	get_token_type(const char *value, size_t len)
 {
 	if (len == 1)
@@ -37,6 +43,12 @@ t_token_type	get_token_type(const char *value, size_t len)
 	return (WORD);
 }
 
+/**
+ * create_token_node - creates a new token node with given value and type
+ * @value: the token value string
+ * @type: the token type
+ * return: pointer to new token node or NULL on failure
+ */
 t_token	*create_token_node(const char *value, t_token_type type)
 {
 	t_token	*new_token;
@@ -50,6 +62,11 @@ t_token	*create_token_node(const char *value, t_token_type type)
 	return (new_token);
 }
 
+/**
+ * add_token - adds a new token to the end of the token list
+ * @head: pointer to the head of the token list
+ * @new_token: the new token to add
+ */
 void	add_token(t_token **head, t_token *new_token)
 {
 	t_token	*tmp;

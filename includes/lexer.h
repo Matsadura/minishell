@@ -37,6 +37,5 @@ void	skip_whitespaces(t_lexer *lexer);
 void	quotes(t_lexer *lexer);
 void	operators(t_lexer *lexer);
 void	words(t_lexer *lexer);
-void	print_lexemes(const char *str);
 
 #endif
