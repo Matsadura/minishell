@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-int	handle_single_quotes(char **res, int i, t_exp_context *cntx)
+int	handle_single_quotes(int i, t_exp_context *cntx)
 {
 	if (cntx->state == SINGLE_QUOTES)
 		cntx->state = NORMAL;
@@ -21,7 +21,7 @@ int	handle_single_quotes(char **res, int i, t_exp_context *cntx)
 	return (i + 1);
 }
 
-int	handle_double_quotes(char **res, int i, t_exp_context *cntx)
+int	handle_double_quotes(int i, t_exp_context *cntx)
 {
 	if (cntx->state == DOUBLE_QUOTES)
 		cntx->state = NORMAL;

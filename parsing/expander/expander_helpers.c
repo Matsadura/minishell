@@ -36,9 +36,9 @@ char	*expand_token(char *token, t_exp_context *cntx)
 int	process_char(char *token, char **res, int i, t_exp_context *cntx)
 {
 	if (token[i] == '\'' && cntx->state != DOUBLE_QUOTES)
-		return (handle_single_quotes(res, i, cntx));
+		return (handle_single_quotes(i, cntx));
 	else if (token[i] == '"' && cntx->state != SINGLE_QUOTES)
-		return (handle_double_quotes(res, i, cntx));
+		return (handle_double_quotes(i, cntx));
 	else if (token[i] == '$' && cntx->state != SINGLE_QUOTES)
 		return (handle_var_expansion(token, res, i, cntx));
 	else
