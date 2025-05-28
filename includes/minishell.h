@@ -18,6 +18,7 @@
 # include "../garbage_collector/gc_header.h"
 # include "lexer.h"
 # include "tokeniser.h"
+# include "expander.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 
