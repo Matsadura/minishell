@@ -13,6 +13,31 @@
 #include "../../includes/minishell.h"
 
 /**
+ * is_simple_quoted - checks if token is a simple quoted string
+ * @value: the lexeme string
+ * @len: the length of the lexeme
+ * @quote_char: the quote character to check for
+ * returns: 1 if it's a simple quoted token or 0 if it's not
+ */
+static int	is_simple_quoted(const char *value, size_t len, char quote_char)
+{
+	int	i;
+	int	quote_count;
+
+	if (len < 2 || value[0] != quote_char || value[len - 1] != quote_char)
+		return (0);
+	quote_count = 0;
+	i = 0;
+	while (i < (int)len)
+	{
+		if (value[i] == quote_char)
+			quote_count++;
+		i++;
+	}
+	return (quote_count == 2);
+}
+
+/**
  * get_token_type - determines the token type based on lexeme value and length
  * @value: the lexeme string
  * @len: the length of the lexeme
@@ -36,9 +61,9 @@ t_token_type	get_token_type(const char *value, size_t len)
 		else if (value[0] == '<' && value[1] == '<')
 			return (HERDOC);
 	}
-	if (len > 0 && value[0] == '"')
+	if (is_simple_quoted(value, len, '"'))
 		return (D_QUOTE);
-	else if (len > 0 && value[0] == '\'')
+	else if (is_simple_quoted(value, len, '\''))
 		return (S_QUOTE);
 	return (WORD);
 }

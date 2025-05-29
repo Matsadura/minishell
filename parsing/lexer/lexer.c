@@ -41,9 +41,7 @@ void	process_lexeme(t_lexer *lexer)
 
 	lexer->start_indx = lexer->current;
 	c = lexer->input[lexer->current];
-	if (is_quote(c))
-		quotes(lexer);
-	else if (is_operator(c))
+	if (is_operator(c))
 		operators(lexer);
 	else
 		words(lexer);

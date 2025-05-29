@@ -41,3 +41,14 @@ int	is_white_space(char c)
 {
 	return (c == ' ' || c == '\t');
 }
+
+/**
+ * skip_whitespaces - advances lexer position past all whitespace characters
+ * @lexer: pointer to the lexer structure
+ */
+void	skip_whitespaces(t_lexer *lexer)
+{
+	while (lexer->current < lexer->input_len
+		&& is_white_space(lexer->input[lexer->current]))
+		lexer->current++;
+}
