@@ -67,7 +67,7 @@ void	del_var(t_env **lst, char *var)
 	prev = NULL;
 	while (current != NULL)
 	{
-		if (strcmp(current->var, var) == 0)
+		if (ft_strcmp(current->var, var) == 0)
 		{
 			if (prev == NULL)
 				*lst = current->next;
