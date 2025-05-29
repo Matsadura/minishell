@@ -52,6 +52,35 @@ void	add_var_back(t_env **lst, t_env *var)
 }
 
 /**
+ * del_var - Delete a variable node from the list
+ * @lst: Head of the list
+ * @var: Variable to delete
+ */
+void	del_var(t_env **lst, char *var)
+{
+	t_env	*current;
+	t_env	*prev;
+
+	if (lst == NULL || *lst == NULL)
+		return ;
+	current = *lst;
+	prev = NULL;
+	while (current != NULL)
+	{
+		if (strcmp(current->var, var) == 0)
+		{
+			if (prev == NULL)
+				*lst = current->next;
+			else
+				prev->next = current->next;
+			return ;
+		}
+		prev = current;
+		current = current->next;
+	}
+}
+
+/**
  * create_env - Duplicate the environment in a linked list
  * @env: 2D array contains the environmental variables
  * Return: The head of the linked list

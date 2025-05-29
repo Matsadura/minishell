@@ -47,5 +47,6 @@ void	export_var(t_env **env_list, char *key, char *value);
 t_env	*create_env(char **env);
 t_env	*add_var(char *var);
 void	add_var_back(t_env **lst, t_env *var);
+void	del_var(t_env **lst, char *var);
 
 #endif

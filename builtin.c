@@ -73,8 +73,6 @@ void	export_var(t_env **env_list, char *key, char *value)
 
 	if (*env_list == NULL || key == NULL || value == NULL)
 		return ;
-	// if Variable already exists -> delete it -> strjoin a new value -> add to env_list
-	// else if variable doesn't exist -> add to env_list
 	var_size = ft_strlen(key) + ft_strlen(value) + 2;
 	var = malloc(var_size); // Add to garbage collector later
 	if (var == NULL)
@@ -86,9 +84,8 @@ void	export_var(t_env **env_list, char *key, char *value)
 	while (current != NULL)
 	{
 		if (ft_strnstr(current->var, var, ft_strlen(var)) != NULL)
-			// delete previous variable node
 		{
-			printf("Variable already exists (REMOVE THIS PRINTF LATER)\n");
+			del_var(env_list, current->var);
 			break ;
 		}
 		current = current->next;
