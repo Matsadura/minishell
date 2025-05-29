@@ -1,13 +1,14 @@
 CC = cc
 CFLAGS = -Wall -Werror -Wextra 
 SRC = main.c builtin.c env_func.c
+GSRC = garbage_collector/gc_alloc.c garbage_collector/gc_utils.c
 NAME = minishell
 LIBFT = libft/libft.a
 
 all: $(NAME)
 
 $(NAME): $(SRC) $(LIBFT)
-	$(CC) $(CFLAGS) $(SRC) $(LIBFT) -lreadline -o $(NAME)
+	$(CC) $(CFLAGS) $(SRC) $(GSRC) $(LIBFT) -lreadline -o $(NAME)
 
 $(LIBFT):
 	make -C libft
