@@ -41,6 +41,7 @@ typedef struct s_env
 void	print_env(t_env *env_list);
 void	pwd(t_env *env);
 void	export_var(t_env **env_list, char *key, char *value);
+void	unset_var(t_env **env_list, char *key);
 
 /* Env helpers */
 

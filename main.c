@@ -40,6 +40,8 @@ int	main(int ac, char **av, char **env)
 			printf("%s\n", p);
 		if (strcmp(cmd, "export") == 0)
 			export_var(&env_list, "TEST_VAR", "TEST_VALUE");
+		if (strcmp(cmd, "unset") == 0)
+			unset_var(&env_list, "TEST_VAR");
 
 	}
 	return (EXIT_SUCCESS);

@@ -95,3 +95,26 @@ void	export_var(t_env **env_list, char *key, char *value)
 	var_to_add = add_var(var);
 	add_var_back(env_list, var_to_add);
 }
+
+/**
+ * unset_var - Unsets an environment variable
+ * @env_list: The head of the environment list
+ * @var: The variable to unset
+ */
+void	unset_var(t_env **env_list, char *key)
+{
+	t_env	*current;
+
+	if (*env_list == NULL || key == NULL)
+		return ;
+	current = *env_list;
+	while (current != NULL)
+	{
+		if (ft_strnstr(current->var, key, ft_strlen(key)) != NULL)
+		{
+			del_var(env_list, current->var);
+			break ;
+		}
+		current = current->next;
+	}
+}
