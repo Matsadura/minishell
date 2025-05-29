@@ -34,10 +34,9 @@ void	pwd(t_env *env)
 	dir = NULL;
 	while (current != NULL)
 	{
-		dir = ft_strnstr(current->var, "PWD=", 4);
+		dir = get_env(current, "PWD=");
 		if (dir != NULL)
 		{
-			dir += 4;
 			printf("%s\n", dir);
 			break ;
 		}

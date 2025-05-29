@@ -44,11 +44,12 @@ void	pwd(t_env *env);
 void	export_var(t_env **env_list, char *key, char *value);
 void	unset_var(t_env **env_list, char *key);
 
-/* Env helpers */
+/* Environment */
 
 t_env	*create_env(char **env);
 t_env	*add_var(char *var);
 void	add_var_back(t_env **lst, t_env *var);
 void	del_var(t_env **lst, char *var);
+char	*get_env(t_env *env_list, const char *var);
 
 #endif

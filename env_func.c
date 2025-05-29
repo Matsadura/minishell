@@ -77,7 +77,6 @@ void	del_var(t_env **lst, char *var)
 				prev->next = current->next;
 			return ;
 		}
-		
 		prev = current;
 		current = current->next;
 	}
@@ -103,4 +102,29 @@ t_env	*create_env(char **env)
 		i++;
 	}
 	return (env_list);
+}
+
+/**
+ * get_env - Get the value of an environment variable
+ * @env_list: The head of the environment list
+ * @var: The variable to search for
+ * Return: The value of the variable or NULL if not found
+ */
+char	*get_env(t_env *env_list, const char *var)
+{
+	t_env	*current;
+	size_t	var_len;
+
+	if (env_list == NULL || var == NULL)
+		return (NULL);
+	var_len = ft_strlen(var);
+	current = env_list;
+	while (current != NULL)
+	{
+		if (ft_strncmp(current->var, var, var_len) == 0
+			&& current->var[var_len] == '=')
+			return (current->var + var_len + 1);
+		current = current->next;
+	}
+	return (NULL);
 }
