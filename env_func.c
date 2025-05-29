@@ -21,7 +21,9 @@ t_env	*add_var(char *var)
 {
 	t_env	*new;
 
-	new = (t_env *)malloc(sizeof(t_env));
+	if (var == NULL)
+		return (NULL);
+	new = gc_alloc(sizeof(t_env));
 	if (new == NULL)
 		return (NULL);
 	new->var = var;
@@ -75,6 +77,7 @@ void	del_var(t_env **lst, char *var)
 				prev->next = current->next;
 			return ;
 		}
+		
 		prev = current;
 		current = current->next;
 	}

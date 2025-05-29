@@ -74,12 +74,11 @@ void	export_var(t_env **env_list, char *key, char *value)
 	if (*env_list == NULL || key == NULL || value == NULL)
 		return ;
 	var_size = ft_strlen(key) + ft_strlen(value) + 2;
-	var = malloc(var_size); // Add to garbage collector later
+	var = gc_alloc(var_size);
 	if (var == NULL)
 		return ;
 	ft_strlcpy(var, key, var_size);
 	ft_strlcat(var, "=", var_size);
-	printf("var after strlcat1: %s\n", var);
 	current = *env_list;
 	while (current != NULL)
 	{
@@ -91,7 +90,6 @@ void	export_var(t_env **env_list, char *key, char *value)
 		current = current->next;
 	}
 	ft_strlcat(var, value, var_size);
-	printf("var after strlcat2: %s\n", var);
 	var_to_add = add_var(var);
 	add_var_back(env_list, var_to_add);
 }

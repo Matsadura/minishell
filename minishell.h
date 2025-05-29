@@ -18,6 +18,7 @@
 # include "libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "garbage_collector/gc_header.h"
 
 /* Macros */
 
