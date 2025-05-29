@@ -115,3 +115,17 @@ void	unset_var(t_env **env_list, char *key)
 		current = current->next;
 	}
 }
+
+/**
+ * echo - Prints a string to STDOUT
+ * @args: Array of arguments passed to the echo command
+ */
+void	echo(char **args)
+{
+	if (sizeof(args) >= 2 && ft_strcmp(args[1], "-n") == 0)
+		printf("%s", args[2]);
+	else if (sizeof(args) >= 1)
+		printf("%s\n", args[1]);
+	else
+		printf("\n");
+}

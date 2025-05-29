@@ -42,6 +42,8 @@ int	main(int ac, char **av, char **env)
 			export_var(&env_list, "TEST_VAR", "TEST_VALUE");
 		if (strcmp(cmd, "unset") == 0)
 			unset_var(&env_list, "TEST_VAR");
+		if (strcmp(cmd, "echo") == 0)
+			echo((char *[]){ "echo", "Hello, World!", NULL });
 
 	}
 	return (EXIT_SUCCESS);
