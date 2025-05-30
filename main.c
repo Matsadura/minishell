@@ -45,7 +45,13 @@ int	main(int argc, char **argv, char **env)
 		if (*cmd != 0)
 			add_history(cmd);
 		tokens = lex_input(cmd);
-		//print_tokens_list(tokens);
+		if (tokens == NULL)
+		{
+			free(cmd);
+			gc_cleanup();
+			continue ;
+		}
+		print_tokens_list(tokens);
 		expanded_tokens = expander(tokens, env, 0);
 		print_tokens_list(expanded_tokens);
 	}

@@ -34,17 +34,20 @@ t_lexer	*init_lexer(const char *input)
 /**
  * process_lexeme - processes a single lexeme based on its first character
  * @lexer: pointer to the lexer structure
+ * return: 1 on success and 0 on faillure
  */
-void	process_lexeme(t_lexer *lexer)
+static int	process_lexeme(t_lexer *lexer)
 {
 	char	c;
 
 	lexer->start_indx = lexer->current;
 	c = lexer->input[lexer->current];
 	if (is_operator(c))
+	{
 		operators(lexer);
-	else
-		words(lexer);
+		return (1);
+	}
+	return (words(lexer));
 }
 
 /**
@@ -65,7 +68,8 @@ t_token	*lex_input(const char *input)
 		skip_whitespaces(lexer);
 		if (lexer->current >= lexer->input_len)
 			break ;
-		process_lexeme(lexer);
+		if (process_lexeme(lexer) == 0)
+			return (NULL);
 		lexeme = gc_strldup(lexer->input + lexer->start_indx,
 				lexer->current - lexer->start_indx);
 		if (lexeme == NULL)

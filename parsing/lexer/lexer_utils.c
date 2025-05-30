@@ -29,19 +29,8 @@ static int	skip_to_matching_quote(t_lexer *lexer, char quote_char)
 		lexer->current++;
 		return (1);
 	}
+	ft_dprintf(2, "syntax error: unclosed quotes\n");
 	return (0);
-}
-
-/**
- * quotes - processes quoted strings by finding the matching closing quote
- * @lexer: pointer to the lexer structure
- */
-void	quotes(t_lexer *lexer)
-{
-	char	quote_char;
-
-	quote_char = lexer->input[lexer->current++];
-	skip_to_matching_quote(lexer, quote_char);
 }
 
 /**
@@ -76,8 +65,9 @@ static int	is_token_boundary(t_lexer *lexer)
 /**
  * words - processes word tokens including complex quote combinations
  * @lexer: pointer to the lexer structure
+ * returns: 1 on success and 0 on syntax error unclosed quotes
  */
-void	words(t_lexer *lexer)
+int	words(t_lexer *lexer)
 {
 	char	quote_char;
 
@@ -86,18 +76,11 @@ void	words(t_lexer *lexer)
 		if (is_quote(lexer->input[lexer->current]))
 		{
 			quote_char = lexer->input[lexer->current];
-			if (!skip_to_matching_quote(lexer, quote_char))
-			{
-				while (lexer->current < lexer->input_len
-					&& !is_white_space(lexer->input[lexer->current])
-					&& !is_operator(lexer->input[lexer->current]))
-				{
-					lexer->current++;
-				}
-				break ;
-			}
+			if (skip_to_matching_quote(lexer, quote_char) == 0)
+				return (0);
 		}
 		else
 			lexer->current++;
 	}
+	return (1);
 }

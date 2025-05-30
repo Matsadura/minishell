@@ -64,7 +64,6 @@ char	*get_var_value(char *var_name, t_exp_context *cntx)
 
 	if (ft_strncmp(var_name, "?", 1) == 0)
 		return (ft_itoa(cntx->last_exit_status));
-	printf("%s\n", cntx->env[0]);
 	if (cntx->env == NULL)
 		return (gc_strldup("", 0));
 	name_len = ft_strlen(var_name);

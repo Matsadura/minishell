@@ -34,8 +34,7 @@ int		is_white_space(char c);
 
 //utils
 void	skip_whitespaces(t_lexer *lexer);
-void	quotes(t_lexer *lexer);
 void	operators(t_lexer *lexer);
-void	words(t_lexer *lexer);
+int		words(t_lexer *lexer);
 
 #endif
