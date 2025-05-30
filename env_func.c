@@ -80,6 +80,7 @@ void	del_var(t_env **lst, char *var)
 		prev = current;
 		current = current->next;
 	}
+	gc_free(var);
 }
 
 /**
