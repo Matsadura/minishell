@@ -29,6 +29,7 @@ int		ft_isdigit(int c);
 int		ft_isalnum(int c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);
+int		ft_isnumber(char *arg);
 
 /* Case convertion functions */
 int		ft_toupper(int c);

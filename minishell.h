@@ -45,6 +45,7 @@ void	pwd(t_env *env);
 void	export_var(t_env **env_list, char *key, char *value);
 void	unset_var(t_env **env_list, char *key);
 void	print_env(t_env *env_list);
+int		exit_builtin(char **args);
 
 /* Environment */
 

@@ -50,6 +50,8 @@ int	main(int ac, char **av, char **env)
 			change_dir(&env_list, "~");
 		if (strcmp(cmd, "cd") == 0)
 			change_dir(&env_list, "");
+		if (strcmp(cmd, "exit") == 0)
+			exit_builtin((char *[]){ "exit", "3", NULL });
 
 	}
 	return (EXIT_SUCCESS);
