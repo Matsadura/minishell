@@ -24,8 +24,8 @@ char	*expand_token(char *token, t_exp_context *cntx)
 	if (res == NULL)
 		return (NULL);
 	res[0] = '\0';
-	if (cntx->quote_removal == 0)
-		cntx->state = NORMAL;
+	cntx->quote_removal = 0;
+	cntx->state = NORMAL;
 	len = ft_strlen(token);
 	i = 0;
 	while (i < len)
