@@ -1,6 +1,9 @@
 CC = cc
 CFLAGS = -Wall -Werror -Wextra 
-SRC = main.c builtin.c env_func.c
+SRC = main.c \
+	builtin.c \
+	env_func.c \
+	builtin_2.c
 GSRC = garbage_collector/gc_alloc.c garbage_collector/gc_utils.c
 NAME = minishell
 LIBFT = libft/libft.a

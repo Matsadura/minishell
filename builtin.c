@@ -61,7 +61,10 @@ void	print_env(t_env *env_list)
 }
 
 /**
- *
+ * export_var - Exports an environment variable
+ * @env_list: The head of the environment list
+ * @key: The key of the variable to export
+ * @value: The value of the variable to export
  */
 void	export_var(t_env **env_list, char *key, char *value)
 {

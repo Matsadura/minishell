@@ -44,6 +44,12 @@ int	main(int ac, char **av, char **env)
 			unset_var(&env_list, "TEST_VAR");
 		if (strcmp(cmd, "echo") == 0)
 			echo((char *[]){ "echo", "Hello, World!", NULL });
+		if (strcmp(cmd, "cd -") == 0)
+			change_dir(&env_list, "-");
+		if (strcmp(cmd, "cd ~") == 0)
+			change_dir(&env_list, "~");
+		if (strcmp(cmd, "cd") == 0)
+			change_dir(&env_list, "");
 
 	}
 	return (EXIT_SUCCESS);

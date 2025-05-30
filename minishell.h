@@ -39,11 +39,12 @@ typedef struct s_env
 
 /* Builtins */
 
-void	print_env(t_env *env_list);
+void	echo(char **args);
+int		change_dir(t_env **env_list, const char *path);
 void	pwd(t_env *env);
 void	export_var(t_env **env_list, char *key, char *value);
 void	unset_var(t_env **env_list, char *key);
-void	echo(char **args);
+void	print_env(t_env *env_list);
 
 /* Environment */
 
