@@ -31,6 +31,7 @@ void	*gc_alloc(size_t size);
 void	gc_free(void *address);
 void	gc_cleanup(void);
 char	*gc_strldup(const char *str, size_t len);
+char	*gc_strljoin(const char *s1, const char *s2, size_t len);
 
 //garbage collector utils
 void	gc_init(t_gc *gc);

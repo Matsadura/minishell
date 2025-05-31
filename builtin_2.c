@@ -1,6 +1,40 @@
 #include "minishell.h"
 
 /**
+ * change_dir_relative - Handles relative path changes
+ * @env_list: The head of the environment list
+ * @path: The relative path to change to
+ * @return: 0 on success, -1 on failure
+ */
+static int	change_dir_relative(t_env **env_list, const char *path)
+{
+	char	*current_dir;
+	char	*new_path;
+	char	*full_path;
+
+	current_dir = getcwd(NULL, 0);
+	if (current_dir == NULL)
+	{
+		perror("getcwd");
+		return (-1);
+	}
+	new_path = gc_strjoin(current_dir, "/", ft_strlen(current_dir) + 1);
+	if (new_path == NULL)
+		return (-1);
+	full_path = gc_strjoin(new_path, path, ft_strlen(new_path) + ft_strlen(path) + 1);
+	gc_free(new_path);
+	if (full_path == NULL)
+		return (-1);
+	if (chdir(full_path) == -1)
+	{
+		perror("cd");
+		return (-1);
+	}
+	export_var(env_list, "PWD", full_path);
+	return (0);
+}
+
+/**
  * change_dir_home - Changes the current working directory to the home directory
  * @env_list: The head of the environment list
  * @return: 0 on success, -1 on failure
