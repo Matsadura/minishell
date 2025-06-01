@@ -54,13 +54,10 @@ static int	update_pwd_vars(t_env **env_list, char *old_pwd)
 	if (new_pwd == NULL)
 	{
 		perror("getcwd");
-		gc_free(old_pwd);
 		return (-1);
 	}
 	export_var(env_list, "OLDPWD", old_pwd);
 	export_var(env_list, "PWD", new_pwd);
-	gc_free(old_pwd);
-	gc_free(new_pwd);
 	return (0);
 }
 
