@@ -12,15 +12,21 @@
 
 #include "../../includes/minishell.h"
 
+static void	init_expansion_context(t_exp_context *context, char **env, int exit_status)
+{
+	context->env = env;
+	context->last_exit_status = exit_status;
+	context->state = NORMAL;
+	context->quote_removal = 0;
+}
+
 t_token	*expander(t_token *tokens, char **env, int exit_status)
 {
 	char			*expanded;
 	t_exp_context	context;
 	t_token			*current;
 
-	context.env = env;
-	context.last_exit_status = exit_status;
-	context.state = NORMAL;
+	init_expansion_context(&context, env, exit_status);
 	current = tokens;
 	while (current != NULL)
 	{
