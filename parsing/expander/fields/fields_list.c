@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fields_list.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aberkass <aberkass@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/01 14:00:16 by aberkass          #+#    #+#             */
+/*   Updated: 2025/06/01 22:39:05 by aberkass         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../includes/minishell.h"
 
-static void clean_list(t_token *list)
+static void	clean_list(t_token *list)
 {
-	t_token *temp;
+	t_token	*temp;
 
 	while (list != NULL)
 	{
@@ -13,11 +25,11 @@ static void clean_list(t_token *list)
 	}
 }
 
-static t_token *create_field_list(char **fields)
+static t_token	*create_field_list(char **fields)
 {
-	int i;
-	t_token *list;
-	t_token *node;
+	int		i;
+	t_token	*list;
+	t_token	*node;
 
 	if (fields == NULL)
 		return (NULL);
@@ -37,10 +49,10 @@ static t_token *create_field_list(char **fields)
 	return (list);
 }
 
-t_token *split_token(t_token *token, t_field_context *cntxt)
+t_token	*split_token(t_token *token, t_field_context *cntxt)
 {
-	char **fields;
-	t_token *field_list;
+	char	**fields;
+	t_token	*field_list;
 
 	if (cntxt->needs_splitting == 0)
 		return (create_token_node(token->value, token->type));
@@ -55,16 +67,16 @@ t_token *split_token(t_token *token, t_field_context *cntxt)
 	return (field_list);
 }
 
-void append_token_list(t_token **dest, t_token *src)
+void	append_token_list(t_token **dest, t_token *src)
 {
-	t_token *current;
+	t_token	*current;
 
 	if (src == NULL)
-		return;
+		return ;
 	if (*dest == NULL)
 	{
 		*dest = src;
-		return;
+		return ;
 	}
 	current = *dest;
 	while (current->next != NULL)

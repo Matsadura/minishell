@@ -1,5 +1,17 @@
-#ifndef FIELD_SPLITTER_H
-# define FIELD_SPLITTER_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fields_splitter.h                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aberkass <aberkass@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/01 12:00:16 by aberkass          #+#    #+#             */
+/*   Updated: 2025/06/01 22:39:05 by aberkass         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef FIELDS_SPLITTER_H
+# define FIELDS_SPLITTER_H
 
 # include "minishell.h"
 
