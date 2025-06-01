@@ -69,7 +69,7 @@ char	*gc_strljoin(const char *s1, const char *s2, size_t len)
 	s1_len = 0;
 	s2_len = 0;
 	if (s1 != NULL)
-		s1_len = ft_strlen(s1);	
+		s1_len = ft_strlen(s1);
 	if (s2 != NULL)
 		s2_len = ft_strlen(s2);
 	if (s1_len + s2_len > len)

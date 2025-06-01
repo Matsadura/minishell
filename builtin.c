@@ -71,7 +71,6 @@ void	export_var(t_env **env_list, char *key, char *value)
 	char	*var;
 	size_t	var_size;
 	t_env	*current;
-	t_env	*var_to_add;
 
 	if (*env_list == NULL || key == NULL || value == NULL)
 		return ;
@@ -92,8 +91,7 @@ void	export_var(t_env **env_list, char *key, char *value)
 		current = current->next;
 	}
 	ft_strlcat(var, value, var_size);
-	var_to_add = add_var(var);
-	add_var_back(env_list, var_to_add);
+	add_var_back(env_list, add_var(var));
 	gc_free(var);
 }
 
