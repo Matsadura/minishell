@@ -78,7 +78,7 @@ char	*gc_strljoin(const char *s1, const char *s2, size_t len)
 	if (joined == NULL)
 		return (NULL);
 	ft_strlcpy(joined, s1, s1_len + 1);
-	ft_strlcat(joined, s2, s1_len + s2_len + 1);
+	ft_strlcat(joined, (char *)s2, s1_len + s2_len + 1);
 	return (joined);
 }
 

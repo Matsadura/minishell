@@ -48,8 +48,14 @@ int	main(int ac, char **av, char **env)
 			change_dir(&env_list, "-");
 		if (strcmp(cmd, "cd ~") == 0)
 			change_dir(&env_list, "~");
+		if (strcmp(cmd, "cd libft") == 0)
+			change_dir(&env_list, "libft");
 		if (strcmp(cmd, "cd") == 0)
-			change_dir(&env_list, "");
+			change_dir(&env_list, "libft");
+		if (strcmp(cmd, "cd /") == 0)
+			change_dir(&env_list, "/");
+		if (strcmp(cmd, "cd ..") == 0)
+			change_dir(&env_list, "..");
 		if (strcmp(cmd, "exit") == 0)
 			exit_builtin((char *[]){ "exit", "3", NULL });
 

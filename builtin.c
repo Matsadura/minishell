@@ -92,7 +92,6 @@ void	export_var(t_env **env_list, char *key, char *value)
 	}
 	ft_strlcat(var, value, var_size);
 	add_var_back(env_list, add_var(var));
-	gc_free(var);
 }
 
 /**

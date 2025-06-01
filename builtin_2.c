@@ -13,116 +13,78 @@
 #include "minishell.h"
 
 /**
- * change_dir_relative - Handles relative path changes
+ * get_target_dir - Determines the target directory for cd command
  * @env_list: The head of the environment list
- * @path: The relative path to change to
- * @return: 0 on success, -1 on failure
+ * @path: The path to change to
+ * return: The target directory or NULL if not found
  */
-static int	change_dir_relative(t_env **env_list, const char *path)
-{
-	char	*current_dir;
-	char	*new_path;
-	char	*full_path;
-
-	current_dir = getcwd(NULL, 0);
-	if (current_dir == NULL)
-	{
-		perror("getcwd");
-		return (-1);
-	}
-	new_path = gc_strjoin(current_dir, "/", ft_strlen(current_dir) + 1);
-	if (new_path == NULL)
-		return (-1);
-	full_path = gc_strjoin(new_path, path, ft_strlen(new_path) + ft_strlen(path) + 1);
-	gc_free(new_path);
-	if (full_path == NULL)
-		return (-1);
-	if (chdir(full_path) == -1)
-	{
-		perror("cd");
-		return (-1);
-	}
-	export_var(env_list, "PWD", full_path);
-	return (0);
-}
-
-/**
- * change_dir_home - Changes the current working directory to the home directory
- * @env_list: The head of the environment list
- * @return: 0 on success, -1 on failure
- */
-static int	change_dir_home(t_env **env_list)
+static char	*get_target_dir(t_env **env_list, const char *path)
 {
 	char	*home;
+	char	*oldpwd;
 
-	home = get_env(*env_list, "HOME");
-	if (home == NULL)
+	if (path == NULL || ft_strcmp(path, "~") == 0 || *path == '\0')
 	{
-		ft_dprintf(STDERR, "cd: HOME not set\n");
-		return (-1);
+		home = get_env(*env_list, "HOME");
+		if (home == NULL)
+			ft_dprintf(STDERR, "cd: HOME not set\n");
+		return (home);
 	}
-	if (change_dir(env_list, home) == -1)
-		return (-1);
-	return (0);
+	else if (ft_strcmp(path, "-") == 0)
+	{
+		oldpwd = get_env(*env_list, "OLDPWD");
+		if (oldpwd == NULL)
+			ft_dprintf(STDERR, "cd: OLDPWD not set\n");
+		return (oldpwd);
+	}
+	return ((char *)path);
 }
 
 /**
- * change_dir_previous - Changes the current working directory
- * 		to the previous directory
+ * update_pwd_vars - Updates PWD and OLDPWD environment variables
  * @env_list: The head of the environment list
+ * @old_pwd: The previous working directory
  * @return: 0 on success, -1 on failure
  */
-static int	change_dir_previous(t_env **env_list)
+static int	update_pwd_vars(t_env **env_list, char *old_pwd)
 {
-	char	*oldpwd;
-	char	*new_oldpwd;
+	char	*new_pwd;
 
-	oldpwd = get_env(*env_list, "OLDPWD");
-	if (oldpwd == NULL)
-	{
-		ft_dprintf(STDERR, "cd: OLDPWD not set\n");
-		return (-1);
-	}
-	if (change_dir(env_list, oldpwd) == -1)
-		return (-1);
-	new_oldpwd = getcwd(NULL, 0);
-	if (new_oldpwd == NULL)
+	new_pwd = getcwd(NULL, 0);
+	if (new_pwd == NULL)
 	{
 		perror("getcwd");
+		gc_free(old_pwd);
 		return (-1);
 	}
-	export_var(env_list, "OLDPWD", new_oldpwd);
-	gc_free(new_oldpwd);
+	export_var(env_list, "OLDPWD", old_pwd);
+	export_var(env_list, "PWD", new_pwd);
+	gc_free(old_pwd);
+	gc_free(new_pwd);
 	return (0);
 }
 
 /**
- * change_dir - Changes the current working directory,
- * 		only absolute and relative paths
+ * change_dir - Changes the current working directory and updates PWD/OLDPWD
  * @env_list: The head of the environment list
  * @path: The path to change to
  * @return: 0 on success, -1 on failure
  */
 int	change_dir(t_env **env_list, const char *path)
 {
-	char	*new_pwd;
+	char	*old_pwd;
+	char	*target;
 
-	if (ft_strcmp(path, "-") == 0)
-		return (change_dir_previous(env_list));
-	if (ft_strcmp(path, "~") == 0 || *path == '\0')
-		return (change_dir_home(env_list));
-	if (chdir(path) == -1)
+	old_pwd = getcwd(NULL, 0);
+	if (old_pwd == NULL)
+		return (perror("getcwd"), -1);
+	target = get_target_dir(env_list, path);
+	if (target == NULL)
+		return (-1);
+	if (chdir(target) == -1)
 	{
 		perror("cd");
 		return (-1);
 	}
-	new_pwd = getcwd(NULL, 0);
-	if (new_pwd == NULL)
-	{
-		perror("getcwd");
-		return (-1);
-	}
-	export_var(env_list, "PWD", new_pwd);
-	gc_free(new_pwd);
-	return (0);
+	return (update_pwd_vars(env_list, old_pwd));
 }
