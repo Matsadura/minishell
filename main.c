@@ -31,6 +31,7 @@ int	main(int argc, char **argv, char **env)
 	char	*cmd;
 	t_token	*tokens;
 	t_token	*expanded_tokens;
+	t_token *splitted;
 
 	(void)argc;
 	(void)argv;
@@ -54,6 +55,8 @@ int	main(int argc, char **argv, char **env)
 		print_tokens_list(tokens);
 		expanded_tokens = expander(tokens, env, 0);
 		print_tokens_list(expanded_tokens);
+		splitted = field_splitter(expanded_tokens);
+		print_tokens_list(splitted);
 	}
 	return (EXIT_SUCCESS);
 }

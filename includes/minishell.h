@@ -19,7 +19,7 @@
 # include "lexer.h"
 # include "tokeniser.h"
 # include "expander.h"
-# include "field_splitter.h"
+# include "fields_splitter.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 

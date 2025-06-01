@@ -32,6 +32,7 @@ typedef struct s_token
 {
 	char				*value;
 	t_token_type		type;
+	int					needs_spliting;
 	struct s_token		*next;
 }	t_token;
 

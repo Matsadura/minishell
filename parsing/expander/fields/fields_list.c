@@ -1,10 +1,23 @@
 #include "../../../includes/minishell.h"
 
-t_token	*create_field_list(char **fields, t_token *original)
+static void clean_list(t_token *list)
 {
-	int		i;
-	t_token	*list;
-	t_token	*node;
+	t_token *temp;
+
+	while (list != NULL)
+	{
+		temp = list;
+		list = list->next;
+		gc_free(temp->value);
+		gc_free(temp);
+	}
+}
+
+static t_token *create_field_list(char **fields)
+{
+	int i;
+	t_token *list;
+	t_token *node;
 
 	if (fields == NULL)
 		return (NULL);
@@ -14,17 +27,20 @@ t_token	*create_field_list(char **fields, t_token *original)
 	{
 		node = create_token_node(fields[i], WORD);
 		if (node == NULL)
-			return (list);
+		{
+			clean_list(list);
+			return (NULL);
+		}
 		add_token(&list, node);
 		i++;
 	}
 	return (list);
 }
 
-t_token	*split_token(t_token *token, t_field_context *cntxt)
+t_token *split_token(t_token *token, t_field_context *cntxt)
 {
-	char	**fields;
-	t_token	*field_list;
+	char **fields;
+	t_token *field_list;
 
 	if (cntxt->needs_splitting == 0)
 		return (create_token_node(token->value, token->type));
@@ -34,21 +50,21 @@ t_token	*split_token(t_token *token, t_field_context *cntxt)
 		free_fields_array(fields);
 		return (create_token_node(token->value, token->type));
 	}
-	field_list = create_field_list(fields, token);
+	field_list = create_field_list(fields);
 	free_fields_array(fields);
 	return (field_list);
 }
 
-void	append_token_list(t_token **dest, t_token *src)
+void append_token_list(t_token **dest, t_token *src)
 {
-	t_token	*current;
+	t_token *current;
 
 	if (src == NULL)
-		return ;
+		return;
 	if (*dest == NULL)
 	{
 		*dest = src;
-		return ;
+		return;
 	}
 	current = *dest;
 	while (current->next != NULL)

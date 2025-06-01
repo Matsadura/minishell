@@ -18,6 +18,7 @@ static void	init_expansion_context(t_exp_context *context, char **env, int exit_
 	context->last_exit_status = exit_status;
 	context->state = NORMAL;
 	context->quote_removal = 0;
+	context->needs_spliting = 0;
 }
 
 t_token	*expander(t_token *tokens, char **env, int exit_status)
@@ -30,15 +31,25 @@ t_token	*expander(t_token *tokens, char **env, int exit_status)
 	current = tokens;
 	while (current != NULL)
 	{
+		context.needs_spliting = 1;
 		if (current->type == D_QUOTE || current->type == S_QUOTE)
+		{
+			context.needs_spliting = 0;
 			expanded = process_quoted_token(current->value,
 					current->type, &context);
+		}
 		else if (current->type == WORD)
 			expanded = expand_token(current->value, &context);
 		else
+		{
 			expanded = NULL;
+			context.needs_spliting = 0;
+		}
 		if (expanded != NULL)
+		{
 			current->value = expanded;
+			current->needs_spliting = context.needs_spliting;
+		}
 		current = current->next;
 	}
 	return (tokens);

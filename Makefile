@@ -16,7 +16,10 @@ EXPANDER_FILES = parsing/expander/expander.c parsing/expander/expander_utils.c \
 				parsing/expander/expander_helpers.c parsing/expander/process_quotes.c \
 				parsing/expander/variable_expansion.c
 
-PARS_FILES = $(LEXER_FILES) $(TOKENISER_FILES) $(EXPANDER_FILES)
+FIELDS_FILES = parsing/expander/fields/fields_splitter.c parsing/expander/fields/fields_list.c \
+			parsing/expander/fields/fields_splitter_utils.c parsing/expander/fields/ft_split_by_space.c 
+
+PARS_FILES = $(LEXER_FILES) $(TOKENISER_FILES) $(EXPANDER_FILES) $(FIELDS_FILES)
 
 LIBFT      = libft/libft.a
 

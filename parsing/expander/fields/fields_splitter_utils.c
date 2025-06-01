@@ -16,17 +16,16 @@ int	contains_whitespace(char *str)
 	return (0);
 }
 
-int	should_split_token(t_token *token, t_field_context *cntxt)
+int should_split_token(t_token *token, t_field_context *cntxt)
 {
-	if (token->type == D_QUOTE || token->type == S_QUOTE)
-		cntxt->was_quoted = 1;
-	cntxt->needs_splitting = 0;
-	if (token->type == WORD && cntxt->was_quoted == 0)
-	{
-		if (contains_whitespace(token->value))
-			cntxt->needs_splitting = 1;
-	}
-	return (cntxt->needs_splitting);
+    if (token->type == WORD && token->needs_spliting
+		&& contains_whitespace(token->value))
+    {
+        cntxt->needs_splitting = 1;
+        return (1);
+    }
+    cntxt->needs_splitting = 0;
+    return (0);
 }
 
 void	free_fields_array(char **fields)

@@ -10,13 +10,13 @@ t_token	*field_splitter(t_token *tokens)
 
 	new_list = NULL;
 	current = tokens;
+	ft_memset(&cntxt, 0, sizeof(cntxt));
 	while (current != NULL)
 	{
-		ft_memset(&cntxt, 0, sizeof(cntxt));
 		if (should_split_token(current, &cntxt))
 		{
 			split_tokens = split_token(current, &cntxt);
-			if (split_token != NULL)
+			if (split_tokens != NULL)
 				append_token_list(&new_list, split_tokens);
 		}
 		else
