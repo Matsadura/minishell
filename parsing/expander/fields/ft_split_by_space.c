@@ -51,7 +51,7 @@ char	**ft_split_by_space(char const	*s)
 
 	splited = (char **)gc_alloc((ft_wc(s) + 1) * sizeof(char *));
 	if (!splited || !s)
-		return (free(splited), NULL);
+		return (gc_free(splited), NULL);
 	i = 0;
 	j = 0;
 	while (s[j] && i < ft_wc(s))
