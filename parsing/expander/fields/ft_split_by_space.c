@@ -37,9 +37,9 @@ static void	ft_free(char **s, int i)
 {
 	while (i > 0)
 	{
-		free(s[--i]);
+		gc_free(s[--i]);
 	}
-	free(s);
+	gc_free(s);
 }
 
 char	**ft_split_by_space(char const	*s)
@@ -49,7 +49,7 @@ char	**ft_split_by_space(char const	*s)
 	int			j;
 	size_t		start;
 
-	splited = (char **)malloc((ft_wc(s) + 1) * sizeof(char *));
+	splited = (char **)gc_alloc((ft_wc(s) + 1) * sizeof(char *));
 	if (!splited || !s)
 		return (free(splited), NULL);
 	i = 0;
@@ -61,7 +61,7 @@ char	**ft_split_by_space(char const	*s)
 		start = j;
 		while (s[j] != ' ' && s[j] != '\t' && s[j])
 			j++;
-		splited[i++] = ft_substr(s, start, j - start);
+		splited[i++] = gc_substr(s, start, j - start);
 		if (!splited[i - 1])
 			return (ft_free(splited, i - 1), NULL);
 	}

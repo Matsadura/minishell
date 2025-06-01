@@ -6,7 +6,7 @@ LDFLAGS = -lreadline
 
 SRC        = main.c
 
-GC_SRC = garbage_collector/gc_alloc.c garbage_collector/gc_utils.c
+GC_SRC = garbage_collector/gc_alloc.c garbage_collector/gc_utils.c garbage_collector/gc_strings.c
 
 LEXER_FILES = parsing/lexer/lexer.c parsing/lexer/char_check.c parsing/lexer/lexer_utils.c
 
