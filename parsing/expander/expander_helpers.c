@@ -12,6 +12,12 @@
 
 #include "../../includes/minishell.h"
 
+/**
+ * expand_token - main token expansion function that processes the entire token
+ * @token: the input token string to be expanded
+ * @cntx: expansion context containing environment and state information
+ * return: fully expanded token string or NULL on failure
+ */
 char	*expand_token(char *token, t_exp_context *cntx)
 {
 	char	*res;
@@ -33,6 +39,14 @@ char	*expand_token(char *token, t_exp_context *cntx)
 	return (res);
 }
 
+/**
+ * process_char - processes a single character during token expansion
+ * @token: the input token string
+ * @res: pointer to the result string
+ * @i: current character index in the token
+ * @cntx: expansion context for state management
+ * return: next index position to process
+ */
 int	process_char(char *token, char **res, int i, t_exp_context *cntx)
 {
 	if (token[i] == '\'' && cntx->state != DOUBLE_QUOTES)

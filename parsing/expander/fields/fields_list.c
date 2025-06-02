@@ -12,6 +12,10 @@
 
 #include "../../../includes/minishell.h"
 
+/**
+ * clean_list - frees all nodes and their values in a token list
+ * @list: linked list of tokens to be freed
+ */
 static void	clean_list(t_token *list)
 {
 	t_token	*temp;
@@ -25,6 +29,11 @@ static void	clean_list(t_token *list)
 	}
 }
 
+/**
+ * create_field_list - converts an array of field strings into a token list
+ * @fields: array of field strings
+ * return: head of the created token list or NULL on failure
+ */
 static t_token	*create_field_list(char **fields)
 {
 	int		i;
@@ -49,6 +58,12 @@ static t_token	*create_field_list(char **fields)
 	return (list);
 }
 
+/**
+ * split_token - splits a token into multiple tokens based on whitespace
+ * @token: the token to potentially split
+ * @cntxt: field context containing splitting flags and state
+ * return: single token or list of tokens after splitting
+ */
 t_token	*split_token(t_token *token, t_field_context *cntxt)
 {
 	char	**fields;
@@ -67,6 +82,11 @@ t_token	*split_token(t_token *token, t_field_context *cntxt)
 	return (field_list);
 }
 
+/**
+ * append_token_list - appends one token list to the end of another
+ * @dest: pointer to the destination list head
+ * @src: source list to append
+ */
 void	append_token_list(t_token **dest, t_token *src)
 {
 	t_token	*current;

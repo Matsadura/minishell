@@ -12,6 +12,14 @@
 
 #include "../../includes/minishell.h"
 
+/**
+ * handle_var_expansion - handles variable expansion when $ is encountered
+ * @token: the input token string being processed
+ * @res: pointer to the result string 
+ * @i: current index in the token string
+ * @cntx: expansion context containing state and environment information
+ * return: new index position after processing the variable
+ */
 int	handle_var_expansion(char *token, char **res, int i, t_exp_context *cntx)
 {
 	int		new_indx;
@@ -34,6 +42,12 @@ int	handle_var_expansion(char *token, char **res, int i, t_exp_context *cntx)
 	}
 }
 
+/**
+ * extract_variable_name - extracts a valid variable name from the token
+ * @token: the input token string
+ * @indx: pointer to current index will be updated to position after var name
+ * return: extracted variable name string or NULL if invalid
+ */
 char	*extract_variable_name(char *token, int *indx)
 {
 	int	start;
@@ -56,6 +70,12 @@ char	*extract_variable_name(char *token, int *indx)
 	return (gc_strldup(token + start, len));
 }
 
+/**
+ * get_var_value - retrieves the value of a variable from the environment
+ * @var_name: the name of the variable to get
+ * @cntx: expansion context containing environment and state information
+ * return: variable value string, or empty string if not found
+ */
 char	*get_var_value(char *var_name, t_exp_context *cntx)
 {
 	size_t	name_len;

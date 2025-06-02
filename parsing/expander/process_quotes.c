@@ -12,6 +12,13 @@
 
 #include "../../includes/minishell.h"
 
+/**
+ * process_quoted_token - processes tokens that are enclosed in quotes
+ * @val: the token value including the quotes
+ * @type: the type of token
+ * @cntx: expansion context containing state and environment information
+ * return: processed string with quotes removed and expansions applied
+ */
 char	*process_quoted_token(char *val, t_token_type type, t_exp_context *cntx)
 {
 	char	*res;
@@ -33,6 +40,12 @@ char	*process_quoted_token(char *val, t_token_type type, t_exp_context *cntx)
 	return (res);
 }
 
+/**
+ * remove_outer_quotes - removes the outer matching quotes from a string
+ * @token_str: the string potentially enclosed in quotes
+ * @quote_char: the quote character to remove (' or ")
+ * return: new string with outer quotes removed, or original string if no quotes
+ */
 char	*remove_outer_quotes(char *token_str, char quote_char)
 {
 	char	*res;

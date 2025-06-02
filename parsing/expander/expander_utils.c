@@ -12,6 +12,12 @@
 
 #include "../../includes/minishell.h"
 
+/**
+ * handle_single_quotes - manages single quote state transitions
+ * @i: current character index
+ * @cntx: expansion context to update the quote state
+ * return: next index position (i + 1)
+ */
 int	handle_single_quotes(int i, t_exp_context *cntx)
 {
 	if (cntx->state == SINGLE_QUOTES)
@@ -21,6 +27,12 @@ int	handle_single_quotes(int i, t_exp_context *cntx)
 	return (i + 1);
 }
 
+/**
+ * handle_double_quotes - manages double quote state transitions
+ * @i: current character index
+ * @cntx: expansion context to update the quote state
+ * return: next index position (i + 1)
+ */
 int	handle_double_quotes(int i, t_exp_context *cntx)
 {
 	if (cntx->state == DOUBLE_QUOTES)
@@ -30,12 +42,25 @@ int	handle_double_quotes(int i, t_exp_context *cntx)
 	return (i + 1);
 }
 
+/**
+ * handle_regular_character - processes non-special characters
+ * @token: the token value
+ * @res: pointer to the result string
+ * @i: current character index
+ * return: next index position (i + 1)
+ */
 int	handle_regular_character(char *token, char **res, int i)
 {
 	*res = append_char_to_str(*res, token[i]);
 	return (i + 1);
 }
 
+/**
+ * append_char_to_str - appends a single character to a string
+ * @str: the source string to append to
+ * @c: the character to append
+ * return: new string with character appended or NULL on allocation failure
+ */
 char	*append_char_to_str(const char *str, char c)
 {
 	int		len;
@@ -57,6 +82,12 @@ char	*append_char_to_str(const char *str, char c)
 	return (new_str);
 }
 
+/**
+ * append_str_to_str - concatenates two strings into a new string
+ * @dst: the destination string
+ * @src: the source string to append
+ * return: new concatenated string, or dst on allocation failure
+ */
 char	*append_str_to_str(char *dst, const char *src)
 {
 	char	*new_str;

@@ -12,6 +12,12 @@
 
 #include "../../../includes/minishell.h"
 
+/**
+ * process_splittable_token - handles tokens that need field splitting
+ * @token: the token to be split into multiple fields
+ * @new_list: pointer to the new token list being built
+ * @cntxt: field context containing splitting state information
+ */
 static void	process_splittable_token(t_token *token, t_token **new_list,
 			t_field_context *cntxt)
 {
@@ -22,6 +28,11 @@ static void	process_splittable_token(t_token *token, t_token **new_list,
 		append_token_list(new_list, split_tokens);
 }
 
+/**
+ * process_regular_token - handles tokens that don't need field splitting
+ * @token: the token to copy without splitting
+ * @new_list: pointer to the new token list being built
+ */
 static void	process_regular_token(t_token *token, t_token **new_list)
 {
 	t_token	*new_node;
@@ -31,6 +42,11 @@ static void	process_regular_token(t_token *token, t_token **new_list)
 		add_token(new_list, new_node);
 }
 
+/**
+ * field_splitter - main field splitting function for token lists
+ * @tokens: linked list of expanded tokens to process for field splitting
+ * return: new token list with field splitting applied
+ */
 t_token	*field_splitter(t_token *tokens)
 {
 	t_token			*current;

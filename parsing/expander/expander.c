@@ -12,6 +12,12 @@
 
 #include "../../includes/minishell.h"
 
+/**
+ * init_expansion_context - initialises the expansion context structure
+ * @cntxt: pointer to the expansion context to initialize
+ * @env: environment array 
+ * @exit_status: the last command exit status for $? expansion
+ */
 static void	init_expansion_context(t_exp_context *cntxt, char **env,
 									int exit_status)
 {
@@ -22,6 +28,12 @@ static void	init_expansion_context(t_exp_context *cntxt, char **env,
 	cntxt->needs_spliting = 0;
 }
 
+/**
+ * process_token_expansion - processes a single token for expansion
+ * @token: the token to be processed and expanded
+ * @context: expansion context containing state and environment info
+ * return: expanded token value string, or NULL if no expansion needed
+ */
 static char	*process_token_expansion(t_token *token, t_exp_context *context)
 {
 	char	*expanded;
@@ -43,6 +55,13 @@ static char	*process_token_expansion(t_token *token, t_exp_context *context)
 	return (expanded);
 }
 
+/**
+ * expander - main expansion function that processes a token list
+ * @tokens: linked list of tokens to be expanded
+ * @env: environment array
+ * @exit_status: last command exit status for $? variable
+ * return: pointer to the modified token list (same as input)
+ */
 t_token	*expander(t_token *tokens, char **env, int exit_status)
 {
 	char			*expanded;

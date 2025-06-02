@@ -12,6 +12,11 @@
 
 #include "../../../includes/minishell.h"
 
+/**
+ * ft_wc - counts the number of words in a string separated by spaces/tabs
+ * @s: the input string to count words in
+ * return: number of words found in the string
+ */
 static int	ft_wc(char const *s)
 {
 	int	wc;
@@ -33,6 +38,11 @@ static int	ft_wc(char const *s)
 	return (wc);
 }
 
+/**
+ * ft_free - frees a partially allocated string array and its elements
+ * @s: the string array to free
+ * @i: number of elements that were successfully allocated
+ */
 static void	ft_free(char **s, int i)
 {
 	while (i > 0)
@@ -42,6 +52,11 @@ static void	ft_free(char **s, int i)
 	gc_free(s);
 }
 
+/**
+ * ft_split_by_space - splits a string into an array of words by whitespace
+ * @s: the input string to split
+ * return: array of word strings or NULL on failure
+ */
 char	**ft_split_by_space(char const	*s)
 {
 	char		**splited;
