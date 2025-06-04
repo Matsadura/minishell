@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fields_splitter_utils.c                            :+:      :+:    :+:   */
+/*   field_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aberkass <aberkass@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -41,7 +41,7 @@ int	contains_whitespace(char *str)
  */
 int	should_split_token(t_token *token, t_field_context *cntxt)
 {
-	if (token->type == WORD && token->needs_spliting
+	if (token->type == WORD && token->needs_splitting
 		&& contains_whitespace(token->value))
 	{
 		cntxt->needs_splitting = 1;

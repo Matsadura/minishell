@@ -15,7 +15,7 @@
 void	print_tokens_list(t_token *list)
 {
 	char *types[] = {"WORD", "PIPE", "REDIRECT_IN",
-		"REDIRECT_OUT", "HERDOC", "APPEND", "S_QUOTE", "D_QUOTE"};
+		"REDIRECT_OUT", "HEREDOC", "APPEND", "S_QUOTE", "D_QUOTE"};
 	printf("| %-20s | %s\n", "VALUE", "TYPE");
 	printf("-----+----------------------+------------\n");
 	while (list != NULL)

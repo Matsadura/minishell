@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokeniser_utils.c                                  :+:      :+:    :+:   */
+/*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aberkass <aberkass@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -21,20 +21,7 @@
  */
 static int	is_simple_quoted(const char *value, size_t len, char quote_char)
 {
-	int	i;
-	int	quote_count;
-
-	if (len < 2 || value[0] != quote_char || value[len - 1] != quote_char)
-		return (0);
-	quote_count = 0;
-	i = 0;
-	while (i < (int)len)
-	{
-		if (value[i] == quote_char)
-			quote_count++;
-		i++;
-	}
-	return (quote_count == 2);
+	return (len >= 2 && value[0] == quote_char && value[len - 1] == quote_char);
 }
 
 /**
@@ -59,7 +46,7 @@ t_token_type	get_token_type(const char *value, size_t len)
 		if (value[0] == '>' && value[1] == '>')
 			return (APPEND);
 		else if (value[0] == '<' && value[1] == '<')
-			return (HERDOC);
+			return (HEREDOC);
 	}
 	if (is_simple_quoted(value, len, '"'))
 		return (D_QUOTE);

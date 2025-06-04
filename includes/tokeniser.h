@@ -22,7 +22,7 @@ typedef enum e_token_type
 	PIPE,
 	REDIRECT_IN,
 	REDIRECT_OUT,
-	HERDOC,
+	HEREDOC,
 	APPEND,
 	S_QUOTE,
 	D_QUOTE
@@ -32,7 +32,7 @@ typedef struct s_token
 {
 	char				*value;
 	t_token_type		type;
-	int					needs_spliting;
+	int					needs_splitting;
 	struct s_token		*next;
 }	t_token;
 

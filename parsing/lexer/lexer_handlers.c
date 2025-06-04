@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils.c                                      :+:      :+:    :+:   */
+/*   lexer_handlers.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aberkass <aberkass@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -39,11 +39,13 @@ static int	skip_to_matching_quote(t_lexer *lexer, char quote_char)
  */
 void	operators(t_lexer *lexer)
 {
+	char	op;
+
+	op = lexer->input[lexer->current];
 	lexer->current++;
 	if (lexer->current < lexer->input_len
-		&& (lexer->input[lexer->current] == '>'
-			|| lexer->input[lexer->current] == '<')
-		&& lexer->input[lexer->current] == lexer->input[lexer->current - 1])
+		&& lexer->input[lexer->current] == op
+		&& (op == '>' || op == '<'))
 		lexer->current++;
 }
 

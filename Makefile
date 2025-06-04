@@ -8,16 +8,16 @@ SRC        = main.c
 
 GC_SRC = garbage_collector/gc_alloc.c garbage_collector/gc_utils.c garbage_collector/gc_strings.c
 
-LEXER_FILES = parsing/lexer/lexer.c parsing/lexer/char_check.c parsing/lexer/lexer_utils.c
+LEXER_FILES = parsing/lexer/lexer.c parsing/lexer/char_utils.c parsing/lexer/lexer_handlers.c
 
-TOKENISER_FILES = parsing/tokeniser/tokeniser.c parsing/tokeniser/tokeniser_utils.c
+TOKENISER_FILES = parsing/tokeniser/tokeniser.c parsing/tokeniser/token_utils.c
 
-EXPANDER_FILES = parsing/expander/expander.c parsing/expander/expander_utils.c \
-				parsing/expander/expander_helpers.c parsing/expander/process_quotes.c \
+EXPANDER_FILES = parsing/expander/expander.c parsing/expander/expansion_utils.c \
+				parsing/expander/token_expansion.c parsing/expander/quote_processing.c \
 				parsing/expander/variable_expansion.c
 
-FIELDS_FILES = parsing/expander/fields/fields_splitter.c parsing/expander/fields/fields_list.c \
-			parsing/expander/fields/fields_splitter_utils.c parsing/expander/fields/ft_split_by_space.c 
+FIELDS_FILES = parsing/expander/fields/field_splitter.c parsing/expander/fields/field_list_utils.c \
+			parsing/expander/fields/field_checker.c parsing/expander/fields/string_splitter.c 
 
 PARS_FILES = $(LEXER_FILES) $(TOKENISER_FILES) $(EXPANDER_FILES) $(FIELDS_FILES)
 

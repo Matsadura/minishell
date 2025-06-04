@@ -66,8 +66,6 @@ t_token	*lex_input(const char *input)
 	while (lexer->current < lexer->input_len)
 	{
 		skip_whitespaces(lexer);
-		if (lexer->current >= lexer->input_len)
-			break ;
 		if (process_lexeme(lexer) == 0)
 			return (NULL);
 		lexeme = gc_strldup(lexer->input + lexer->start_indx,

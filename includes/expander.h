@@ -28,7 +28,7 @@ typedef struct s_exp_context
 	int				last_exit_status;
 	t_exp_state		state;
 	int				quote_removal;
-	int				needs_spliting;
+	int				needs_splitting;
 }	t_exp_context;
 
 //main expander function
