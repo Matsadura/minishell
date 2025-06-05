@@ -20,9 +20,10 @@
  */
 char	*expand_token(char *token, t_exp_context *cntx)
 {
-	char	*res;
-	int		i;
-	int		len;
+	char			*res;
+	int				i;
+	int				len;
+	t_exp_state		saved_state;
 
 	if (token == NULL)
 		return (NULL);
@@ -30,12 +31,15 @@ char	*expand_token(char *token, t_exp_context *cntx)
 	if (res == NULL)
 		return (NULL);
 	res[0] = '\0';
-	cntx->quote_removal = 0;
-	cntx->state = NORMAL;
+	saved_state = cntx->state;
+	if (cntx->quote_removal == 0)
+		cntx->state = NORMAL;
 	len = ft_strlen(token);
 	i = 0;
 	while (i < len)
 		i = process_char(token, &res, i, cntx);
+	if (cntx->quote_removal == 1)
+		cntx->state = saved_state;
 	return (res);
 }
 

@@ -27,14 +27,13 @@ char	*process_quoted_token(char *val, t_token_type type, t_exp_context *cntx)
 	res = NULL;
 	cntx->quote_removal = 1;
 	if (type == S_QUOTE)
-	{
-		cntx->state = SINGLE_QUOTES;
 		res = remove_outer_quotes(val, '\'');
-	}
 	else
 	{
-		cntx->state = DOUBLE_QUOTES;
 		tmp = remove_outer_quotes(val, '"');
+		if (tmp == NULL)
+			return (NULL);
+		cntx->state = DOUBLE_QUOTES;
 		res = expand_token(tmp, cntx);
 	}
 	return (res);
