@@ -12,7 +12,6 @@
 
 #include "includes/minishell.h"
 
-
 t_cmd	*parsing(char *input, char **env, int exit_status)
 {
 	t_cmd	*cmd_list;
@@ -44,9 +43,7 @@ int	main(int argc, char **argv, char **env)
 		}
 		if (*cmd != 0)
 			add_history(cmd);
-		//print_tokens_list(tokens);
 		command_list = parsing(cmd, env, 0);
-		//print_command_list(command_list);
 	}
 	return (EXIT_SUCCESS);
 }

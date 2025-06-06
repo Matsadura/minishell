@@ -1,5 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_redirection.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aberkass <aberkass@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/04 21:25:52 by aberkass          #+#    #+#             */
+/*   Updated: 2025/05/06 03:15:30 by aberkass         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
+/**
+ * create_redirect_node - creates a new redirection node with specified type
+ * @cntx: parser context containing the filename token
+ * @type: type of redirection (REDIRECT_IN, REDIRECT_OUT, APPEND, HEREDOC)
+ * return: pointer to new redirection node or NULL on allocation failure
+ */
 static t_redirect	*create_redirect_node(t_pars_context *cntx
 	, t_token_type type)
 {
@@ -15,6 +33,11 @@ static t_redirect	*create_redirect_node(t_pars_context *cntx
 	return (redirect);
 }
 
+/**
+ * append_to_redirections - appends a redirection node to the end of the list
+ * @redirect: redirection node to append
+ * @redirections: pointer to the head of the redirections list
+ */
 static void	append_to_redirections(t_redirect *redirect
 	, t_redirect **redirections)
 {
@@ -32,6 +55,12 @@ static void	append_to_redirections(t_redirect *redirect
 	return ;
 }
 
+/**
+ * parse_redirect - parses a redirection operator and its target filename
+ * @cntx: parser context containing the redirection tokens
+ * @redirections: pointer to the redirections list to append to
+ * return: 1 on success, 0 on syntax error
+ */
 int	parse_redirect(t_pars_context *cntx, t_redirect **redirections)
 {
 	t_redirect		*redirect_node;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aberkass <aberkass@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/04 21:25:52 by aberkass          #+#    #+#             */
+/*   Updated: 2025/05/06 03:15:30 by aberkass         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSER_H
 # define PARSER_H
 
@@ -25,7 +37,6 @@ typedef struct s_pars_context
 	char	*error_message;
 }	t_pars_context;
 
-//main parser function
 t_cmd	*parse_tokens(t_token *tokens);
 
 t_cmd	*pipeline(t_pars_context *cntx);
@@ -35,7 +46,7 @@ int		is_redirection(t_token_type type);
 void	set_syntax_error(t_pars_context *cntx, char *message);
 void	consume_token(t_pars_context *cntx);
 
-int	parse_word(t_pars_context *cntx, char ***args, int *arg_count);
-int	parse_redirect(t_pars_context *cntx, t_redirect **redirections);
+int		parse_word(t_pars_context *cntx, char ***args, int *arg_count);
+int		parse_redirect(t_pars_context *cntx, t_redirect **redirections);
 
 #endif
