@@ -19,7 +19,10 @@ EXPANDER_FILES = parsing/expander/expander.c parsing/expander/expansion_utils.c 
 FIELDS_FILES = parsing/expander/fields/field_splitter.c parsing/expander/fields/field_list_utils.c \
 			parsing/expander/fields/field_checker.c parsing/expander/fields/string_splitter.c 
 
-PARS_FILES = $(LEXER_FILES) $(TOKENISER_FILES) $(EXPANDER_FILES) $(FIELDS_FILES)
+PARSER_FILES = parsing/parser/parse_command.c parsing/parser/parse_pipeline.c parsing/parser/parse_redirection.c \
+			parsing/parser/parse_word.c parsing/parser/parser_utils.c parsing/parser/parser.c
+
+PARSING_FILES = $(LEXER_FILES) $(TOKENISER_FILES) $(EXPANDER_FILES) $(FIELDS_FILES) $(PARSER_FILES)
 
 LIBFT      = libft/libft.a
 
@@ -28,7 +31,7 @@ NAME = minishell
 all: $(NAME)
 
 $(NAME): $(SRC) $(PARS_FILES) $(LIBFT)
-	$(CC) $(CFLAGS) $(SRC) $(PARS_FILES) $(GC_SRC) $(LIBFT) $(LDFLAGS) -o $@
+	$(CC) $(CFLAGS) $(SRC) $(PARSING_FILES) $(GC_SRC) $(LIBFT) $(LDFLAGS) -o $@
 
 $(LIBFT):
 	make -C libft
