@@ -77,6 +77,8 @@ t_token	*expander(t_token *tokens, char **env, int exit_status)
 		{
 			current->value = expanded;
 			current->needs_splitting = context.needs_splitting;
+			if (current->type == S_QUOTE || current->type == D_QUOTE)
+				current->type = WORD;
 		}
 		current = current->next;
 	}

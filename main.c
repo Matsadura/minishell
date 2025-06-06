@@ -13,8 +13,9 @@
 #include "includes/minishell.h"
 
 
-t_token	*get_token_list(const char *input, char **env, int exit_status)
+t_cmd	*parsing(char *input, char **env, int exit_status)
 {
+	t_cmd	*cmd_list;
 	t_token	*tokens;
 
 	tokens = lex_input(input);
@@ -22,13 +23,13 @@ t_token	*get_token_list(const char *input, char **env, int exit_status)
 		return (NULL);
 	tokens = expander(tokens, env, exit_status);
 	tokens = field_splitter(tokens);
-	return (tokens);
+	cmd_list = parse_tokens(tokens);
+	return (cmd_list);
 }
 
 int	main(int argc, char **argv, char **env)
 {
 	char	*cmd;
-	t_token	*tokens;
 	t_cmd	*command_list;
 
 	(void)argc;
@@ -43,9 +44,8 @@ int	main(int argc, char **argv, char **env)
 		}
 		if (*cmd != 0)
 			add_history(cmd);
-		tokens = get_token_list(cmd, env, 0);
 		//print_tokens_list(tokens);
-		command_list = parse_tokens(tokens);
+		command_list = parsing(cmd, env, 0);
 		//print_command_list(command_list);
 	}
 	return (EXIT_SUCCESS);
