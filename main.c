@@ -12,38 +12,44 @@
 
 #include "includes/minishell.h"
 
-t_cmd	*parsing(char *input, char **env, int exit_status)
+static t_pipeline	*parse_input(char *input, char **env, int exit_status)
 {
-	t_cmd	*cmd_list;
-	t_token	*tokens;
+	t_pipeline	*pipeline;
+	t_token		*tokens;
 
 	tokens = lex_input(input);
 	if (tokens == NULL)
 		return (NULL);
 	tokens = expander(tokens, env, exit_status);
 	tokens = field_splitter(tokens);
-	cmd_list = parse_tokens(tokens);
-	return (cmd_list);
+	pipeline = parse_tokens(tokens);
+	return (pipeline);
 }
 
 int	main(int argc, char **argv, char **env)
 {
-	char	*cmd;
-	t_cmd	*command_list;
+	char		*input;
+	t_pipeline	*pipeline;
+	int			exit_status;
 
 	(void)argc;
 	(void)argv;
+	exit_status = 0;
 	while (1)
 	{
-		cmd = readline("minishell$ ");
-		if (cmd == NULL)
+		input = readline("minishell$ ");
+		if (input == NULL)
 		{
 			printf("exit\n");
 			return (EXIT_SUCCESS);
 		}
-		if (*cmd != 0)
-			add_history(cmd);
-		command_list = parsing(cmd, env, 0);
+		if (*input != 0)
+		{
+			add_history(input);
+			pipeline = parse_input(input, env, exit_status);
+		}
+		free(input);
+		gc_cleanup();
 	}
 	return (EXIT_SUCCESS);
 }
