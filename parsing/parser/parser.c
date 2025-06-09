@@ -26,17 +26,43 @@ static void	init_parser_context(t_pars_context *cntx, t_token *tokens)
 }
 
 /**
+ * get_pipeline - creates a pipeline structure from a command list
+ * @cmd_list: linked list of commands to wrap in a pipeline
+ * return: pointer to pipeline structure or NULL on allocation failure
+ */
+static t_pipeline	*get_pipeline(t_cmd *cmd_list)
+{
+	int			cmd_count;
+	t_cmd		*current;
+	t_pipeline	*pipeline;
+
+	cmd_count = 0;
+	current = cmd_list;
+	while (current != NULL)
+	{
+		cmd_count++;
+		current = current->next;
+	}
+	pipeline = gc_alloc(sizeof(t_pipeline));
+	if (pipeline == NULL)
+		return (NULL);
+	pipeline->head = cmd_list;
+	pipeline->cmd_count = cmd_count;
+	return (pipeline);
+}
+
+/**
  * parse_tokens - main parsing function that converts tokens into command list
  * @tokens: linked list of tokens to be parsed into commands
  * return: parsed command list or NULL if syntax error occurs
  */
-t_cmd	*parse_tokens(t_token *tokens)
+t_pipeline	*parse_tokens(t_token *tokens)
 {
 	t_cmd			*command_list;
 	t_pars_context	cntx;
 
 	init_parser_context(&cntx, tokens);
-	command_list = pipeline(&cntx);
+	command_list = pipeline_parser(&cntx);
 	if (cntx.has_syntax_error == 1)
 	{
 		if (cntx.error_message != NULL)
@@ -46,5 +72,5 @@ t_cmd	*parse_tokens(t_token *tokens)
 		}
 		return (NULL);
 	}
-	return (command_list);
+	return (get_pipeline(command_list));
 }

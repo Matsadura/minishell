@@ -17,7 +17,7 @@
  * @input: the input string to be lexed
  * return: pointer to initialized lexer or NULL on failure
  */
-t_lexer	*init_lexer(const char *input)
+static t_lexer	*init_lexer(const char *input)
 {
 	t_lexer	*lexer;
 

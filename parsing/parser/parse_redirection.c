@@ -29,6 +29,7 @@ static t_redirect	*create_redirect_node(t_pars_context *cntx
 	redirect->type = type;
 	redirect->filename = gc_strldup(cntx->current_token->value,
 			ft_strlen(cntx->current_token->value));
+	redirect->fd = -1;
 	redirect->next = NULL;
 	return (redirect);
 }

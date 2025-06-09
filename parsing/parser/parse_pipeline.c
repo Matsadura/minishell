@@ -44,7 +44,7 @@ static void	link_commands(t_cmd **current, t_cmd *cmd)
  * @cntx: parser context containing token list and current token
  * return: head of the command pipeline or NULL on error
  */
-t_cmd	*pipeline(t_pars_context *cntx)
+t_cmd	*pipeline_parser(t_pars_context *cntx)
 {
 	t_cmd	*head;
 	t_cmd	*new_cmd;

@@ -25,6 +25,9 @@ static t_cmd	*init_cmd_node(void)
 		return (NULL);
 	cmd->args = NULL;
 	cmd->redirections = NULL;
+	cmd->input_fd = -1;
+	cmd->output_fd = -1;
+	cmd->pid = -1;
 	cmd->next = NULL;
 	return (cmd);
 }
@@ -34,7 +37,7 @@ static t_cmd	*init_cmd_node(void)
  * @cntx: parser context containing the current token
  * return: 1 if token is a redirection or word 0 otherwise
  */
-static int	is_cmd_token(t_pars_context *cntx)
+static int	is_valid_cmd_token(t_pars_context *cntx)
 {
 	return (is_redirection(cntx->current_token->type)
 		|| cntx->current_token->type == WORD);
@@ -87,7 +90,7 @@ t_cmd	*command(t_pars_context *cntx)
 	cmd_node = init_cmd_node();
 	if (cmd_node == NULL)
 		return (NULL);
-	while (cntx->current_token != NULL && is_cmd_token(cntx))
+	while (cntx->current_token != NULL && is_valid_cmd_token(cntx))
 	{
 		if (process_cmd_token(cntx, cmd_node, &args_count) == 0)
 			return (NULL);
