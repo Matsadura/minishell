@@ -41,15 +41,29 @@ int	main(int argc, char **argv, char **env)
 		if (input == NULL)
 		{
 			printf("exit\n");
+			free(input);
+			gc_cleanup();
+			rl_clear_history();
 			return (EXIT_SUCCESS);
 		}
 		if (*input != 0)
 		{
 			add_history(input);
 			pipeline = parse_input(input, env, exit_status);
+			if (pipeline == NULL)
+			{
+				// printf("minishell: syntax error\n");
+				exit_status = 258; // Syntax error exit status
+			}
+			else
+			{
+				exit_status = execute_pipeline(pipeline, env);
+				//free_pipeline(pipeline);
+			}
 		}
 		free(input);
 		gc_cleanup();
 	}
+	rl_clear_history();
 	return (EXIT_SUCCESS);
 }

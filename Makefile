@@ -1,6 +1,6 @@
 CC      = cc
 
-CFLAGS  = -Wall -Werror -Wextra
+CFLAGS  = -Wall -Werror -Wextra -ggdb
 
 LDFLAGS = -lreadline
 
@@ -24,6 +24,8 @@ PARSER_FILES = parsing/parser/parse_command.c parsing/parser/parse_pipeline.c pa
 
 PARSING_FILES = $(LEXER_FILES) $(TOKENISER_FILES) $(EXPANDER_FILES) $(FIELDS_FILES) $(PARSER_FILES)
 
+EXECUTION_FILES = execution/execution_command.c
+
 LIBFT      = libft/libft.a
 
 NAME = minishell
@@ -31,7 +33,7 @@ NAME = minishell
 all: $(NAME)
 
 $(NAME): $(SRC) $(PARS_FILES) $(LIBFT)
-	$(CC) $(CFLAGS) $(SRC) $(PARSING_FILES) $(GC_SRC) $(LIBFT) $(LDFLAGS) -o $@
+	$(CC) $(CFLAGS) $(SRC) $(PARSING_FILES) $(EXECUTION_FILES) $(GC_SRC) $(LIBFT) $(LDFLAGS) -o $@
 
 $(LIBFT):
 	make -C libft

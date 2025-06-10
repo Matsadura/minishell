@@ -1,3 +1,6 @@
 .vscode
 a.out
 fdsfdas
+minishell
+**/*.o
+libft/libft.a

@@ -21,6 +21,7 @@
 # include "expander.h"
 # include "fields_splitter.h"
 # include "parser.h"
+# include "execution.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 
