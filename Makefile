@@ -6,7 +6,8 @@ LDFLAGS = -lreadline
 
 SRC        = main.c
 
-GC_SRC = garbage_collector/gc_alloc.c garbage_collector/gc_utils.c garbage_collector/gc_strings.c
+GC_SRC = garbage_collector/gc_alloc.c garbage_collector/gc_utils.c garbage_collector/gc_strings.c \
+          garbage_collector/gc_split.c
 
 LEXER_FILES = parsing/lexer/lexer.c parsing/lexer/char_utils.c parsing/lexer/lexer_handlers.c
 
@@ -25,7 +26,7 @@ PARSER_FILES = parsing/parser/parse_command.c parsing/parser/parse_pipeline.c pa
 PARSING_FILES = $(LEXER_FILES) $(TOKENISER_FILES) $(EXPANDER_FILES) $(FIELDS_FILES) $(PARSER_FILES)
 
 EXECUTION_FILES = execution/execution_command.c execution/execution_redirection.c \
-				execution/execution_pipe.c
+				execution/execution_pipe.c execution/execution_path.c
 
 LIBFT      = libft/libft.a
 

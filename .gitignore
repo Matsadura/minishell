@@ -4,3 +4,5 @@ fdsfdas
 minishell
 **/*.o
 libft/libft.a
+in
+out
