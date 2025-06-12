@@ -49,14 +49,14 @@ typedef struct s_pipeline
 
 t_pipeline	*parse_tokens(t_token *tokens);
 
-t_cmd		*pipeline_parser(t_pars_context *cntx);
-t_cmd		*command(t_pars_context *cntx);
+t_cmd		*pipeline_parser(t_pars_context *cntxt);
+t_cmd		*command(t_pars_context *cntxt);
 
 int			is_redirection(t_token_type type);
-void		set_syntax_error(t_pars_context *cntx, char *message);
-void		consume_token(t_pars_context *cntx);
+void		set_syntax_error(t_pars_context *cntxt, char *message);
+void		consume_token(t_pars_context *cntxt);
 
-int			parse_word(t_pars_context *cntx, char ***args, int *arg_count);
-int			parse_redirect(t_pars_context *cntx, t_redirect **redirections);
+int			parse_word(t_pars_context *cntxt, char ***args, int *arg_count);
+int			parse_redirect(t_pars_context *cntxt, t_redirect **redirections);
 
 #endif

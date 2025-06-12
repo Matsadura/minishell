@@ -55,7 +55,8 @@ t_token	*field_splitter(t_token *tokens)
 
 	new_list = NULL;
 	current = tokens;
-	ft_memset(&cntxt, 0, sizeof(cntxt));
+	cntxt.needs_splitting = 0;
+	cntxt.was_quoted = 0;
 	while (current != NULL)
 	{
 		if (should_split_token(current, &cntxt))

@@ -34,23 +34,23 @@ static void	init_expansion_context(t_exp_context *cntxt, char **env,
  * @context: expansion context containing state and environment info
  * return: expanded token value string, or NULL if no expansion needed
  */
-static char	*process_token_expansion(t_token *token, t_exp_context *context)
+static char	*process_token_expansion(t_token *token, t_exp_context *cntxt)
 {
 	char	*expanded;
 
-	context->needs_splitting = 1;
+	cntxt->needs_splitting = 1;
 	if (token->type == D_QUOTE || token->type == S_QUOTE)
 	{
-		context->needs_splitting = 0;
+		cntxt->needs_splitting = 0;
 		expanded = process_quoted_token(token->value,
-				token->type, context);
+				token->type, cntxt);
 	}
 	else if (token->type == WORD)
-		expanded = expand_token(token->value, context);
+		expanded = expand_token(token->value, cntxt);
 	else
 	{
 		expanded = NULL;
-		context->needs_splitting = 0;
+		cntxt->needs_splitting = 0;
 	}
 	return (expanded);
 }
@@ -65,18 +65,18 @@ static char	*process_token_expansion(t_token *token, t_exp_context *context)
 t_token	*expander(t_token *tokens, char **env, int exit_status)
 {
 	char			*expanded;
-	t_exp_context	context;
+	t_exp_context	cntxt;
 	t_token			*current;
 
-	init_expansion_context(&context, env, exit_status);
+	init_expansion_context(&cntxt, env, exit_status);
 	current = tokens;
 	while (current != NULL)
 	{
-		expanded = process_token_expansion(current, &context);
+		expanded = process_token_expansion(current, &cntxt);
 		if (expanded != NULL)
 		{
 			current->value = expanded;
-			current->needs_splitting = context.needs_splitting;
+			current->needs_splitting = cntxt.needs_splitting;
 			if (current->type == S_QUOTE || current->type == D_QUOTE)
 				current->type = WORD;
 		}

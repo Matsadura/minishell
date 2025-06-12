@@ -15,30 +15,30 @@
 /**
  * handle_single_quotes - manages single quote state transitions
  * @i: current character index
- * @cntx: expansion context to update the quote state
+ * @cntxt: expansion context to update the quote state
  * return: next index position (i + 1)
  */
-int	handle_single_quotes(int i, t_exp_context *cntx)
+int	handle_single_quotes(int i, t_exp_context *cntxt)
 {
-	if (cntx->state == SINGLE_QUOTES)
-		cntx->state = NORMAL;
-	else if (cntx->state == NORMAL)
-		cntx->state = SINGLE_QUOTES;
+	if (cntxt->state == SINGLE_QUOTES)
+		cntxt->state = NORMAL;
+	else if (cntxt->state == NORMAL)
+		cntxt->state = SINGLE_QUOTES;
 	return (i + 1);
 }
 
 /**
  * handle_double_quotes - manages double quote state transitions
  * @i: current character index
- * @cntx: expansion context to update the quote state
+ * @cntxt: expansion context to update the quote state
  * return: next index position (i + 1)
  */
-int	handle_double_quotes(int i, t_exp_context *cntx)
+int	handle_double_quotes(int i, t_exp_context *cntxt)
 {
-	if (cntx->state == DOUBLE_QUOTES)
-		cntx->state = NORMAL;
-	else if (cntx->state == NORMAL)
-		cntx->state = DOUBLE_QUOTES;
+	if (cntxt->state == DOUBLE_QUOTES)
+		cntxt->state = NORMAL;
+	else if (cntxt->state == NORMAL)
+		cntxt->state = DOUBLE_QUOTES;
 	return (i + 1);
 }
 
@@ -63,20 +63,14 @@ int	handle_regular_character(char *token, char **res, int i)
  */
 char	*append_char_to_str(const char *str, char c)
 {
-	int		len;
-	int		i;
-	char	*new_str;
+	size_t		len;
+	char		*new_str;
 
 	len = ft_strlen(str);
 	new_str = gc_alloc(len + 2);
 	if (new_str == NULL)
 		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		new_str[i] = str[i];
-		i++;
-	}
+	ft_strlcpy(new_str, str, len + 2);
 	new_str[len] = c;
 	new_str[len + 1] = '\0';
 	return (new_str);
@@ -88,31 +82,18 @@ char	*append_char_to_str(const char *str, char c)
  * @src: the source string to append
  * return: new concatenated string, or dst on allocation failure
  */
-char	*append_str_to_str(char *dst, const char *src)
+char	*append_str_to_str(char *dst, char *src)
 {
-	char	*new_str;
-	int		src_len;
-	int		dst_len;
-	int		i;
-	int		j;
+	char		*new_str;
+	size_t		src_len;
+	size_t		dst_len;
 
 	src_len = ft_strlen(src);
 	dst_len = ft_strlen(dst);
 	new_str = gc_alloc(src_len + dst_len + 1);
 	if (new_str == NULL)
-		return (dst);
-	i = 0;
-	while (i < dst_len)
-	{
-		new_str[i] = dst[i];
-		i++;
-	}
-	j = 0;
-	while (j < src_len)
-	{
-		new_str[i + j] = src[j];
-		j++;
-	}
-	new_str[dst_len + src_len] = '\0';
+		return (NULL);
+	ft_strlcpy(new_str, dst, dst_len + 1);
+	ft_strlcat(new_str, src, src_len + dst_len + 1);
 	return (new_str);
 }

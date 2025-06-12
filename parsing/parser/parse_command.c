@@ -34,32 +34,32 @@ static t_cmd	*init_cmd_node(void)
 
 /**
  * is_cmd_token - checks if current token is part of a command
- * @cntx: parser context containing the current token
+ * @cntxt: parser context containing the current token
  * return: 1 if token is a redirection or word 0 otherwise
  */
-static int	is_valid_cmd_token(t_pars_context *cntx)
+static int	is_valid_cmd_token(t_pars_context *cntxt)
 {
-	return (is_redirection(cntx->current_token->type)
-		|| cntx->current_token->type == WORD);
+	return (is_redirection(cntxt->current_token->type)
+		|| cntxt->current_token->type == WORD);
 }
 
 /**
  * process_cmd_token - processes a single command token (redirection or word)
- * @cntx: parser context containing the current token
+ * @cntxt: parser context containing the current token
  * @cmd: command node to add the token to
  * @count: pointer to argument count for word tokens
  * return: 1 on success, 0 on failure
  */
-static int	process_cmd_token(t_pars_context *cntx, t_cmd *cmd, int *count)
+static int	process_cmd_token(t_pars_context *cntxt, t_cmd *cmd, int *count)
 {
-	if (is_redirection(cntx->current_token->type))
+	if (is_redirection(cntxt->current_token->type))
 	{
-		if (parse_redirect(cntx, &cmd->redirections) == 0)
+		if (parse_redirect(cntxt, &cmd->redirections) == 0)
 			return (0);
 	}
-	else if (cntx->current_token->type == WORD)
+	else if (cntxt->current_token->type == WORD)
 	{
-		if (parse_word(cntx, &cmd->args, count) == 0)
+		if (parse_word(cntxt, &cmd->args, count) == 0)
 			return (0);
 	}
 	return (1);
@@ -78,10 +78,10 @@ static int	has_cmd_content(t_cmd *cmd, int args_count)
 
 /**
  * command - parses a complete command with its arguments and redirections
- * @cntx: parser context containing the token stream
+ * @cntxt: parser context containing the token stream
  * return: parsed command node or NULL on error
  */
-t_cmd	*command(t_pars_context *cntx)
+t_cmd	*command(t_pars_context *cntxt)
 {
 	t_cmd	*cmd_node;
 	int		args_count;
@@ -90,14 +90,14 @@ t_cmd	*command(t_pars_context *cntx)
 	cmd_node = init_cmd_node();
 	if (cmd_node == NULL)
 		return (NULL);
-	while (cntx->current_token != NULL && is_valid_cmd_token(cntx))
+	while (cntxt->current_token != NULL && is_valid_cmd_token(cntxt))
 	{
-		if (process_cmd_token(cntx, cmd_node, &args_count) == 0)
+		if (process_cmd_token(cntxt, cmd_node, &args_count) == 0)
 			return (NULL);
 	}
 	if (has_cmd_content(cmd_node, args_count) == 0)
 	{
-		set_syntax_error(cntx, "syntax error empty command");
+		set_syntax_error(cntxt, "syntax error empty command");
 		return (NULL);
 	}
 	return (cmd_node);

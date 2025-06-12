@@ -25,21 +25,21 @@ int	is_redirection(t_token_type type)
 
 /**
  * set_syntax_error - sets a syntax error in the parser context
- * @cntx: parser context to update with error information
+ * @cntxt: parser context to update with error information
  * @message: error message string to store
  */
-void	set_syntax_error(t_pars_context *cntx, char *message)
+void	set_syntax_error(t_pars_context *cntxt, char *message)
 {
-	cntx->has_syntax_error = 1;
-	cntx->error_message = gc_strldup(message, ft_strlen(message));
+	cntxt->has_syntax_error = 1;
+	cntxt->error_message = gc_strldup(message, ft_strlen(message));
 }
 
 /**
  * consume_token - advances the current token pointer to the next token
- * @cntx: parser context containing the current token pointer
+ * @cntxt: parser context containing the current token pointer
  */
-void	consume_token(t_pars_context *cntx)
+void	consume_token(t_pars_context *cntxt)
 {
-	if (cntx->current_token != NULL)
-		cntx->current_token = cntx->current_token->next;
+	if (cntxt->current_token != NULL)
+		cntxt->current_token = cntxt->current_token->next;
 }

@@ -17,10 +17,10 @@
  * @token: the input token string being processed
  * @res: pointer to the result string 
  * @i: current index in the token string
- * @cntx: expansion context containing state and environment information
+ * @cntxt: expansion context containing state and environment information
  * return: new index position after processing the variable
  */
-int	handle_var_expansion(char *token, char **res, int i, t_exp_context *cntx)
+int	handle_var_expansion(char *token, char **res, int i, t_exp_context *cntxt)
 {
 	int		new_indx;
 	char	*var_name;
@@ -30,7 +30,7 @@ int	handle_var_expansion(char *token, char **res, int i, t_exp_context *cntx)
 	var_name = extract_variable_name(token, &new_indx);
 	if (var_name != NULL)
 	{
-		var_value = get_var_value(var_name, cntx);
+		var_value = get_var_value(var_name, cntxt);
 		if (var_value != NULL)
 			*res = append_str_to_str(*res, var_value);
 		return (new_indx);
@@ -73,24 +73,22 @@ char	*extract_variable_name(char *token, int *indx)
 /**
  * get_var_value - retrieves the value of a variable from the environment
  * @var_name: the name of the variable to get
- * @cntx: expansion context containing environment and state information
+ * @cntxt: expansion context containing environment and state information
  * return: variable value string, or empty string if not found
  */
-char	*get_var_value(char *var_name, t_exp_context *cntx)
+char	*get_var_value(char *var_name, t_exp_context *cntxt)
 {
 	size_t	name_len;
 	int		i;
 	char	*env_line;
 
 	if (ft_strncmp(var_name, "?", 1) == 0)
-		return (ft_itoa(cntx->last_exit_status));
-	if (cntx->env == NULL)
-		return (gc_strldup("", 0));
+		return (ft_itoa(cntxt->last_exit_status));
 	name_len = ft_strlen(var_name);
 	i = 0;
-	while (cntx->env[i])
+	while (cntxt->env != NULL && cntxt->env[i] != NULL)
 	{
-		env_line = cntx->env[i];
+		env_line = cntxt->env[i];
 		if (ft_strncmp(env_line, var_name, name_len) == 0
 			&& env_line[name_len] == '=')
 			return (gc_strldup(env_line + name_len + 1,
