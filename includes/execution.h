@@ -19,15 +19,15 @@ char	**create_env(char **env);
 char	*get_env(char **env, const char *name);
 char	**get_path_env(char **env);
 char	*find_executable_path(char *cmd, char **env);
-void    set_custom_var(char *key, char *value, char **env);
+void	set_custom_var(char *key, char *value, char **env);
 
 /* Built-in command functions */
 
-int     env_builtin(char **env);
-int     export_builtin(char **args, char **env);
-int     unset_builtin(char **args, char **env);
-int     pwd_builtin(char **env);
-
+int		env_builtin(char **env);
+int		export_builtin(char **args, char **env);
+int		unset_builtin(char **args, char **env);
+int		pwd_builtin(char **env);
+int		echo_builtin(char **args);
 
 /* Built-in helper functions */
 
