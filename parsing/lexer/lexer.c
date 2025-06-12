@@ -57,6 +57,7 @@ static int	process_lexeme(t_lexer *lexer)
  */
 t_token	*lex_input(const char *input)
 {
+	size_t		lexeme_len;
 	t_lexer		*lexer;
 	t_token		*token_list;
 	const char	*lexeme;
@@ -68,11 +69,14 @@ t_token	*lex_input(const char *input)
 		skip_whitespaces(lexer);
 		if (process_lexeme(lexer) == 0)
 			return (NULL);
-		lexeme = gc_strldup(lexer->input + lexer->start_indx,
-				lexer->current - lexer->start_indx);
-		if (lexeme == NULL)
-			return (NULL);
-		token_list = tokeniser(lexeme, token_list);
+		lexeme_len = lexer->current - lexer->start_indx;
+		if (lexeme_len > 0)
+		{
+			lexeme = gc_strldup(lexer->input + lexer->start_indx, lexeme_len);
+			if (lexeme == NULL)
+				return (NULL);
+			token_list = tokeniser(lexeme, token_list);
+		}
 	}
 	return (token_list);
 }

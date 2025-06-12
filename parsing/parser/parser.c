@@ -14,15 +14,15 @@
 
 /**
  * init_parser_context - initialises the parser context structure
- * @cntx: pointer to the parser context to initialise
+ * @cntxt: pointer to the parser context to initialise
  * @tokens: linked list of tokens to be parsed
  */
-static void	init_parser_context(t_pars_context *cntx, t_token *tokens)
+static void	init_parser_context(t_pars_context *cntxt, t_token *tokens)
 {
-	cntx->token_list = tokens;
-	cntx->current_token = tokens;
-	cntx->has_syntax_error = 0;
-	cntx->error_message = NULL;
+	cntxt->token_list = tokens;
+	cntxt->current_token = tokens;
+	cntxt->has_syntax_error = 0;
+	cntxt->error_message = NULL;
 }
 
 /**
@@ -59,16 +59,16 @@ static t_pipeline	*get_pipeline(t_cmd *cmd_list)
 t_pipeline	*parse_tokens(t_token *tokens)
 {
 	t_cmd			*command_list;
-	t_pars_context	cntx;
+	t_pars_context	cntxt;
 
-	init_parser_context(&cntx, tokens);
-	command_list = pipeline_parser(&cntx);
-	if (cntx.has_syntax_error == 1)
+	init_parser_context(&cntxt, tokens);
+	command_list = pipeline_parser(&cntxt);
+	if (cntxt.has_syntax_error == 1)
 	{
-		if (cntx.error_message != NULL)
+		if (cntxt.error_message != NULL)
 		{
-			ft_dprintf(2, "minishell: %s\n", cntx.error_message);
-			gc_free(cntx.error_message);
+			ft_dprintf(2, "minishell: %s\n", cntxt.error_message);
+			gc_free(cntxt.error_message);
 		}
 		return (NULL);
 	}
