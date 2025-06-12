@@ -27,7 +27,7 @@ PARSING_FILES = $(LEXER_FILES) $(TOKENISER_FILES) $(EXPANDER_FILES) $(FIELDS_FIL
 
 EXECUTION_FILES = execution/execution_command.c execution/execution_redirection.c \
 				execution/execution_pipe.c execution/execution_path.c execution/execution_builtins.c \
-				execution/builtins/env_builtin.c execution/builtins/export_builtin.c
+				execution/builtins/env_builtin.c execution/builtins/export_builtin.c execution/builtins/unset_builtin.c
 
 LIBFT      = libft/libft.a
 

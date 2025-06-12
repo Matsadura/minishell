@@ -24,6 +24,7 @@ char	*find_executable_path(char *cmd, char **env);
 
 int     env_builtin(char **env);
 int     export_builtin(char **args, char **env);
+int     unset_builtin(char **args, char **env);
 
 
 /* Built-in helper functions */
