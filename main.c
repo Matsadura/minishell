@@ -55,6 +55,7 @@ int	main(int argc, char **argv, char **env)
 			if (pipeline == NULL)
 				exit_status = 258;
 			else
+				//printf("cmd count: %d\n", pipeline->cmd_count);
 				exit_status = execute_pipeline(pipeline, env_copy);
 		}
 		free(input);

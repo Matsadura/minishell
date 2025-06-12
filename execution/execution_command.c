@@ -14,23 +14,21 @@ void	execute_command(t_cmd *command, char **env)
 		exit(EXIT_FAILURE);
 	if (handle_redirection(command) < 0)
 		exit(EXIT_FAILURE);
+	if (is_builtin(command->args[0]) == TRUE)
+		exit(execute_builtin(command, env, 0));
 	executable_path = find_executable_path(command->args[0], env);
 	if (executable_path != NULL)
-	{
 		command->args[0] = executable_path;
-	}
 	else
 	{
 		ft_dprintf(STDERR, "minishell: %s: command not found\n", command->args[0]);
 		exit(127);
 	}
-	/* built in here*/
 	if (execve(command->args[0], command->args, env) < 0)
 	{
 		perror(command->args[0]);
 		if (errno == ENOENT)
 			exit(127);
-		else
-			exit(126);
+		exit(126);
 	}
 }

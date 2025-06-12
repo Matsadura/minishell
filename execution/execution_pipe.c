@@ -106,8 +106,15 @@ int	execute_pipeline(t_pipeline *pipeline, char **env)
 
 	if (pipeline == NULL || pipeline->head == NULL)
 		return (EXIT_FAILURE);
+	/* Builtin redirection is bugged at the moment, need to restore original FDs after execution */
+	if (pipeline->cmd_count == 1 && is_builtin(pipeline->head->args[0]) == 1)
+	{
+    	if (handle_redirection(pipeline->head) < 0)
+            return (EXIT_FAILURE);
+		return (execute_builtin(pipeline->head, env, 0));
+	}
 	pids = gc_alloc(sizeof(pid_t) * 256);
-	if (!pids)
+	if (pids == NULL)
 		return (EXIT_FAILURE);
 	current_cmd = pipeline->head;
 	prev_fd = -1;
@@ -121,6 +128,5 @@ int	execute_pipeline(t_pipeline *pipeline, char **env)
 		current_cmd = current_cmd->next;
 	}
 	wait_for_children(pids, cmd_count);
-	gc_free(pids);
 	return (EXIT_SUCCESS);
 }
