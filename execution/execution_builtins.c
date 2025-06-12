@@ -36,8 +36,8 @@ int	execute_builtin(t_cmd *cmd, char **env, int exit_status)
 	// 	return (echo_builtin(cmd->args));
 	// else if (ft_strcmp(cmd->args[0], "exit") == 0)
 	// 	return (exit_builtin(cmd->args, exit_status));
-	// else if (ft_strcmp(cmd->args[0], "pwd") == 0)
-	// 	return (pwd_builtin());
+	else if (ft_strcmp(cmd->args[0], "pwd") == 0)
+		return (pwd_builtin(env));
 	else if (ft_strcmp(cmd->args[0], "unset") == 0)
 		return (unset_builtin(cmd->args, env));
 	return (-1);

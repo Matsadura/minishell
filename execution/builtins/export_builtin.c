@@ -72,8 +72,6 @@ int	export_builtin(char **args, char **env)
 	ret = 0;
 	while (args[i])
 	{
-		/* TO DO: Handle PATH=$PATH:xxx:xxx:xxx case */
-		//printf("exporting(%d): [%s]\n", i, args[i]);
 		if (ft_strchr(args[i], '=') == NULL)
 		{
 			ft_dprintf(STDERR, "export: '%s': not a valid identifier\n", args[i]);
