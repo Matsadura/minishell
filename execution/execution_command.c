@@ -21,7 +21,7 @@ void	execute_command(t_cmd *command, char **env)
 	}
 	else
 	{
-		fprintf(stderr, "minishell: %s: command not found\n", command->args[0]);
+		ft_dprintf(STDERR, "minishell: %s: command not found\n", command->args[0]);
 		exit(127);
 	}
 	/* built in here*/

@@ -29,12 +29,14 @@ static t_pipeline	*parse_input(char *input, char **env, int exit_status)
 int	main(int argc, char **argv, char **env)
 {
 	char		*input;
+	char		**env_copy;
 	t_pipeline	*pipeline;
 	int			exit_status;
 
 	(void)argc;
 	(void)argv;
 	exit_status = 0;
+	env_copy = create_env(env);
 	while (1)
 	{
 		input = readline("minishell$ ");
@@ -49,21 +51,15 @@ int	main(int argc, char **argv, char **env)
 		if (*input != 0)
 		{
 			add_history(input);
-			pipeline = parse_input(input, env, exit_status);
+			pipeline = parse_input(input, env_copy, exit_status);
 			if (pipeline == NULL)
-			{
-				// printf("minishell: syntax error\n");
-				exit_status = 258; // Syntax error exit status
-			}
+				exit_status = 258;
 			else
-			{
-				exit_status = execute_pipeline(pipeline, env);
-				//free_pipeline(pipeline);
-			}
+				exit_status = execute_pipeline(pipeline, env_copy);
 		}
 		free(input);
-		gc_cleanup();
 	}
+	gc_cleanup();
 	rl_clear_history();
 	return (EXIT_SUCCESS);
 }
