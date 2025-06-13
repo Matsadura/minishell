@@ -37,13 +37,22 @@ int	contains_whitespace(char *str)
  * @cntxt: field context to update with splitting decision
  * return: 1 if token should be split 0 if it shouldn't
  */
-int	should_split_token(t_token *token, t_field_context *cntxt)
+int	should_split_token(t_token *token, t_token *prev_token,
+		t_field_context *cntxt)
 {
-	if (token->type == WORD && token->needs_splitting
-		&& contains_whitespace(token->value))
+	set_redirect_context(token, prev_token, cntxt);
+	if (token->type == WORD && token->needs_splitting)
 	{
-		cntxt->needs_splitting = 1;
-		return (1);
+		if (cntxt->is_redirect_target == 1)
+		{
+			cntxt->needs_splitting = 1;
+			return (1);
+		}
+		if (contains_whitespace(token->value))
+		{
+			cntxt->needs_splitting = 1;
+			return (1);
+		}
 	}
 	cntxt->needs_splitting = 0;
 	return (0);
