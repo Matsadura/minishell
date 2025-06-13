@@ -7,12 +7,10 @@
  */
 int	exit_builtin(char **args)
 {
-	int	exit_status;
-
 	if (args[1] == NULL)
 	{
 		ft_dprintf(STDOUT, "exit\n");
-		exit(0);
+		g_exit_status = 0;
 	}
 	else if (args[2] != NULL)
 		return (ft_dprintf(STDERR, "exit: too many arguments\n"), 1);
@@ -20,15 +18,15 @@ int	exit_builtin(char **args)
 	{
 		ft_dprintf(STDERR, "exit\nexit: %s: numeric argument required\n",
 			args[1]);
-		exit(2);
+		g_exit_status = 2;
 	}
 	else
 	{
-		exit_status = ft_atoi(args[1]);
-		if (exit_status < 0 || exit_status > 255)
-			exit_status = 255;
+		g_exit_status = ft_atoi(args[1]);
+		if (g_exit_status < 0 || g_exit_status > 255)
+			g_exit_status = 255;
 		ft_dprintf(STDOUT, "exit\n");
-		exit(exit_status);
 	}
+	exit(g_exit_status);
 	return (0);
 }

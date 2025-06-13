@@ -45,16 +45,16 @@ static t_pipeline	*parse_input(char *input, char **env, int exit_status)
 	return (pipeline);
 }
 
+int g_exit_status = 0;
+
 int	main(int argc, char **argv, char **env)
 {
 	char		*input;
 	char		**env_copy;
 	t_pipeline	*pipeline;
-	int			exit_status;
 
 	(void)argc;
 	(void)argv;
-	exit_status = 0;
 	env_copy = create_env(env);
 	while (1)
 	{
@@ -65,21 +65,21 @@ int	main(int argc, char **argv, char **env)
 			free(input);
 			gc_cleanup();
 			rl_clear_history();
-			return (EXIT_SUCCESS);
+			return (g_exit_status);
 		}
 		if (*input != 0)
 		{
 			add_history(input);
-			pipeline = parse_input(input, env_copy, exit_status);
+			pipeline = parse_input(input, env_copy, g_exit_status);
 			if (pipeline == NULL)
-				exit_status = 258;
+				g_exit_status = 258;
 			else
 				//printf("cmd count: %d\n", pipeline->cmd_count);
-				exit_status = execute_pipeline(pipeline, env_copy);
+				execute_pipeline(pipeline, env_copy);
 		}
 		free(input);
 	}
 	gc_cleanup();
 	rl_clear_history();
-	return (EXIT_SUCCESS);
+	return (g_exit_status);
 }

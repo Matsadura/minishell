@@ -33,4 +33,6 @@
 # define STDOUT 1
 # define STDERR 2
 
+extern int	g_exit_status;
+
 #endif

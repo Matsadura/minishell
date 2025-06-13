@@ -1,6 +1,35 @@
 #include "../../includes/execution.h"
 
 /**
+ * is_n_flag - Checks if the argument is the "-n" flag for echo.
+ * @arg: The argument to check.
+ * Returns: 1 if it is the "-n" flag, 0 otherwise.
+ */
+static int	is_n_flag(char *arg)
+{
+	return (arg && ft_strcmp(arg, "-n") == 0);
+}
+
+/**
+ * print_echo_args - Prints the arguments passed to the echo command.
+ * @args: The arguments passed to the echo command.
+ * @i: The index to start printing from.
+ */
+static void	print_echo_args(char **args, int i)
+{
+	while (args[i])
+	{
+		if (ft_strcmp(args[i], "$?") == 0)
+			ft_printf("%d", g_exit_status);
+		else
+			ft_printf("%s", args[i]);
+		if (args[i + 1])
+			ft_printf(" ");
+		i++;
+	}
+}
+
+/**
  * echo_builtin - Prints the arguments passed to the echo command.
  * @args: The arguments passed to the echo command.
  * Returns: 0 on success, 1 on failure.
@@ -14,18 +43,12 @@ int	echo_builtin(char **args)
 		return (1);
 	newline = 1;
 	i = 1;
-	if (args[i] && ft_strcmp(args[i], "-n") == 0)
+	if (is_n_flag(args[i]))
 	{
 		newline = 0;
 		i++;
 	}
-	while (args[i])
-	{
-		ft_printf("%s", args[i]);
-		if (args[i + 1])
-			ft_printf(" ");
-		i++;
-	}
+	print_echo_args(args, i);
 	if (newline)
 		ft_printf("\n");
 	return (0);

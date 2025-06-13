@@ -15,13 +15,15 @@ static char	*join_env_var(char *name, char *value)
 	env_var = gc_strljoin(name, "=", 2 + ft_strlen(name));
 	if (env_var == NULL)
 		return (NULL);
-	env_var = gc_strljoin(env_var, value, ft_strlen(env_var) + 1 + ft_strlen(value) + 1);
+	env_var = gc_strljoin(env_var, value,
+			ft_strlen(env_var) + 1 + ft_strlen(value) + 1);
 	return (env_var);
 }
 
 /**
  * set_env_var - Sets or updates an environment variable
- * @arg: The argument containing the variable name and value in the format "NAME=VALUE"
+ * @arg: The argument containing the variable name
+ * 		and value in the format "NAME=VALUE"
  * @env: The current environment variables
  */
 static void	set_env_var(char *arg, char **env)
@@ -74,7 +76,8 @@ int	export_builtin(char **args, char **env)
 	{
 		if (ft_strchr(args[i], '=') == NULL)
 		{
-			ft_dprintf(STDERR, "export: '%s': not a valid identifier\n", args[i]);
+			ft_dprintf(STDERR, "export: '%s': not a valid identifier\n",
+				args[i]);
 			ret = 1;
 		}
 		else

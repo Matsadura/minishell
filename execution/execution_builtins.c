@@ -14,6 +14,7 @@ int	is_builtin(const char *cmd)
 		return (TRUE);
 	return (FALSE);
 }
+
 /**
  * execute_builtin - Executes a built-in command
  * @pipeline: The pipeline containing the command to execute
@@ -22,10 +23,8 @@ int	is_builtin(const char *cmd)
  * Return: The exit status of the built-in command
  *         Returns -1 if the command is not a built-in command
  */
-int	execute_builtin(t_cmd *cmd, char **env, int exit_status)
+int	execute_builtin(t_cmd *cmd, char **env)
 {
-	(void)exit_status;
-
 	if (ft_strcmp(cmd->args[0], "export") == 0)
 		return (export_builtin(cmd->args, env));
 	else if (ft_strcmp(cmd->args[0], "env") == 0)

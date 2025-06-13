@@ -8,29 +8,31 @@
  */
 void	set_custom_var(char *key, char *value, char **env)
 {
-    int		i;
-    char	*new_var;
+	int		i;
+	char	*new_var;
 
-    if (key == NULL || value == NULL || env == NULL)
-        return ;
-    new_var = gc_strljoin(key, "=", ft_strlen(key) + 2);
-    if (new_var == NULL)
-        return ;
-    new_var = gc_strljoin(new_var, value, ft_strlen(new_var) + ft_strlen(value) + 1);
-    if (new_var == NULL)
-        return ;
-    i = 0;
-    while (env[i])
-    {
-        if (ft_strncmp(env[i], key, ft_strlen(key)) == 0 && env[i][ft_strlen(key)] == '=')
-        {
-            env[i] = new_var;
-            return ;
-        }
-        i++;
-    }
-    env[i] = new_var;
-    env[i + 1] = NULL;
+	if (key == NULL || value == NULL || env == NULL)
+		return ;
+	new_var = gc_strljoin(key, "=", ft_strlen(key) + 2);
+	if (new_var == NULL)
+		return ;
+	new_var = gc_strljoin(new_var, value,
+			ft_strlen(new_var) + ft_strlen(value) + 1);
+	if (new_var == NULL)
+		return ;
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], key, ft_strlen(key)) == 0
+			&& env[i][ft_strlen(key)] == '=')
+		{
+			env[i] = new_var;
+			return ;
+		}
+		i++;
+	}
+	env[i] = new_var;
+	env[i + 1] = NULL;
 }
 
 /**
