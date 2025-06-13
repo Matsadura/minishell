@@ -30,8 +30,8 @@ int	execute_builtin(t_cmd *cmd, char **env, int exit_status)
 		return (export_builtin(cmd->args, env));
 	else if (ft_strcmp(cmd->args[0], "env") == 0)
 		return (env_builtin(env));
-	// else if (ft_strcmp(cmd->args[0], "cd") == 0)
-	// 	return (cd_builtin(cmd->args, env));
+	else if (ft_strcmp(cmd->args[0], "cd") == 0)
+		return (cd_builtin(cmd->args, env));
 	else if (ft_strcmp(cmd->args[0], "echo") == 0)
 		return (echo_builtin(cmd->args));
 	// else if (ft_strcmp(cmd->args[0], "exit") == 0)
