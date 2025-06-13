@@ -33,6 +33,14 @@ int		open_pipe_if_needed(t_cmd *cmd, int *pipe_fd);
 pid_t	fork_and_setup(t_cmd *cmd, int *pipe_fd, int prev_fd, char **env);
 void	close_fds(int *prev_fd, int *pipe_fd, t_cmd *cmd);
 
+/* Redirection helper functions */
+
+int		handle_single_redir(t_cmd *command, t_redirect *redir);
+int		handle_redir_in(t_cmd *command, t_redirect *redir);
+int		handle_redir_out(t_cmd *command, t_redirect *redir);
+int		handle_redir_append(t_cmd *command, t_redirect *redir);
+int		handle_redir_heredoc(t_cmd *command, t_redirect *redir);
+
 /* Environment functions */
 
 char	**create_env(char **env);

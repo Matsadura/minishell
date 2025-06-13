@@ -18,7 +18,7 @@
  * @redir: The redirection structure containing the type and filename.
  * Returns: 0 on success, -1 on failure.
  */
-static int	handle_redir_in(t_cmd *command, t_redirect *redir)
+int	handle_redir_in(t_cmd *command, t_redirect *redir)
 {
 	command->input_fd = open(redir->filename, O_RDONLY);
 	if (command->input_fd < 0)
@@ -42,7 +42,7 @@ static int	handle_redir_in(t_cmd *command, t_redirect *redir)
  * @redir: The redirection structure containing the type and filename.
  * Returns: 0 on success, -1 on failure.
  */
-static int	handle_redir_out(t_cmd *command, t_redirect *redir)
+int	handle_redir_out(t_cmd *command, t_redirect *redir)
 {
 	command->output_fd = open(redir->filename,
 			O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -67,7 +67,7 @@ static int	handle_redir_out(t_cmd *command, t_redirect *redir)
  * @redir: The redirection structure containing the type and filename.
  * Returns: 0 on success, -1 on failure.
  */
-static int	handle_redir_append(t_cmd *command, t_redirect *redir)
+int	handle_redir_append(t_cmd *command, t_redirect *redir)
 {
 	command->output_fd = open(redir->filename,
 			O_WRONLY | O_CREAT | O_APPEND, 0644);
@@ -90,7 +90,7 @@ static int	handle_redir_append(t_cmd *command, t_redirect *redir)
  * handle_redir_heredoc - Handles heredoc redirection for a command.
  * TO DO
  */
-static int	handle_redir_heredoc(t_cmd *command, t_redirect *redir)
+int	handle_redir_heredoc(t_cmd *command, t_redirect *redir)
 {
 	(void)command;
 	(void)redir;
@@ -112,14 +112,8 @@ int	handle_redirection(t_cmd *command)
 	redir = command->redirections;
 	while (redir)
 	{
-		if (redir->type == REDIRECT_IN)
-			handle_redir_in(command, redir);
-		else if (redir->type == REDIRECT_OUT)
-			handle_redir_out(command, redir);
-		else if (redir->type == APPEND)
-			handle_redir_append(command, redir);
-		else if (redir->type == HEREDOC)
-			handle_redir_heredoc(command, redir);
+		if (handle_single_redir(command, redir) < 0)
+			return (-1);
 		redir = redir->next;
 	}
 	return (0);
