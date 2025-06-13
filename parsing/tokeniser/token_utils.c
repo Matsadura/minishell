@@ -56,6 +56,28 @@ t_token_type	get_token_type(const char *value, size_t len)
 }
 
 /**
+ * is_quoted_token - checks if a token type represents a quoted stirng
+ * @type: the token type to check
+ * @value: the token value to check for quote characters
+ * return: 1 if token is quoted or 0 if it's not
+ */
+static int	is_quoted_token(t_token_type type, const char *value)
+{
+	int	i;
+
+	if (type == D_QUOTE || type == S_QUOTE)
+		return (1);
+	i = 0;
+	while (value[i] != '\0')
+	{
+		if (value[i] == '"' || value[i] == '\'')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+/**
  * create_token_node - creates a new token node with given value and type
  * @value: the token value string
  * @type: the token type
@@ -70,6 +92,8 @@ t_token	*create_token_node(const char *value, t_token_type type)
 		return (NULL);
 	new_token->value = gc_strldup(value, ft_strlen(value));
 	new_token->type = type;
+	new_token->was_quoted = is_quoted_token(type, value);
+	new_token->needs_splitting = 0;
 	new_token->next = NULL;
 	return (new_token);
 }

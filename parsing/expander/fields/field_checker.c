@@ -43,6 +43,11 @@ int	should_split_token(t_token *token, t_token *prev_token,
 	set_redirect_context(token, prev_token, cntxt);
 	if (token->type == WORD && token->needs_splitting)
 	{
+		if (token->was_quoted == 1)
+		{
+			cntxt->needs_splitting = 0;
+			return (0);
+		}
 		if (cntxt->is_redirect_target == 1)
 		{
 			cntxt->needs_splitting = 1;
