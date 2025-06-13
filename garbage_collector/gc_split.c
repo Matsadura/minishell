@@ -1,5 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   gc_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/13 17:16:16 by zzaoui            #+#    #+#             */
+/*   Updated: 2025/06/13 17:17:07 by zzaoui           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "gc_header.h"
 
+/**
+ * count_words - Counts the number of words in a string
+ * @str: The string to count words in.
+ * @c: The delimiter character.
+ * Returns: The number of words in the string.
+ */
 static int	count_words(char const *str, char c)
 {
 	int	i;
@@ -25,6 +43,13 @@ static int	count_words(char const *str, char c)
 	return (count);
 }
 
+/**
+ * ft_dup - Duplicates a substring into a newly allocated string.
+ * @word: The destination string.
+ * @start: The start of the substring in the original string.
+ * @len: The length of the substring to copy.
+ * Returns: The duplicated string.
+ */
 static char	*ft_dup(char *word, char *start, int len)
 {
 	int	i;
@@ -39,6 +64,13 @@ static char	*ft_dup(char *word, char *start, int len)
 	return (word);
 }
 
+/**
+ * get_next_word - Finds the next word in the string and updates the pointer.
+ * @s: The string to search.
+ * @c: The delimiter character.
+ * @start: Pointer to store the start of the next word.
+ * Returns: The length of the next word.
+ */
 static int	get_next_word(const char **s, char c, char **start)
 {
 	while (**s == c && **s)
@@ -48,6 +80,7 @@ static int	get_next_word(const char **s, char c, char **start)
 		(*s)++;
 	return (*s - *start);
 }
+
 /**
  * gc_split - Splits a string into an array of strings using a delimiter
  *            and allocates memory using the garbage collector.
