@@ -72,6 +72,11 @@ t_token	*split_token(t_token *token, t_field_context *cntxt)
 	if (cntxt->needs_splitting == 0)
 		return (create_token_node(token->value, token->type));
 	fields = ft_split_by_space(token->value);
+	if (is_ambiguous_redirect(fields, cntxt) == 1)
+	{
+		free_fields_array(fields);
+		return (NULL);
+	}
 	if (fields == NULL || fields[0] == NULL)
 	{
 		free_fields_array(fields);

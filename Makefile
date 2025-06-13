@@ -18,7 +18,8 @@ EXPANDER_FILES = parsing/expander/expander.c parsing/expander/expansion_utils.c 
 				parsing/expander/variable_expansion.c
 
 FIELDS_FILES = parsing/expander/fields/field_splitter.c parsing/expander/fields/field_list_utils.c \
-			parsing/expander/fields/field_checker.c parsing/expander/fields/string_splitter.c 
+			parsing/expander/fields/field_checker.c parsing/expander/fields/string_splitter.c \
+			parsing/expander/fields/ambiguous_redirect_handler.c
 
 PARSER_FILES = parsing/parser/parse_command.c parsing/parser/parse_pipeline.c parsing/parser/parse_redirection.c \
 			parsing/parser/parse_word.c parsing/parser/parser_utils.c parsing/parser/parser.c

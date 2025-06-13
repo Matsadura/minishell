@@ -82,5 +82,6 @@ t_token	*expander(t_token *tokens, char **env, int exit_status)
 		}
 		current = current->next;
 	}
+	tokens = field_splitter(tokens);
 	return (tokens);
 }
