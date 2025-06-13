@@ -29,6 +29,7 @@ int		unset_builtin(char **args, char **env);
 int		pwd_builtin(char **env);
 int		echo_builtin(char **args);
 int		cd_builtin(char **args, char **env);
+int		exit_builtin(char **args);
 
 /* Built-in helper functions */
 
