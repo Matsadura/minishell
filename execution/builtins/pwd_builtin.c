@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   pwd_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/01 12:36:20 by zzaoui            #+#    #+#             */
-/*   Updated: 2024/11/01 12:45:03 by zzaoui           ###   ########.fr       */
+/*   Created: 2025/06/13 17:14:14 by zzaoui            #+#    #+#             */
+/*   Updated: 2025/06/13 17:14:15 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/execution.h"
 
 /**
- * ft_putstr_fd - Outputs the string 's' to the given
- *		file descriptor
- * @s: the string to output
- * @fd: the fild descriptor on which to write
+ * pwd_builtin - Prints the current working directory
+ * Returns: 0 on success, 1 on failure
  */
-void	ft_putstr_fd(char *s, int fd)
+int	pwd_builtin(char **env)
 {
-	if (s == NULL)
-		return ;
-	write(fd, s, ft_strlen(s));
+	char	cwd[4096];
+
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
+	{
+		perror("getcwd");
+		return (1);
+	}
+	set_custom_var("PWD", cwd, env);
+	ft_printf("%s\n", cwd);
+	return (0);
 }

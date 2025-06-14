@@ -18,7 +18,6 @@
  * @s: The string to output
  * @fd: The file descriptor on which to write
  */
-
 void	ft_putendl_fd(char *s, int fd)
 {
 	ft_putstr_fd(s, fd);
