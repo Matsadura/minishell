@@ -67,6 +67,9 @@ int		exit_builtin(char **args);
 /* Built-in helper functions */
 
 int		is_builtin(const char *cmd);
+int		save_and_redirect_builtin(t_cmd *command, int *saved_stdin,
+			int *saved_stdout);
+void	restore_builtin_fds(int saved_stdin, int saved_stdout);
 
 /* Signals functions */
 

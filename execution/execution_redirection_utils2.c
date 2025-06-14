@@ -36,3 +36,50 @@ int	redir_heredoc(t_cmd *command, t_redirect *redir)
 	unlink(redir->temp_file);
 	return (0);
 }
+
+/**
+ * save_and_redirect_builtin - Saves original FDs
+ * 		and applies redirections for builtins
+ * @command: The command with redirections
+ * @saved_stdin: Pointer to store original stdin
+ * @saved_stdout: Pointer to store original stdout
+ * Returns: 0 on success, -1 on failure
+ */
+int	save_and_redirect_builtin(t_cmd *command, int *saved_stdin,
+	int *saved_stdout)
+{
+	*saved_stdin = dup(STDIN_FILENO);
+	*saved_stdout = dup(STDOUT_FILENO);
+	if (*saved_stdin < 0 || *saved_stdout < 0)
+	{
+		perror("dup");
+		return (-1);
+	}
+	if (handle_redirection(command) < 0)
+	{
+		close(*saved_stdin);
+		close(*saved_stdout);
+		return (-1);
+	}
+	return (0);
+}
+
+/**
+ * restore_builtin_fds - Restores original file descriptors
+ * 		after builtin execution
+ * @saved_stdin: Original stdin file descriptor
+ * @saved_stdout: Original stdout file descriptor
+ */
+void	restore_builtin_fds(int saved_stdin, int saved_stdout)
+{
+	if (saved_stdin >= 0)
+	{
+		dup2(saved_stdin, STDIN_FILENO);
+		close(saved_stdin);
+	}
+	if (saved_stdout >= 0)
+	{
+		dup2(saved_stdout, STDOUT_FILENO);
+		close(saved_stdout);
+	}
+}

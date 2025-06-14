@@ -67,12 +67,25 @@ int	wait_for_children(pid_t *pids, int cmd_count)
  */
 int	handle_single_builtin(t_pipeline *pipeline, char **env)
 {
-	if (handle_redirection(pipeline->head) < 0)
+	int	saved_stdin;
+	int	saved_stdout;
+	int	result;
+
+	saved_stdin = -1;
+	saved_stdout = -1;
+	if (pipeline->head->redirections != NULL)
 	{
-		g_exit_status = EXIT_FAILURE;
-		return (g_exit_status);
+		if (save_and_redirect_builtin(pipeline->head,
+				&saved_stdin, &saved_stdout) < 0)
+		{
+			g_exit_status = EXIT_FAILURE;
+			return (g_exit_status);
+		}
 	}
-	g_exit_status = execute_builtin(pipeline->head, env);
+	result = execute_builtin(pipeline->head, env);
+	if (pipeline->head->redirections != NULL)
+		restore_builtin_fds(saved_stdin, saved_stdout);
+	g_exit_status = result;
 	return (g_exit_status);
 }
 
