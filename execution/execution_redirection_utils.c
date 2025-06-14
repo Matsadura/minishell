@@ -62,7 +62,7 @@ char	*create_temp_file(void)
  * @delimiter: The delimiter to stop writing.
  * Returns: 0 on success, -1 on failure.
  */
-int	write_heredoc_content(char *temp_file, char *delimiter)
+int	write_heredoc_content(char *temp_file, char *del)
 {
 	int		fd;
 	char	*line;
@@ -70,17 +70,16 @@ int	write_heredoc_content(char *temp_file, char *delimiter)
 	fd = open(temp_file, O_WRONLY);
 	if (fd < 0)
 		return (-1);
+	ignore_signals();
 	while (1)
 	{
 		line = readline("> ");
 		if (line == NULL)
 		{
-			ft_dprintf(STDERR,
-				"warning: here-doc delimited by end-of-file (wanted `%s')\n",
-				delimiter);
+			ft_dprintf(2, "warning: delimited by EOF (wanted `%s')\n", del);
 			break ;
 		}
-		if (ft_strcmp(line, delimiter) == 0)
+		if (ft_strcmp(line, del) == 0)
 		{
 			free(line);
 			break ;
@@ -88,6 +87,7 @@ int	write_heredoc_content(char *temp_file, char *delimiter)
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
+	setup_signals();
 	return (close(fd), 0);
 }
 

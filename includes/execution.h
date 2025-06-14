@@ -17,6 +17,7 @@
 # include "parser.h"
 # include <sys/wait.h>
 # include <errno.h>
+# include <signal.h>
 
 /* Execution functions */
 
@@ -66,5 +67,16 @@ int		exit_builtin(char **args);
 /* Built-in helper functions */
 
 int		is_builtin(const char *cmd);
+
+/* Signals functions */
+
+void	sigint_handler(int sig);
+void	sigquit_handler(int sig);
+void	sigint_child_handler(int sig);
+void	sigquit_child_handler(int sig);
+void	setup_signals(void);
+void	setup_child_signals(void);
+void	ignore_signals(void);
+void	restore_signals(void);
 
 #endif /* EXECUTION_H */

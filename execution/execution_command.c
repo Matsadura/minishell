@@ -22,6 +22,7 @@ void	execute_command(t_cmd *command, char **env)
 {
 	char	*executable_path;
 
+	setup_child_signals();
 	if (command == NULL || command->args == NULL || command->args[0] == NULL)
 		exit(1);
 	if (handle_redirection(command) < 0)

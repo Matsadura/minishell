@@ -13,6 +13,30 @@
 #include "../includes/execution.h"
 
 /**
+ * get_exit_status - Retrieves the exit status of a child process.
+ * @status: The status returned by waitpid.
+ * Returns: The exit status of the child process.
+ */
+static int	get_exit_status(int status)
+{
+	int	sig;
+
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	else if (WIFSIGNALED(status))
+	{
+		sig = WTERMSIG(status);
+		if (sig == SIGINT)
+			return (130);
+		else if (sig == SIGQUIT)
+			return (131);
+		else
+			return (128 + sig);
+	}
+	return (0);
+}
+
+/**
  * wait_for_children - Waits for all child processes to finish.
  * @pids: Array of PIDs of the child processes.
  * @cmd_count: The number of commands in the pipeline.
@@ -29,12 +53,7 @@ int	wait_for_children(pid_t *pids, int cmd_count)
 	{
 		waitpid(pids[i], &status, 0);
 		if (i == cmd_count - 1)
-		{
-			if (WIFEXITED(status))
-				exit_status = WEXITSTATUS(status);
-			else if (WIFSIGNALED(status))
-				exit_status = 128 + WTERMSIG(status);
-		}
+			exit_status = get_exit_status(status);
 		i++;
 	}
 	return (exit_status);

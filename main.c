@@ -37,6 +37,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
+	setup_signals();
 	env_copy = create_env(env);
 	while (1)
 	{
