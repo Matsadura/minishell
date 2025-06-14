@@ -39,8 +39,6 @@ int	exit_builtin(char **args)
 			g_exit_status = 255;
 		ft_dprintf(STDOUT, "exit\n");
 	}
-	gc_cleanup();
-	rl_clear_history();
-	exit(g_exit_status);
+	cleanup_and_exit(g_exit_status);
 	return (0);
 }

@@ -31,7 +31,8 @@ EXECUTION_FILES = execution/execution_command.c execution/execution_redirection.
 				execution/builtins/env_builtin.c execution/builtins/export_builtin.c execution/builtins/unset_builtin.c \
 				execution/builtins/pwd_builtin.c execution/builtins/echo_builtin.c execution/builtins/cd_builtin.c \
 				execution/builtins/exit_builtin.c execution/execution_pipe_utils.c execution/execution_redirection_utils.c \
-				execution/execution_redirection_utils2.c execution/execution_signals.c execution/execution_signals_utils.c
+				execution/execution_redirection_utils2.c execution/execution_signals.c execution/execution_signals_utils.c \
+				execution/execution_utils.c
 
 LIBFT      = libft/libft.a
 

@@ -82,4 +82,8 @@ void	setup_child_signals(void);
 void	ignore_signals(void);
 void	restore_signals(void);
 
+/* Cleanup functions */
+
+void	cleanup_and_exit(int exit_code);
+
 #endif /* EXECUTION_H */

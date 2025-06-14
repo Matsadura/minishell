@@ -12,6 +12,15 @@
 
 #include "includes/minishell.h"
 
+int	g_exit_status = 0;
+
+/**
+ * parse_input - Parses the input string into a pipeline structure.
+ * @input: The input string to parse.
+ * @env: The environment variables to use during parsing.
+ * @exit_status: The current exit status of the shell.
+ * Returns: A pointer to the parsed pipeline structure, or NULL on failure.
+ */
 static t_pipeline	*parse_input(char *input, char **env, int exit_status)
 {
 	t_pipeline	*pipeline;
@@ -27,18 +36,36 @@ static t_pipeline	*parse_input(char *input, char **env, int exit_status)
 	return (pipeline);
 }
 
-int g_exit_status = 0;
-
-int	main(int argc, char **argv, char **env)
+/**
+ * handle_input - Handles the input string by parsing it
+ * 		and executing the commands.
+ * @input: The input string to handle.
+ * @env_copy: The environment variables to use during execution.
+ */
+static void	handle_input(char *input, char **env_copy)
 {
-	char		*input;
-	char		**env_copy;
 	t_pipeline	*pipeline;
 
-	(void)argc;
-	(void)argv;
-	setup_signals();
-	env_copy = create_env(env);
+	if (*input != 0)
+	{
+		add_history(input);
+		pipeline = parse_input(input, env_copy, g_exit_status);
+		if (pipeline == NULL)
+			g_exit_status = 2;
+		else
+			execute_pipeline(pipeline, env_copy);
+	}
+}
+
+/**
+ * main_loop - The main loop of the shell that reads input
+ * 		and processes commands.
+ * @env_copy: The environment variables to use during the loop.
+ */
+static void	main_loop(char **env_copy)
+{
+	char	*input;
+
 	while (1)
 	{
 		input = readline("minishell$ ");
@@ -46,23 +73,29 @@ int	main(int argc, char **argv, char **env)
 		{
 			printf("exit\n");
 			free(input);
-			gc_cleanup();
-			rl_clear_history();
-			return (g_exit_status);
+			cleanup_and_exit(g_exit_status);
 		}
-		if (*input != 0)
-		{
-			add_history(input);
-			pipeline = parse_input(input, env_copy, g_exit_status);
-			if (pipeline == NULL)
-				g_exit_status = 258;
-			else
-				//printf("cmd count: %d\n", pipeline->cmd_count);
-				execute_pipeline(pipeline, env_copy);
-		}
+		handle_input(input, env_copy);
 		free(input);
 	}
-	gc_cleanup();
-	rl_clear_history();
+}
+
+/**
+ * main - Entry point of the minishell program.
+ * @argc: Argument count.
+ * @argv: Argument vector.
+ * @env: Environment variables.
+ * Returns: Exit status of the program.
+ */
+int	main(int argc, char **argv, char **env)
+{
+	char	**env_copy;
+
+	(void)argc;
+	(void)argv;
+	setup_signals();
+	env_copy = create_env(env);
+	main_loop(env_copy);
+	cleanup_and_exit(g_exit_status);
 	return (g_exit_status);
 }
