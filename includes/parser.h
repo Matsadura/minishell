@@ -28,6 +28,7 @@ typedef struct s_redirect
 	t_token_type		type;
 	char				*filename;
 	int					fd;
+	char				*temp_file;
 	struct s_redirect	*next;
 }	t_redirect;
 
