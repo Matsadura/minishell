@@ -31,10 +31,7 @@ static void	print_echo_args(char **args, int i)
 {
 	while (args[i])
 	{
-		if (ft_strcmp(args[i], "$?") == 0)
-			ft_printf("%d", g_exit_status);
-		else
-			ft_printf("%s", args[i]);
+		ft_printf("%s", args[i]);
 		if (args[i + 1])
 			ft_printf(" ");
 		i++;
