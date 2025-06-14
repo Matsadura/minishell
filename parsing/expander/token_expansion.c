@@ -27,10 +27,9 @@ char	*expand_token(char *token, t_exp_context *cntxt)
 
 	if (token == NULL)
 		return (NULL);
-	res = gc_alloc(1);
+	res = gc_strldup("", 1);
 	if (res == NULL)
 		return (NULL);
-	res[0] = '\0';
 	saved_state = cntxt->state;
 	if (cntxt->quote_removal == 0)
 		cntxt->state = NORMAL;
