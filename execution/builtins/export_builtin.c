@@ -13,7 +13,8 @@
 #include "../../includes/execution.h"
 
 /**
- * ft_is_valid_identifier - Checks if a string is a valid identifier for an environment variable
+ * ft_is_valid_identifier - Checks if a string is a valid identifier
+ * 		for an environment variable
  * @str: The string to check
  * Returns: 1 if valid, 0 otherwise
  */

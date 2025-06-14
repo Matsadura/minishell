@@ -19,7 +19,16 @@
  */
 static int	is_n_flag(char *arg)
 {
-	return (arg && ft_strcmp(arg, "-n") == 0);
+	int	i;
+
+	if (arg == NULL || arg[0] != '-')
+		return (0);
+	i = 1;
+	if (arg[i] == '\0')
+		return (0);
+	while (arg[i] == 'n')
+		i++;
+	return (arg[i] == '\0');
 }
 
 /**
@@ -31,6 +40,11 @@ static void	print_echo_args(char **args, int i)
 {
 	while (args[i])
 	{
+		if (is_n_flag(args[i]))
+		{
+			i++;
+			continue ;
+		}
 		ft_printf("%s", args[i]);
 		if (args[i + 1])
 			ft_printf(" ");
