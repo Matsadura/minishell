@@ -88,9 +88,8 @@ int	export_builtin(char **args, char **env)
 	{
 		if (ft_strchr(args[i], '=') == NULL)
 		{
-			ft_dprintf(STDERR, "export: '%s': not a valid identifier\n",
-				args[i]);
-			ret = 1;
+			i++;
+			continue ;
 		}
 		else
 			set_env_var(args[i], env);

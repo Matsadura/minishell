@@ -24,7 +24,7 @@ char	**create_env(char **env)
 
 	if (env == NULL)
 		return (NULL);
-	new_env = gc_alloc(sizeof(char *) * (ft_strarrlen(env) + 1));
+	new_env = gc_alloc(sizeof(char *) * (ft_strarrlen(env) + 50));
 	if (new_env == NULL)
 		return (NULL);
 	i = 0;
