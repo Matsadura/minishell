@@ -86,28 +86,28 @@ int	handle_redir_append(t_cmd *command, t_redirect *redir)
 	return (0);
 }
 
-/**
- * handle_redir_heredoc - Handles heredoc redirection for a command.
- * @command: The command to which the redirection applies.
- * @redir: The redirection structure containing the type and filename.
- * Returns: 0 on success, -1 on failure.
- */
-int	handle_redir_heredoc(t_cmd *command, t_redirect *redir)
-{
-	char	*temp_file;
+// /**
+//  * handle_redir_heredoc - Handles heredoc redirection for a command.
+//  * @command: The command to which the redirection applies.
+//  * @redir: The redirection structure containing the type and filename.
+//  * Returns: 0 on success, -1 on failure.
+//  */
+// int	handle_redir_heredoc(t_cmd *command, t_redirect *redir)
+// {
+// 	char	*temp_file;
 
-	(void)command;
-	temp_file = create_temp_file();
-	if (temp_file == NULL)
-		return (-1);
-	if (write_heredoc_content(temp_file, redir->filename) < 0)
-	{
-		unlink(temp_file);
-		return (-1);
-	}
-	redir->temp_file = temp_file;
-	return (0);
-}
+// 	(void)command;
+// 	temp_file = create_temp_file();
+// 	if (temp_file == NULL)
+// 		return (-1);
+// 	if (write_heredoc_content(temp_file, redir->filename) < 0)
+// 	{
+// 		unlink(temp_file);
+// 		return (-1);
+// 	}
+// 	redir->temp_file = temp_file;
+// 	return (0);
+// }
 
 /**
  * handle_redirection - Handles all redirections for a command.

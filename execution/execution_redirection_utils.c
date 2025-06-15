@@ -56,68 +56,68 @@ char	*create_temp_file(void)
 	return (temp_file);
 }
 
-/**
- * write_heredoc_content - Writes content to a temporary file for heredoc.
- * @temp_file: The name of the temporary file.
- * @delimiter: The delimiter to stop writing.
- * Returns: 0 on success, -1 on failure.
- */
-int	write_heredoc_content(char *temp_file, char *del)
-{
-	int		fd;
-	char	*line;
+// /**
+//  * write_heredoc_content - Writes content to a temporary file for heredoc.
+//  * @temp_file: The name of the temporary file.
+//  * @delimiter: The delimiter to stop writing.
+//  * Returns: 0 on success, -1 on failure.
+//  */
+// int	write_heredoc_content(char *temp_file, char *del)
+// {
+// 	int		fd;
+// 	char	*line;
 
-	fd = open(temp_file, O_WRONLY);
-	if (fd < 0)
-		return (-1);
-	ignore_signals();
-	while (1)
-	{
-		line = readline("> ");
-		if (line == NULL)
-		{
-			ft_dprintf(2, "warning: delimited by EOF (wanted `%s')\n", del);
-			break ;
-		}
-		if (ft_strcmp(line, del) == 0)
-		{
-			free(line);
-			break ;
-		}
-		ft_putendl_fd(line, fd);
-		free(line);
-	}
-	setup_signals();
-	return (close(fd), 0);
-}
+// 	fd = open(temp_file, O_WRONLY);
+// 	if (fd < 0)
+// 		return (-1);
+// 	ignore_signals();
+// 	while (1)
+// 	{
+// 		line = readline("> ");
+// 		if (line == NULL)
+// 		{
+// 			ft_dprintf(2, "warning: delimited by EOF (wanted `%s')\n", del);
+// 			break ;
+// 		}
+// 		if (ft_strcmp(line, del) == 0)
+// 		{
+// 			free(line);
+// 			break ;
+// 		}
+// 		ft_putendl_fd(line, fd);
+// 		free(line);
+// 	}
+// 	setup_signals();
+// 	return (close(fd), 0);
+// }
 
-/**
- * preprocess_heredocs - Preprocesses heredoc redirections in the pipeline.
- * @pipeline: The pipeline containing the commands.
- * Returns: 0 on success, -1 on failure.
- */
-int	preprocess_heredocs(t_pipeline *pipeline)
-{
-	t_cmd		*current;
-	t_redirect	*redir;
+// /**
+//  * preprocess_heredocs - Preprocesses heredoc redirections in the pipeline.
+//  * @pipeline: The pipeline containing the commands.
+//  * Returns: 0 on success, -1 on failure.
+//  */
+// int	preprocess_heredocs(t_pipeline *pipeline)
+// {
+// 	t_cmd		*current;
+// 	t_redirect	*redir;
 
-	current = pipeline->head;
-	while (current)
-	{
-		redir = current->redirections;
-		while (redir)
-		{
-			if (redir->type == HEREDOC)
-			{
-				if (handle_redir_heredoc(current, redir) < 0)
-					return (-1);
-			}
-			redir = redir->next;
-		}
-		current = current->next;
-	}
-	return (0);
-}
+// 	current = pipeline->head;
+// 	while (current)
+// 	{
+// 		redir = current->redirections;
+// 		while (redir)
+// 		{
+// 			if (redir->type == HEREDOC)
+// 			{
+// 				if (handle_redir_heredoc(current, redir) < 0)
+// 					return (-1);
+// 			}
+// 			redir = redir->next;
+// 		}
+// 		current = current->next;
+// 	}
+// 	return (0);
+// }
 
 /**
  * handle_signle_redir - Handles a single redirection for a command.
@@ -133,7 +133,7 @@ int	handle_single_redir(t_cmd *command, t_redirect *redir)
 		return (handle_redir_out(command, redir));
 	else if (redir->type == APPEND)
 		return (handle_redir_append(command, redir));
-	else if (redir->type == HEREDOC)
-		return (redir_heredoc(command, redir));
+	// else if (redir->type == HEREDOC)
+	// 	return (redir_heredoc(command, redir));
 	return (0);
 }

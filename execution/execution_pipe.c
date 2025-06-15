@@ -98,8 +98,8 @@ int	execute_pipeline(t_pipeline *pipeline, char **env)
 
 	if (pipeline == NULL || pipeline->head == NULL)
 		return (EXIT_FAILURE);
-	if (preprocess_heredocs(pipeline) < 0)
-		return (g_exit_status = EXIT_FAILURE);
+	// if (preprocess_heredocs(pipeline) < 0)
+	// 	return (g_exit_status = EXIT_FAILURE);
 	if (pipeline->cmd_count == 1 && pipeline->head->args != NULL
 		&& pipeline->head->args[0] != NULL
 		&& is_builtin(pipeline->head->args[0]) == 1)
