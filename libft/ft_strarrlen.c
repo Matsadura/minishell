@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_strarrlen.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/01 12:36:20 by zzaoui            #+#    #+#             */
-/*   Updated: 2024/11/01 12:45:03 by zzaoui           ###   ########.fr       */
+/*   Created: 2025/06/13 17:12:21 by zzaoui            #+#    #+#             */
+/*   Updated: 2025/06/13 17:12:29 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * ft_putstr_fd - Outputs the string 's' to the given
- *		file descriptor
- * @s: the string to output
- * @fd: the fild descriptor on which to write
+ * ft_strarrlen - Calculates the length of a NULL-terminated array of strings.
+ * @arr: The array of strings to measure.
+ * Returns: The number of strings in the array, excluding the NULL terminator.
  */
-void	ft_putstr_fd(char *s, int fd)
+int	ft_strarrlen(char **arr)
 {
-	if (s == NULL)
-		return ;
-	write(fd, s, ft_strlen(s));
+	int	i;
+
+	if (arr == NULL)
+		return (0);
+	i = 0;
+	while (arr[i] != NULL)
+		i++;
+	return (i);
 }

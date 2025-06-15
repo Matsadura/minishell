@@ -14,7 +14,14 @@
 # define MINISHELL_H
 
 /* Libraries */
-# include "libft/libft.h"
+# include "../libft/libft.h"
+# include "../garbage_collector/gc_header.h"
+# include "lexer.h"
+# include "tokeniser.h"
+# include "expander.h"
+# include "fields_splitter.h"
+# include "parser.h"
+# include "execution.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -25,5 +32,7 @@
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
+
+extern int	g_exit_status;
 
 #endif

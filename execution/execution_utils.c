@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/01 12:36:20 by zzaoui            #+#    #+#             */
-/*   Updated: 2024/11/01 12:45:03 by zzaoui           ###   ########.fr       */
+/*   Created: 2025/06/14 18:46:28 by zzaoui            #+#    #+#             */
+/*   Updated: 2025/06/14 18:46:30 by zzaoui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/execution.h"
 
 /**
- * ft_putstr_fd - Outputs the string 's' to the given
- *		file descriptor
- * @s: the string to output
- * @fd: the fild descriptor on which to write
+ * cleanup_and_exit - Cleanup function
+ * @exit_code: The exit code to return
  */
-void	ft_putstr_fd(char *s, int fd)
+void	cleanup_and_exit(int exit_code)
 {
-	if (s == NULL)
-		return ;
-	write(fd, s, ft_strlen(s));
+	gc_cleanup();
+	rl_clear_history();
+	exit(exit_code);
 }

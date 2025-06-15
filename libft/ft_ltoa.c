@@ -20,7 +20,7 @@
  */
 char	*ft_ltoa(long n)
 {
-	char			buff[12];
+	char			buff[21];
 	unsigned long	m;
 	long			i;
 

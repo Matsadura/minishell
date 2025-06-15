@@ -35,23 +35,6 @@ void	*gc_alloc(size_t size)
 }
 
 /**
- * gc_strldup - duplicates a string with length limit using garbage collection
- * @str: string to duplicate
- * @len: length to copy
- * return: pointer to duplicated string or NULL on failure
- */
-char	*gc_strldup(const char *str, size_t len)
-{
-	char	*dup;
-
-	dup = gc_alloc(len + 1);
-	if (dup == NULL)
-		return (NULL);
-	ft_strlcpy(dup, str, len + 1);
-	return (dup);
-}
-
-/**
  * gc_free - frees memory and removes it from garbage collector tracking
  * @address: pointer to memory to free
  */
