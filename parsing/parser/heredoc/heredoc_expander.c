@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 /**
  * find_var_end - finds the end of a variable name in heredoc
@@ -24,7 +24,7 @@ static int	find_var_end(char *str)
 	i = 0;
 	if (str[0] == '?')
 		return (1);
-	if (ft_isdigit(str[0]) == 0 && str[0] != '_' && ft_isalpha(str[0]) == 0)
+	if (str[0] != '_' && ft_isalpha(str[0]) == 0)
 		return (0);
 	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 		i++;
@@ -80,7 +80,7 @@ static char	*expand_variable(char *result, char *line, int *pos,
 	var_value = get_value(var_name, env, exit_status);
 	if (var_value == NULL)
 		return (result);
-	new_result = gc_strljoin(result, var_value, ft_strlen(var_value));
+	new_result = append_str_to_str(result, var_value);
 	*pos += var_len;
 	return (new_result);
 }

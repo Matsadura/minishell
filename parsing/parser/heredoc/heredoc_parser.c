@@ -10,32 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 extern int	g_exit_status;
-
-/**
- * should_expand_heredoc - determines if heredoc delimiter should be expanded
- * @delimiter: the delimiter string to check
- * return: 1 if should expand, 0 if literal (quoted delimiter)
- */
-// static int	should_expand_heredoc(char *delimiter)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	printf("delimiter: %s\n", delimiter);
-// 	while (delimiter[i])
-// 	{
-// 		if (delimiter[i] == '\'' || delimiter[i] == '"')
-// 		{
-			
-// 			return (0);
-// 		}
-// 		i++;
-// 	}
-// 	return (1);
-// }
 
 /**
  * write_heredoc_line - writes a single line to heredoc temp file
@@ -56,8 +33,12 @@ static int	write_heredoc_line(int fd, char *line, int should_expand,
 		return (1);
 	}
 	expanded_line = expand_heredoc_line(line, env, g_exit_status);
+	
 	if (expanded_line == NULL)
-		return (0);
+	{
+		ft_putendl_fd(line, fd);
+		return (1);
+	}
 	ft_putendl_fd(expanded_line, fd);
 	return (1);
 }
@@ -65,33 +46,39 @@ static int	write_heredoc_line(int fd, char *line, int should_expand,
 /**
  * read_heredoc_input - reads heredoc input until delimiter is found
  * @fd: file descriptor to write to
- * @delimiter: delimiter to stop reading
+ * @delimiter: original delimiter (potentially quoted)
  * @env: environment variables for expansion
  * return: 1 on success, 0 on failure
  */
 static int	read_heredoc_input(int fd, char *delimiter, char **env)
 {
 	char	*line;
-	//int		should_expand;
+	char	*clean_delimiter;
+	int		should_expand;
 
-	//should_expand = should_expand_heredoc(delimiter);
-	ignore_signals();
+	should_expand = should_expand_heredoc(delimiter);
+	clean_delimiter = remove_quotes(delimiter);
+	if (!clean_delimiter)
+		return (0);
 	while (1)
 	{
 		line = readline("> ");
 		if (line == NULL)
 		{
 			ft_dprintf(2, "warning: delimited by EOF (wanted `%s')\n", 
-				delimiter);
+				clean_delimiter);
 			break ;
 		}
-		if (ft_strcmp(line, delimiter) == 0)
+		if (ft_strcmp(line, clean_delimiter) == 0)
 		{
 			free(line);
 			break ;
 		}
-		if (write_heredoc_line(fd, line,/*should_expand,*/0, env) == 0)
-			return (free(line), 0);
+		if (write_heredoc_line(fd, line, should_expand, env) == 0)
+		{
+			free(line);
+			return (0);
+		}
 		free(line);
 	}
 	setup_signals();
@@ -113,19 +100,22 @@ int	process_heredoc(t_redirect *redirect, char **env)
 	temp_file = create_temp_file();
 	if (temp_file == NULL)
 		return (0);
-	// printf("DEBUG: heredoc temp file: %s\n", temp_file);
-	// printf("DEBUG: delimiter: '%s', was_quoted: %d, expand: %d\n", redirect->filename, was_quoted, should_expand);
-	//printf("heredoc temp file: %s\n", temp_file);
 	fd = open(temp_file, O_WRONLY);
 	if (fd < 0)
 	{
 		perror(temp_file);
+		free(temp_file);
 		return (0);
 	}
 	result = read_heredoc_input(fd, redirect->filename, env);
 	close(fd);
 	if (result == 0)
-		return (unlink(temp_file), 0);
+	{
+		unlink(temp_file);
+		free(temp_file);
+		return (0);
+	}
 	redirect->temp_file = temp_file;
+	printf("temp file : %s\n", redirect->temp_file);
 	return (1);
 }

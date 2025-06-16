@@ -12,49 +12,49 @@
 
 #include "../includes/execution.h"
 
-/**
- * random_name - Generates a random temporary file name.
- * Returns: A string containing the random file name.
- */
-static char	*random_name(void)
-{
-	long	n;
-	char	*name;
-	char	*full_name;
+// /**
+//  * random_name - Generates a random temporary file name.
+//  * Returns: A string containing the random file name.
+//  */
+// static char	*random_name(void)
+// {
+// 	long	n;
+// 	char	*name;
+// 	char	*full_name;
 
-	n = 1;
-	name = ft_ltoa((long) &n);
-	while (1)
-	{
-		if (access(name, F_OK) == -1)
-			break ;
-		n++;
-		free(name);
-		name = ft_ltoa((long) &n);
-	}
-	full_name = gc_strljoin("/tmp/", name, ft_strlen(name) + 5);
-	free(name);
-	return (full_name);
-}
+// 	n = 1;
+// 	name = ft_ltoa((long) &n);
+// 	while (1)
+// 	{
+// 		if (access(name, F_OK) == -1)
+// 			break ;
+// 		n++;
+// 		free(name);
+// 		name = ft_ltoa((long) &n);
+// 	}
+// 	full_name = gc_strljoin("/tmp/", name, ft_strlen(name) + 5);
+// 	free(name);
+// 	return (full_name);
+// }
 
-/**
- * create_temp_file - Creates a temporary file for heredoc redirection.
- * Returns: The file descriptor of the created temporary file, or -1 on failure.
- */
-char	*create_temp_file(void)
-{
-	int		fd;
-	char	*temp_file;
+// /**
+//  * create_temp_file - Creates a temporary file for heredoc redirection.
+//  * Returns: The file descriptor of the created temporary file, or -1 on failure.
+//  */
+// char	*create_temp_file(void)
+// {
+// 	int		fd;
+// 	char	*temp_file;
 
-	temp_file = random_name();
-	fd = open(temp_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd < 0)
-	{
-		perror(temp_file);
-		return (NULL);
-	}
-	return (temp_file);
-}
+// 	temp_file = random_name();
+// 	fd = open(temp_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+// 	if (fd < 0)
+// 	{
+// 		perror(temp_file);
+// 		return (NULL);
+// 	}
+// 	return (temp_file);
+// }
 
 // /**
 //  * write_heredoc_content - Writes content to a temporary file for heredoc.

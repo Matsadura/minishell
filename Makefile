@@ -22,10 +22,12 @@ FIELDS_FILES = parsing/expander/fields/field_splitter.c parsing/expander/fields/
 			parsing/expander/fields/ambiguous_redirect_handler.c
 
 PARSER_FILES = parsing/parser/parse_command.c parsing/parser/parse_pipeline.c parsing/parser/parse_redirection.c \
-			parsing/parser/parse_word.c parsing/parser/parser_utils.c parsing/parser/parser.c \
-			parsing/parser/heredoc_expander.c parsing/parser/heredoc_parser.c
+			parsing/parser/parse_word.c parsing/parser/parser_utils.c parsing/parser/parser.c
+			
+HEREDOC_FILES = parsing/parser/heredoc/heredoc_expander.c parsing/parser/heredoc/heredoc_parser.c \
+			parsing/parser/heredoc/heredoc_utils.c
 
-PARSING_FILES = $(LEXER_FILES) $(TOKENISER_FILES) $(EXPANDER_FILES) $(FIELDS_FILES) $(PARSER_FILES)
+PARSING_FILES = $(LEXER_FILES) $(TOKENISER_FILES) $(EXPANDER_FILES) $(FIELDS_FILES) $(PARSER_FILES) $(HEREDOC_FILES)
 
 EXECUTION_FILES = execution/execution_command.c execution/execution_redirection.c \
 				execution/execution_pipe.c execution/execution_path.c execution/execution_builtins.c \
