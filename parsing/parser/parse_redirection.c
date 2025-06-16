@@ -6,7 +6,7 @@
 /*   By: aberkass <aberkass@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:25:52 by aberkass          #+#    #+#             */
-/*   Updated: 2025/05/06 03:15:30 by aberkass         ###   ########.fr       */
+/*   Updated: 2025/06/15 15:00:00 by aberkass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,27 @@ static void	append_to_redirections(t_redirect *redirect
 }
 
 /**
+ * handle_heredoc_parsing - processes heredoc during parsing phase
+ * @redirect_node: the heredoc redirection node
+ * @env: environment variables for expansion
+ * return: 1 on success, 0 on failure
+ */
+static int	handle_heredoc_parsing(t_redirect *redirect_node, char **env)
+{
+	if (redirect_node->type != HEREDOC)
+		return (1);
+	return (process_heredoc(redirect_node, env));
+}
+
+/**
  * parse_redirect - parses a redirection operator and its target filename
  * @cntxt: parser context containing the redirection tokens
  * @redirections: pointer to the redirections list to append to
+ * @env: environment variables for heredoc expansion
  * return: 1 on success, 0 on syntax error
  */
-int	parse_redirect(t_pars_context *cntxt, t_redirect **redirections)
+int	parse_redirect(t_pars_context *cntxt, t_redirect **redirections, 
+	char **env)
 {
 	t_redirect		*redirect_node;
 	t_token_type	redirect_type;
@@ -80,6 +95,8 @@ int	parse_redirect(t_pars_context *cntxt, t_redirect **redirections)
 	}
 	redirect_node = create_redirect_node(cntxt, redirect_type);
 	if (redirect_node == NULL)
+		return (0);
+	if (handle_heredoc_parsing(redirect_node, env) == 0)
 		return (0);
 	append_to_redirections(redirect_node, redirections);
 	consume_token(cntxt);

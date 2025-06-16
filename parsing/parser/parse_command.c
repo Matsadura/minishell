@@ -6,7 +6,7 @@
 /*   By: aberkass <aberkass@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:25:52 by aberkass          #+#    #+#             */
-/*   Updated: 2025/05/06 03:15:30 by aberkass         ###   ########.fr       */
+/*   Updated: 2025/06/15 15:00:00 by aberkass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,15 @@ static int	is_valid_cmd_token(t_pars_context *cntxt)
  * @cntxt: parser context containing the current token
  * @cmd: command node to add the token to
  * @count: pointer to argument count for word tokens
+ * @env: environment variables for heredoc expansion
  * return: 1 on success, 0 on failure
  */
-static int	process_cmd_token(t_pars_context *cntxt, t_cmd *cmd, int *count)
+static int	process_cmd_token(t_pars_context *cntxt, t_cmd *cmd, int *count,
+	char **env)
 {
 	if (is_redirection(cntxt->current_token->type))
 	{
-		if (parse_redirect(cntxt, &cmd->redirections) == 0)
+		if (parse_redirect(cntxt, &cmd->redirections, env) == 0)
 			return (0);
 	}
 	else if (cntxt->current_token->type == WORD)
@@ -79,9 +81,10 @@ static int	has_cmd_content(t_cmd *cmd, int args_count)
 /**
  * command - parses a complete command with its arguments and redirections
  * @cntxt: parser context containing the token stream
+ * @env: environment variables for heredoc expansion
  * return: parsed command node or NULL on error
  */
-t_cmd	*command(t_pars_context *cntxt)
+t_cmd	*command(t_pars_context *cntxt, char **env)
 {
 	t_cmd	*cmd_node;
 	int		args_count;
@@ -92,7 +95,7 @@ t_cmd	*command(t_pars_context *cntxt)
 		return (NULL);
 	while (cntxt->current_token != NULL && is_valid_cmd_token(cntxt))
 	{
-		if (process_cmd_token(cntxt, cmd_node, &args_count) == 0)
+		if (process_cmd_token(cntxt, cmd_node, &args_count, env) == 0)
 			return (NULL);
 	}
 	if (has_cmd_content(cmd_node, args_count) == 0)

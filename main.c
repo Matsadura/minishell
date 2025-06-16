@@ -32,7 +32,7 @@ static t_pipeline	*parse_input(char *input, char **env, int exit_status)
 	tokens = expander(tokens, env, exit_status);
 	if (tokens == NULL)
 		return (NULL);
-	pipeline = parse_tokens(tokens);
+	pipeline = parse_tokens(tokens, env);
 	return (pipeline);
 }
 
