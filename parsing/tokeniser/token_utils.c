@@ -94,6 +94,7 @@ t_token	*create_token_node(const char *value, t_token_type type)
 	new_token->type = type;
 	new_token->was_quoted = is_quoted_token(type, value);
 	new_token->needs_splitting = 0;
+	new_token->is_heredoc_target = 0;
 	new_token->next = NULL;
 	return (new_token);
 }
