@@ -94,7 +94,7 @@ t_token	*expander(t_token *tokens, char **env, int exit_status)
 			current->needs_splitting = cntxt.needs_splitting;
 		}
 		if (current->type == S_QUOTE || current->type == D_QUOTE)
-				current->type = WORD;
+			current->type = WORD;
 		current = current->next;
 	}
 	tokens = field_splitter(tokens);

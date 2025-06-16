@@ -77,7 +77,7 @@ static int	handle_heredoc_parsing(t_redirect *redirect_node, char **env)
  * @env: environment variables for heredoc expansion
  * return: 1 on success, 0 on syntax error
  */
-int	parse_redirect(t_pars_context *cntxt, t_redirect **redirections, 
+int	parse_redirect(t_pars_context *cntxt, t_redirect **redirections,
 	char **env)
 {
 	t_redirect		*redirect_node;

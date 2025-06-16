@@ -39,7 +39,8 @@ static int	find_var_end(char *str)
  * return: variable value or empty string if not found
  */
 static char	*get_value(char *var_name, char **env, int exit_status)
-{	char	*value;
+{
+	char	*value;
 	char	*exit_str;
 
 	if (ft_strcmp(var_name, "?") == 0)
@@ -58,12 +59,11 @@ static char	*get_value(char *var_name, char **env, int exit_status)
  * @result: current result string
  * @line: original line
  * @pos: position in line (will be updated)
- * @env: environment variables
- * @exit_status: current exit status
+ * @cntxt: expansion data (env and exit_status)
  * return: new result string with variable expanded
  */
-static char	*expand_variable(char *result, char *line, int *pos, 
-	char **env, int exit_status)
+static char	*expand_variable(char *result, char *line, int *pos,
+	t_heredoc_ctx *cntxt)
 {
 	int		var_len;
 	char	*var_name;
@@ -77,7 +77,7 @@ static char	*expand_variable(char *result, char *line, int *pos,
 	var_name = gc_strldup(line + *pos, var_len);
 	if (var_name == NULL)
 		return (result);
-	var_value = get_value(var_name, env, exit_status);
+	var_value = get_value(var_name, cntxt->env, cntxt->exit_status);
 	if (var_value == NULL)
 		return (result);
 	new_result = append_str_to_str(result, var_value);
@@ -94,9 +94,12 @@ static char	*expand_variable(char *result, char *line, int *pos,
  */
 char	*expand_heredoc_line(char *line, char **env, int exit_status)
 {
-	char	*result;
-	int		pos;
+	char			*result;
+	int				pos;
+	t_heredoc_ctx	cntxt;
 
+	cntxt.env = env;
+	cntxt.exit_status = exit_status;
 	result = gc_strldup("", 0);
 	if (result == NULL)
 		return (NULL);
@@ -104,7 +107,7 @@ char	*expand_heredoc_line(char *line, char **env, int exit_status)
 	while (line[pos])
 	{
 		if (line[pos] == '$')
-			result = expand_variable(result, line, &pos, env, exit_status);
+			result = expand_variable(result, line, &pos, &cntxt);
 		else
 		{
 			result = append_char_to_str(result, line[pos]);

@@ -58,6 +58,7 @@ void		set_syntax_error(t_pars_context *cntxt, char *message);
 void		consume_token(t_pars_context *cntxt);
 
 int			parse_word(t_pars_context *cntxt, char ***args, int *arg_count);
-int			parse_redirect(t_pars_context *cntxt, t_redirect **redirections, char **env);
+int			parse_redirect(t_pars_context *cntxt,
+				t_redirect **redirections, char **env);
 
 #endif

@@ -105,3 +105,13 @@ int	should_expand_heredoc(char *delimiter)
 	}
 	return (1);
 }
+
+/**
+ * handle_readline_eof - handles EOF condition during readline
+ * @clean_delimiter: the delimiter we were expecting
+ */
+void	handle_readline_eof(char *clean_delimiter)
+{
+	ft_dprintf(2, "warning: delimited by EOF (wanted `%s')\n",
+		clean_delimiter);
+}

@@ -15,8 +15,21 @@
 
 # include "minishell.h"
 
+typedef struct s_heredoc_ctx
+{
+	int		should_expand;
+	char	**env;
+	int		exit_status;
+}	t_heredoc_ctx;
+
+typedef struct s_expand_data
+{
+	char	**env;
+	int		exit_status;
+}	t_expand_data;
+
 //heredoc handler main function
-int 	process_heredoc(t_redirect *redirect, char **env);
+int		process_heredoc(t_redirect *redirect, char **env);
 
 //heredoc expander
 char	*expand_heredoc_line(char *line, char **env, int exit_status);
@@ -24,6 +37,7 @@ char	*expand_heredoc_line(char *line, char **env, int exit_status);
 //heredoc utils
 char	*create_temp_file(void);
 char	*remove_quotes(char *delimiter);
-int	    should_expand_heredoc(char *delimiter);
+int		should_expand_heredoc(char *delimiter);
+void	handle_readline_eof(char *clean_delimiter);
 
 #endif
