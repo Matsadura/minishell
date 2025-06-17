@@ -62,9 +62,8 @@ void	sigquit_child_handler(int sig)
 void	sigint_heredoc_handler(int sig)
 {
 	(void)sig;
-    write(STDOUT_FILENO, "^C\n", 3);
-    g_exit_status = 130;
-    rl_on_new_line();
-    rl_replace_line("", 0);
-    rl_done = 1;
+	g_exit_status = 999;
+	printf("> ^C\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
 }

@@ -60,7 +60,7 @@ static int	process_heredoc_line(int fd, char *line, t_heredoc_ctx *ctx)
  * @ctx: heredoc context containing expansion info and environment
  * return: 1 to continue, 0 to stop with error, 2 to stop with success
  */
-static int	process_single_line(int fd, char *line, char *clean_delimiter,
+int	process_single_line(int fd, char *line, char *clean_delimiter,
 	t_heredoc_ctx *ctx)
 {
 	if (ft_strcmp(line, clean_delimiter) == 0)
@@ -74,40 +74,6 @@ static int	process_single_line(int fd, char *line, char *clean_delimiter,
 		return (0);
 	}
 	free(line);
-	return (1);
-}
-
-/**
- * read_heredoc_input - reads heredoc input until delimiter is found
- * @fd: file descriptor to write to
- * @delimiter: original delimiter (potentially quoted)
- * @env: environment variables for expansion
- * return: 1 on success, 0 on failure
- */
-static int	read_heredoc_input(int fd, char *delimiter, char **env)
-{
-	char			*line;
-	char			*clean_delimiter;
-	t_heredoc_ctx	ctx;
-	int				result;
-
-	ctx.should_expand = should_expand_heredoc(delimiter);
-	ctx.env = env;
-	clean_delimiter = remove_quotes(delimiter);
-	if (!clean_delimiter)
-		return (0);
-	while (1)
-	{
-		line = readline("> ");
-		if (line == NULL)
-		{
-			handle_readline_eof(clean_delimiter);
-			break ;
-		}
-		result = process_single_line(fd, line, clean_delimiter, &ctx);
-		if (result != 1)
-			return (result == 2);
-	}
 	return (1);
 }
 
@@ -130,18 +96,15 @@ int	process_heredoc(t_redirect *redirect, char **env)
 	if (fd < 0)
 	{
 		perror(temp_file);
-		free(temp_file);
 		return (0);
 	}
 	result = read_heredoc_input(fd, redirect->filename, env);
 	close(fd);
-	if (result == 0)
+	if (result == 0 || g_exit_status == 130)
 	{
 		unlink(temp_file);
-		free(temp_file);
 		return (0);
 	}
 	redirect->temp_file = temp_file;
-	printf("temp file : %s\n", redirect->temp_file);
 	return (1);
 }

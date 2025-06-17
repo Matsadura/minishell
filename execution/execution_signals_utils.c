@@ -54,5 +54,5 @@ void	restore_signals(void)
 void	setup_heredoc_signals(void)
 {
 	signal(SIGINT, sigint_heredoc_handler);
-    signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }

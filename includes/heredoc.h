@@ -38,6 +38,9 @@ char	*expand_heredoc_line(char *line, char **env, int exit_status);
 char	*create_temp_file(void);
 char	*remove_quotes(char *delimiter);
 int		should_expand_heredoc(char *delimiter);
+int		read_heredoc_input(int fd, char *delimiter, char **env);
 void	handle_readline_eof(char *clean_delimiter);
+int		process_single_line(int fd, char *line, char *clean_delimiter,
+			t_heredoc_ctx *ctx);
 
 #endif
