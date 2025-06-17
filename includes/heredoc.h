@@ -42,5 +42,7 @@ int		read_heredoc_input(int fd, char *delimiter, char **env);
 void	handle_readline_eof(char *clean_delimiter);
 int		process_single_line(int fd, char *line, char *clean_delimiter,
 			t_heredoc_ctx *ctx);
+int		handle_heredoc_parent(pid_t pid, char *temp_file);
+int		handle_heredoc_child(char *temp_file, t_redirect *redirect, char **env);
 
 #endif

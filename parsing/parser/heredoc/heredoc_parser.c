@@ -86,25 +86,22 @@ int	process_single_line(int fd, char *line, char *clean_delimiter,
 int	process_heredoc(t_redirect *redirect, char **env)
 {
 	char	*temp_file;
-	int		fd;
-	int		result;
+	pid_t	pid;
 
 	temp_file = create_temp_file();
 	if (temp_file == NULL)
 		return (0);
-	fd = open(temp_file, O_WRONLY);
-	if (fd < 0)
+	pid = fork();
+	if (pid < 0)
 	{
-		perror(temp_file);
-		return (0);
-	}
-	result = read_heredoc_input(fd, redirect->filename, env);
-	close(fd);
-	if (result == 0 || g_exit_status == 130)
-	{
+		perror("fork");
 		unlink(temp_file);
 		return (0);
 	}
+	if (pid == 0)
+		handle_heredoc_child(temp_file, redirect, env);
+	if (!handle_heredoc_parent(pid, temp_file))
+		return (0);
 	redirect->temp_file = temp_file;
 	return (1);
 }

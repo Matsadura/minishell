@@ -13,79 +13,92 @@
 #include "../../../includes/minishell.h"
 
 /**
- * handle_heredoc_interrupt - handles interruption during heredoc input
- * @line: the line that was being read
- * return: 0 to stop the heredoc, 1 to continue
+ * handle_heredoc_child - Handles the child process for heredoc input.
+ * @temp_file: The temporary file created for heredoc input.
+ * @redirect: The redirect structure containing heredoc information.
+ * @env: Environment variables for expansion.
+ * Returns: 0 on success, 130 on SIGINT.
  */
-static int	handle_heredoc_interrupt(char *line)
+int	handle_heredoc_child(char *temp_file, t_redirect *redirect, char **env)
 {
-	g_exit_status = 130;
-	setup_signals();
-	if (line)
-		free(line);
-	return (0);
+	int	fd;
+	int	result;
+
+	fd = open(temp_file, O_WRONLY);
+	if (fd < 0)
+	{
+		perror(temp_file);
+		exit(1);
+	}
+	setup_heredoc_signals();
+	result = read_heredoc_input(fd, redirect->filename, env);
+	close(fd);
+	if (result)
+		exit(0);
+	else
+		exit(130);
 }
 
 /**
- * handle_heredoc_eof - handles EOF in heredoc input
- * @clean_delimiter: the clean delimiter to check against
- * return: 1 on success, 0 on failure
+ * handle_heredoc_parent - Handles the parent process after heredoc input.
+ * @pid: The process ID of the child process.
+ * @temp_file: The temporary file created for heredoc input.
+ * Returns: 1 on success, 0 on failure.
  */
-static int	handle_heredoc_eof(char *clean_delimiter)
+int	handle_heredoc_parent(pid_t pid, char *temp_file)
 {
-	handle_readline_eof(clean_delimiter);
-	setup_signals();
+	int	status;
+	int	exit_code;
+
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+	{
+		exit_code = WEXITSTATUS(status);
+		if (exit_code == 130)
+		{
+			g_exit_status = 130;
+			return (unlink(temp_file), 0);
+		}
+		else if (exit_code != 0)
+			return (unlink(temp_file), 0);
+	}
+	else if (WIFSIGNALED(status))
+	{
+		g_exit_status = 130;
+		return (unlink(temp_file), 0);
+	}
 	return (1);
 }
 
 /**
- * process_heredoc_loop - processes the heredoc input loop
- * @fd: file descriptor to write to
- * @clean_delimiter: delimiter to check against
- * @ctx: heredoc context containing expansion info and environment
- * return: 1 on success, 0 on failure
- */
-static int	process_heredoc_loop(int fd, char *clean_delimiter,
-	t_heredoc_ctx *ctx)
-{
-	char	*line;
-	int		result;
-
-	while (1)
-	{
-		line = readline("> ");
-		if (g_exit_status == 999)
-			return (handle_heredoc_interrupt(line));
-		if (line == NULL)
-			return (handle_heredoc_eof(clean_delimiter));
-		result = process_single_line(fd, line, clean_delimiter, ctx);
-		if (result != 1)
-		{
-			setup_signals();
-			return (result == 2);
-		}
-	}
-}
-
-/**
- * read_heredoc_input - reads heredoc input until delimiter is found
- * @fd: file descriptor to write to
- * @delimiter: original delimiter (potentially quoted)
- * @env: environment variables for expansion
- * return: 1 on success, 0 on failure
+ * read_heredoc_input - Reads input for heredoc until the delimiter is met.
+ * @fd: File descriptor to write the heredoc input to.
+ * @delimiter: The delimiter to stop reading input.
+ * @env: Environment variables for expansion.
  */
 int	read_heredoc_input(int fd, char *delimiter, char **env)
 {
+	char			*line;
 	char			*clean_delimiter;
 	t_heredoc_ctx	ctx;
-	int				ret;
+	int				result;
 
 	ctx.should_expand = should_expand_heredoc(delimiter);
 	ctx.env = env;
 	clean_delimiter = remove_quotes(delimiter);
 	if (!clean_delimiter)
 		return (0);
-	setup_heredoc_signals();
-	ret = process_heredoc_loop(fd, clean_delimiter, &ctx);
-	return (ret);
+	while (1)
+	{
+		line = readline("> ");
+		if (line == NULL)
+		{
+			handle_readline_eof(clean_delimiter);
+			break ;
+		}
+		result = process_single_line(fd, line, clean_delimiter, &ctx);
+		if (result != 1)
+			return (result == 2);
+	}
+	return (1);
 }
