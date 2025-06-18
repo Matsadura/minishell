@@ -53,19 +53,13 @@ static int	remove_env_var(char *arg, char **env)
 int	unset_builtin(char **args, char **env)
 {
 	int	i;
-	int	found;
 
 	if (args == NULL || args[1] == NULL)
-	{
-		ft_dprintf(STDERR, "unset: not enough arguments\n");
-		return (1);
-	}
+		return (0);
 	i = 1;
 	while (args[i])
 	{
-		found = remove_env_var(args[i], env);
-		if (found == 0)
-			ft_dprintf(STDERR, "unset: `%s`: not found\n", args[i]);
+		remove_env_var(args[i], env);
 		i++;
 	}
 	return (0);
