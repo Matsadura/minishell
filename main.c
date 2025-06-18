@@ -80,6 +80,7 @@ static void	main_loop(char **env_copy)
 			cleanup_and_exit(g_exit_status);
 		}
 		handle_input(input, env_copy);
+		signal(SIGINT, sigint_handler);
 		free(input);
 	}
 }

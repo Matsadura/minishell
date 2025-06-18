@@ -62,6 +62,7 @@ void	sigquit_child_handler(int sig)
 void	sigint_heredoc_handler(int sig)
 {
 	(void)sig;
-	printf("> ^C\n");
+	//printf("> ^C\n");
+	write(1, "\n", 1);
 	exit(130);
 }

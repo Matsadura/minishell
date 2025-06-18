@@ -91,6 +91,7 @@ int	process_heredoc(t_redirect *redirect, char **env)
 	temp_file = create_temp_file();
 	if (temp_file == NULL)
 		return (0);
+	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid < 0)
 	{
