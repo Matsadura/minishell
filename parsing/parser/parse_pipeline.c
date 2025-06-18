@@ -6,7 +6,7 @@
 /*   By: aberkass <aberkass@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 21:25:52 by aberkass          #+#    #+#             */
-/*   Updated: 2025/05/06 03:15:30 by aberkass         ###   ########.fr       */
+/*   Updated: 2025/06/15 15:00:00 by aberkass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,16 @@ static void	link_commands(t_cmd **current, t_cmd *cmd)
 /**
  * pipeline - parses a pipeline of commands connected by pipes
  * @cntxt: parser context containing token list and current token
+ * @env: environment variables for heredoc expansion
  * return: head of the command pipeline or NULL on error
  */
-t_cmd	*pipeline_parser(t_pars_context *cntxt)
+t_cmd	*pipeline_parser(t_pars_context *cntxt, char **env)
 {
 	t_cmd	*head;
 	t_cmd	*new_cmd;
 	t_cmd	*current;
 
-	head = command(cntxt);
+	head = command(cntxt, env);
 	if (head == NULL)
 		return (NULL);
 	current = head;
@@ -58,7 +59,7 @@ t_cmd	*pipeline_parser(t_pars_context *cntxt)
 	{
 		if (handle_pipe(cntxt) == 0)
 			return (NULL);
-		new_cmd = command(cntxt);
+		new_cmd = command(cntxt, env);
 		if (new_cmd == NULL)
 			return (NULL);
 		link_commands(&current, new_cmd);

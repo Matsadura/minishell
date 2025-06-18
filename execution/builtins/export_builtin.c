@@ -94,6 +94,35 @@ static void	set_env_var(char *arg, char **env)
 }
 
 /**
+ * no_arg - Prints all environment variables
+ * 		in the format "declare -x NAME=VALUE"
+ * @env: The current environment variables
+ * Return: 0 on success, 1 on failure
+ */
+int	no_arg(char **env)
+{
+	int	i;
+
+	if (env == NULL)
+	{
+		ft_dprintf(STDERR, "No environment variables found\n");
+		return (1);
+	}
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], "_=", 2) == 0)
+		{
+			i++;
+			continue ;
+		}
+		ft_dprintf(STDOUT, "declare -x %s\n", env[i]);
+		i++;
+	}
+	return (0);
+}
+
+/**
  * export_builtin - Exports environment variables
  * @args: The arguments passed to the export command
  * @env: The current environment variables
@@ -103,7 +132,7 @@ int	export_builtin(char **args, char **env)
 {
 	int (i), (ret);
 	if (args == NULL || args[1] == NULL)
-		return (ft_dprintf(STDERR, "export: No arguments provided\n"), 1);
+		return (no_arg(env), 0);
 	i = 1;
 	ret = 0;
 	while (args[i])

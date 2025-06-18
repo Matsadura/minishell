@@ -47,3 +47,12 @@ void	restore_signals(void)
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, sigquit_handler);
 }
+
+/**
+ * setup_heredoc_signals - Sets up signal handlers for heredoc input
+ */
+void	setup_heredoc_signals(void)
+{
+	signal(SIGINT, sigint_heredoc_handler);
+	signal(SIGQUIT, SIG_IGN);
+}

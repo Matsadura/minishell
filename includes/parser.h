@@ -48,16 +48,17 @@ typedef struct s_pipeline
 	int		cmd_count;
 }	t_pipeline;
 
-t_pipeline	*parse_tokens(t_token *tokens);
+t_pipeline	*parse_tokens(t_token *tokens, char **env);
 
-t_cmd		*pipeline_parser(t_pars_context *cntxt);
-t_cmd		*command(t_pars_context *cntxt);
+t_cmd		*pipeline_parser(t_pars_context *cntxt, char **env);
+t_cmd		*command(t_pars_context *cntxt, char **env);
 
 int			is_redirection(t_token_type type);
 void		set_syntax_error(t_pars_context *cntxt, char *message);
 void		consume_token(t_pars_context *cntxt);
 
 int			parse_word(t_pars_context *cntxt, char ***args, int *arg_count);
-int			parse_redirect(t_pars_context *cntxt, t_redirect **redirections);
+int			parse_redirect(t_pars_context *cntxt,
+				t_redirect **redirections, char **env);
 
 #endif

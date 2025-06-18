@@ -32,7 +32,7 @@ static t_pipeline	*parse_input(char *input, char **env, int exit_status)
 	tokens = expander(tokens, env, exit_status);
 	if (tokens == NULL)
 		return (NULL);
-	pipeline = parse_tokens(tokens);
+	pipeline = parse_tokens(tokens, env);
 	return (pipeline);
 }
 
@@ -51,7 +51,11 @@ static void	handle_input(char *input, char **env_copy)
 		add_history(input);
 		pipeline = parse_input(input, env_copy, g_exit_status);
 		if (pipeline == NULL)
+		{
+			if (g_exit_status == 130)
+				return ;
 			g_exit_status = 2;
+		}
 		else
 			execute_pipeline(pipeline, env_copy);
 	}
@@ -68,6 +72,8 @@ static void	main_loop(char **env_copy)
 
 	while (1)
 	{
+		signal(SIGINT, sigint_interactive_handler);
+		signal(SIGQUIT, SIG_IGN);
 		input = readline("minishell$ ");
 		if (input == NULL)
 		{

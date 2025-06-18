@@ -18,7 +18,7 @@
  * @redir: The redirection structure containing the type and filename.
  * Returns: 0 on success, -1 on failure.
  */
-int	redir_heredoc(t_cmd *command, t_redirect *redir)
+int	handle_redir_heredoc(t_cmd *command, t_redirect *redir)
 {
 	command->input_fd = open(redir->temp_file, O_RDONLY);
 	if (command->input_fd < 0)

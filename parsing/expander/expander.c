@@ -28,6 +28,19 @@ static void	init_expansion_context(t_exp_context *cntxt, char **env,
 	cntxt->needs_splitting = 0;
 }
 
+static void	set_heredoc_targets(t_token *tokens)
+{
+	t_token	*current;
+
+	current = tokens;
+	while (current->next != NULL)
+	{
+		if (current->type == HEREDOC)
+			current->next->is_heredoc_target = 1;
+		current = current->next;
+	}
+}
+
 /**
  * process_token_expansion - processes a single token for expansion
  * @token: the token to be processed and expanded
@@ -39,13 +52,14 @@ static char	*process_token_expansion(t_token *token, t_exp_context *cntxt)
 	char	*expanded;
 
 	cntxt->needs_splitting = 1;
-	if (token->type == D_QUOTE || token->type == S_QUOTE)
+	if ((token->type == D_QUOTE || token->type == S_QUOTE)
+		&& token->is_heredoc_target == 0)
 	{
 		cntxt->needs_splitting = 0;
 		expanded = process_quoted_token(token->value,
 				token->type, cntxt);
 	}
-	else if (token->type == WORD)
+	else if (token->type == WORD && token->is_heredoc_target == 0)
 		expanded = expand_token(token->value, cntxt);
 	else
 	{
@@ -69,6 +83,7 @@ t_token	*expander(t_token *tokens, char **env, int exit_status)
 	t_token			*current;
 
 	init_expansion_context(&cntxt, env, exit_status);
+	set_heredoc_targets(tokens);
 	current = tokens;
 	while (current != NULL)
 	{
@@ -77,9 +92,9 @@ t_token	*expander(t_token *tokens, char **env, int exit_status)
 		{
 			current->value = expanded;
 			current->needs_splitting = cntxt.needs_splitting;
-			if (current->type == S_QUOTE || current->type == D_QUOTE)
-				current->type = WORD;
 		}
+		if (current->type == S_QUOTE || current->type == D_QUOTE)
+			current->type = WORD;
 		current = current->next;
 	}
 	tokens = field_splitter(tokens);

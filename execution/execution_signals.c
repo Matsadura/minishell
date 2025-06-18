@@ -20,9 +20,6 @@ void	sigint_handler(int sig)
 {
 	(void)sig;
 	ft_putstr_fd("\n", STDOUT);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
 	g_exit_status = 130;
 }
 
@@ -53,4 +50,15 @@ void	sigquit_child_handler(int sig)
 	(void)sig;
 	ft_dprintf(STDERR, "Quit: (core dumped)\n");
 	exit(131);
+}
+
+/**
+ * sigint_heredoc_handler - Handles SIGINT during heredoc input
+ * @sig: Signal number
+ */
+void	sigint_heredoc_handler(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+	exit(130);
 }

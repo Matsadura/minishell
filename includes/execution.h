@@ -41,10 +41,6 @@ int		handle_redir_in(t_cmd *command, t_redirect *redir);
 int		handle_redir_out(t_cmd *command, t_redirect *redir);
 int		handle_redir_append(t_cmd *command, t_redirect *redir);
 int		handle_redir_heredoc(t_cmd *command, t_redirect *redir);
-char	*create_temp_file(void);
-int		write_heredoc_content(char *temp_file, char *delimiter);
-int		preprocess_heredocs(t_pipeline *pipeline);
-int		redir_heredoc(t_cmd *command, t_redirect *redir);
 
 /* Environment functions */
 
@@ -77,8 +73,11 @@ void	sigint_handler(int sig);
 void	sigquit_handler(int sig);
 void	sigint_child_handler(int sig);
 void	sigquit_child_handler(int sig);
+void	sigint_heredoc_handler(int sig);
 void	setup_signals(void);
 void	setup_child_signals(void);
+void	setup_heredoc_signals(void);
+void	sigint_interactive_handler(int sig);
 void	ignore_signals(void);
 void	restore_signals(void);
 
