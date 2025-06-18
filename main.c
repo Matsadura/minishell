@@ -72,6 +72,8 @@ static void	main_loop(char **env_copy)
 
 	while (1)
 	{
+		signal(SIGINT, sigint_interactive_handler);
+		signal(SIGQUIT, SIG_IGN);
 		input = readline("minishell$ ");
 		if (input == NULL)
 		{
@@ -80,7 +82,6 @@ static void	main_loop(char **env_copy)
 			cleanup_and_exit(g_exit_status);
 		}
 		handle_input(input, env_copy);
-		signal(SIGINT, sigint_handler);
 		free(input);
 	}
 }

@@ -20,9 +20,6 @@ void	sigint_handler(int sig)
 {
 	(void)sig;
 	ft_putstr_fd("\n", STDOUT);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
 	g_exit_status = 130;
 }
 
@@ -62,7 +59,6 @@ void	sigquit_child_handler(int sig)
 void	sigint_heredoc_handler(int sig)
 {
 	(void)sig;
-	//printf("> ^C\n");
 	write(1, "\n", 1);
 	exit(130);
 }

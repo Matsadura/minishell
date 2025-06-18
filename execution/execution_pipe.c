@@ -98,6 +98,8 @@ int	execute_pipeline(t_pipeline *pipeline, char **env)
 
 	if (pipeline == NULL || pipeline->head == NULL)
 		return (EXIT_FAILURE);
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 	if (pipeline->cmd_count == 1 && pipeline->head->args != NULL
 		&& pipeline->head->args[0] != NULL
 		&& is_builtin(pipeline->head->args[0]) == 1)
@@ -112,5 +114,7 @@ int	execute_pipeline(t_pipeline *pipeline, char **env)
 	if (cmd_count < 0)
 		return (g_exit_status);
 	g_exit_status = wait_for_children(pids, cmd_count);
+	signal(SIGINT, sigint_interactive_handler);
+	signal(SIGQUIT, SIG_IGN);
 	return (g_exit_status);
 }

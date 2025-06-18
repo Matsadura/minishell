@@ -77,6 +77,7 @@ void	sigint_heredoc_handler(int sig);
 void	setup_signals(void);
 void	setup_child_signals(void);
 void	setup_heredoc_signals(void);
+void	sigint_interactive_handler(int sig);
 void	ignore_signals(void);
 void	restore_signals(void);
 

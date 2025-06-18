@@ -35,7 +35,7 @@ EXECUTION_FILES = execution/execution_command.c execution/execution_redirection.
 				execution/builtins/pwd_builtin.c execution/builtins/echo_builtin.c execution/builtins/cd_builtin.c \
 				execution/builtins/exit_builtin.c execution/execution_pipe_utils.c execution/execution_redirection_utils.c \
 				execution/execution_redirection_utils2.c execution/execution_signals.c execution/execution_signals_utils.c \
-				execution/execution_utils.c
+				execution/execution_utils.c execution/execution_signals_utils2.c
 
 LIBFT      = libft/libft.a
 
