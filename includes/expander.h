@@ -36,9 +36,10 @@ t_token	*expander(t_token *tokens, char **env, int exit_status);
 
 //expander utils
 void	init_expansion_context(t_exp_context *cntxt, char **env,
-									int exit_status);
+			int exit_status);
 void	set_heredoc_targets(t_token *tokens);
-char	*process_token_expansion(t_token *token, t_exp_context *cntxt);					
+char	*process_token_expansion(t_token *token,
+			t_exp_context *cntxt);					
 
 //expander char utils
 char	*expand_token(char *token, t_exp_context *cntxt);
