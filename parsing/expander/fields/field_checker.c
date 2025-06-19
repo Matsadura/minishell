@@ -32,6 +32,35 @@ int	contains_whitespace(char *str)
 }
 
 /**
+ * should_split_export_arg - checks if an export token needs to be split or no
+ * @token: the export arg to evaluate for splitting
+ * @cntxt: field context to update with splitting decision
+ * return: 1 if token should be split 0 if it shouldn't
+ */
+int	should_split_export_arg(t_token *token, t_field_context *cntxt)
+{
+	char	*equal_pos;
+	char	*ptr;
+
+	equal_pos = ft_strchr(token->value, '=');
+	if (equal_pos != NULL)
+	{
+		ptr = token->value;
+		while (ptr < equal_pos)
+		{
+			if (is_white_space(*ptr) == 1)
+			{
+				cntxt->needs_splitting = 1;
+				return (1);
+			}
+			ptr++;
+		}
+	}
+	cntxt->needs_splitting = 0;
+	return (0);
+}
+
+/**
  * should_split_token - checks if a token needs to be split into fields 
  * @token: the token to evaluate for splitting
  * @cntxt: field context to update with splitting decision
@@ -43,6 +72,8 @@ int	should_split_token(t_token *token, t_token *prev_token,
 	set_redirect_context(token, prev_token, cntxt);
 	if (token->type == WORD && token->needs_splitting)
 	{
+		if (prev_token != NULL && ft_strcmp(prev_token->value, "export") == 0)
+			return (should_split_export_arg(token, cntxt));
 		if (token->was_quoted == 1)
 		{
 			cntxt->needs_splitting = 0;
