@@ -13,7 +13,7 @@ LEXER_FILES = parsing/lexer/lexer.c parsing/lexer/char_utils.c parsing/lexer/lex
 
 TOKENISER_FILES = parsing/tokeniser/tokeniser.c parsing/tokeniser/token_utils.c
 
-EXPANDER_FILES = parsing/expander/expander.c parsing/expander/expansion_utils.c \
+EXPANDER_FILES = parsing/expander/expander.c parsing/expander/expansion_char_utils.c \
 				parsing/expander/token_expansion.c parsing/expander/quote_processing.c \
 				parsing/expander/variable_expansion.c
 

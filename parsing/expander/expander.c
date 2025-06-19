@@ -13,63 +13,6 @@
 #include "../../includes/minishell.h"
 
 /**
- * init_expansion_context - initialises the expansion context structure
- * @cntxt: pointer to the expansion context to initialize
- * @env: environment array 
- * @exit_status: the last command exit status for $? expansion
- */
-static void	init_expansion_context(t_exp_context *cntxt, char **env,
-									int exit_status)
-{
-	cntxt->env = env;
-	cntxt->last_exit_status = exit_status;
-	cntxt->state = NORMAL;
-	cntxt->quote_removal = 0;
-	cntxt->needs_splitting = 0;
-}
-
-static void	set_heredoc_targets(t_token *tokens)
-{
-	t_token	*current;
-
-	current = tokens;
-	while (current->next != NULL)
-	{
-		if (current->type == HEREDOC)
-			current->next->is_heredoc_target = 1;
-		current = current->next;
-	}
-}
-
-/**
- * process_token_expansion - processes a single token for expansion
- * @token: the token to be processed and expanded
- * @context: expansion context containing state and environment info
- * return: expanded token value string, or NULL if no expansion needed
- */
-static char	*process_token_expansion(t_token *token, t_exp_context *cntxt)
-{
-	char	*expanded;
-
-	cntxt->needs_splitting = 1;
-	if ((token->type == D_QUOTE || token->type == S_QUOTE)
-		&& token->is_heredoc_target == 0)
-	{
-		cntxt->needs_splitting = 0;
-		expanded = process_quoted_token(token->value,
-				token->type, cntxt);
-	}
-	else if (token->type == WORD && token->is_heredoc_target == 0)
-		expanded = expand_token(token->value, cntxt);
-	else
-	{
-		expanded = NULL;
-		cntxt->needs_splitting = 0;
-	}
-	return (expanded);
-}
-
-/**
  * expander - main expansion function that processes a token list
  * @tokens: linked list of tokens to be expanded
  * @env: environment array

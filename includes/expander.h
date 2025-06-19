@@ -35,6 +35,12 @@ typedef struct s_exp_context
 t_token	*expander(t_token *tokens, char **env, int exit_status);
 
 //expander utils
+void	init_expansion_context(t_exp_context *cntxt, char **env,
+									int exit_status);
+void	set_heredoc_targets(t_token *tokens);
+char	*process_token_expansion(t_token *token, t_exp_context *cntxt);					
+
+//expander char utils
 char	*expand_token(char *token, t_exp_context *cntxt);
 int		process_char(char *token, char **res, int i, t_exp_context *cntxt);
 int		handle_single_quotes(int i, t_exp_context *cntxt);
