@@ -26,6 +26,8 @@ static int	ft_is_valid_identifier(const char *str)
 	if (str == NULL || *str == '\0' || ft_isdigit(*str) == 1)
 		return (0);
 	eq_pos = ft_strchr(str, '=');
+	if (eq_pos == str)
+		return (0);
 	if (eq_pos != NULL)
 	{
 		name_len = eq_pos - str;
