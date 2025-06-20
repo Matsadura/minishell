@@ -68,6 +68,8 @@ int	cd_builtin(char **args, char **env)
 		ft_dprintf(STDERR, "cd: %s: %s\n", target, strerror(errno));
 		return (1);
 	}
+	ft_bzero(&oldpwd, sizeof(oldpwd));
+	ft_bzero(&pwd, sizeof(pwd));
 	set_custom_var("OLDPWD", oldpwd, env);
 	getcwd(pwd, sizeof(pwd));
 	set_custom_var("PWD", pwd, env);
