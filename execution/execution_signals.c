@@ -38,7 +38,8 @@ void	sigquit_handler(int sig)
 void	sigint_child_handler(int sig)
 {
 	(void)sig;
-	exit(130);
+	//exit(130);
+	clean_exit(130);
 }
 
 /**
@@ -49,7 +50,8 @@ void	sigquit_child_handler(int sig)
 {
 	(void)sig;
 	ft_dprintf(STDERR, "Quit: (core dumped)\n");
-	exit(131);
+	//exit(131);
+	clean_exit(131);
 }
 
 /**
@@ -60,5 +62,6 @@ void	sigint_heredoc_handler(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
-	exit(130);
+	//exit(130);
+	clean_exit(130);
 }
