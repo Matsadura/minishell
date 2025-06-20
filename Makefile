@@ -73,7 +73,7 @@ EXECUTION_SRC = \
 		execution/execution_signals_utils2.c \
 		execution/execution_cleanup.c
 
-SRC = main.c $(PARSING_SRC) $(BUILTINS_SRC) $(EXECUTION_SRC) $(GC_SRC)
+SRC = main.c main_utils.c $(PARSING_SRC) $(BUILTINS_SRC) $(EXECUTION_SRC) $(GC_SRC)
 
 OBJ_DIR = objects
 

@@ -36,4 +36,6 @@
 
 extern int	g_exit_status;
 
+void	main_loop(char **env_copy);
+
 #endif
