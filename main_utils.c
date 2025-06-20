@@ -13,28 +13,24 @@
 #include "includes/minishell.h"
 
 /**
- * get_foldername - generate a colored prompt based on the cwd
+ * get_foldername - generate a prompt based on the cwd
  * return: the formatted prompt
  */
-char	*get_foldername(void)
+char *get_foldername(void)
 {
-	char	cwd[4096];
-	char	*tmp;
-
-	if (getcwd(cwd, 4096) == NULL)
-		return (gc_strdup("\001\033[34m\002minishell\001\033[0m\002 > "));
-	tmp = strrchr(cwd, '/');
-	if (tmp == NULL || *(tmp + 1) == '\0')
+    char	cwd[4096];
+	char	*prompt;
+    char	*tmp;
+    
+	tmp = getcwd(cwd, 4096);
+    if (tmp == NULL)
+        return (gc_strdup("minishell > "));
+    if (tmp[1] == '\0')
 	{
-		if (g_exit_status != 0)
-			return (gc_strdup("➜ \001\033[31m\002/\001\033[0m\002 "));
-		return (gc_strdup("➜ \001\033[34m\002/\001\033[0m\002 "));
+        return (gc_strdup("➜ /$ "));
 	}
-	if (g_exit_status != 0)
-		return (gc_strjoin(gc_strjoin("➜ \001\033[31m\002",
-					gc_strjoin(tmp + 1, " $")), "\001\033[0m\002 "));
-	return (gc_strjoin(gc_strjoin("➜ \001\033[34m\002",
-				gc_strjoin(tmp + 1, " $")), "\001\033[0m\002 "));
+	prompt = gc_strjoin("➜ ", tmp + 1);
+    return (gc_strjoin(prompt, "$ "));
 }
 
 /**
