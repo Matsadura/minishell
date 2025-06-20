@@ -41,15 +41,15 @@ char	*get_foldername(void)
  * get_input - displayed the formatted prompt and reads input line
  * return: the input line
  */
-char    *get_input(void)
+char	*get_input(void)
 {
-    char    *input;
-    char    *prompt;
+	char	*input;
+	char	*prompt;
 
-    prompt = get_foldername();
-    input = readline(prompt);
-    free (prompt);
-    return (input);
+	prompt = get_foldername();
+	input = readline(prompt);
+	free (prompt);
+	return (input);
 }
 
 /**
@@ -80,7 +80,7 @@ static t_pipeline	*parse_input(char *input, char **env, int exit_status)
  * @input: The input string to handle.
  * @env_copy: The environment variables to use during execution.
  */
-static void handle_input(char *input, char **env_copy)
+static void	handle_input(char *input, char **env_copy)
 {
 	t_pipeline	*pipeline;
 
