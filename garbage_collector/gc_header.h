@@ -38,6 +38,7 @@ char	*gc_strldup(const char *str, size_t len);
 char	*gc_substr(char const *s, unsigned int start, size_t len);
 char	**gc_split(char const *s, char c);
 char	*gc_strljoin(char const *s1, char const *s2, size_t len);
+char	*gc_itoa(int n);
 
 /* garbage collector utils */
 

@@ -7,6 +7,7 @@ GC_SRC = \
 		garbage_collector/gc_alloc.c \
 		garbage_collector/gc_utils.c \
 		garbage_collector/gc_strings.c \
+		garbage_collector/gc_itoa.c \
         garbage_collector/gc_split.c
 
 LEXER_SRC = \
