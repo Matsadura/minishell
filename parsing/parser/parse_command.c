@@ -27,7 +27,6 @@ static t_cmd	*init_cmd_node(void)
 	cmd->redirections = NULL;
 	cmd->input_fd = -1;
 	cmd->output_fd = -1;
-	cmd->pid = -1;
 	cmd->next = NULL;
 	return (cmd);
 }
