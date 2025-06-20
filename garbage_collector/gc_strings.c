@@ -22,6 +22,28 @@ char	*gc_strldup(const char *str, size_t len)
 {
 	char	*dup;
 
+	if (str == NULL)
+		return (NULL);
+	dup = gc_alloc(len + 1);
+	if (dup == NULL)
+		return (NULL);
+	ft_strlcpy(dup, str, len + 1);
+	return (dup);
+}
+
+/**
+ * gc_strldup - duplicates a string using garbage collection
+ * @str: string to duplicate
+ * return: pointer to duplicated string or NULL on failure
+ */
+char	*gc_strdup(const char *str)
+{
+	char	*dup;
+	size_t	len;
+
+	if (str == NULL)
+		return (NULL);
+	len = ft_strlen(str);
 	dup = gc_alloc(len + 1);
 	if (dup == NULL)
 		return (NULL);
@@ -41,7 +63,7 @@ char	*gc_substr(char const *s, unsigned int start, size_t len)
 	char	*sub;
 	size_t	l;
 
-	if (!s)
+	if (s == NULL)
 		return (NULL);
 	l = ft_strlen(s);
 	if (!s[0] || start > l)
@@ -53,6 +75,26 @@ char	*gc_substr(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	ft_strlcpy(sub, s + start, len + 1);
 	return (sub);
+}
+
+/**
+ * gc_strljoin - joins two strings using garbage collection
+ * @s1: first string
+ * @s2: second string
+ * Return: pointer to the joined string or NULL on failure
+ */
+char	*gc_strjoin(char const *s1, char const *s2)
+{
+	char	*str;
+
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	str = gc_alloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (str == NULL)
+		return (NULL);
+	ft_strlcpy(str, (char *)s1, ft_strlen(s1) + 1);
+	ft_strlcat(str, (char *)s2, ft_strlen(s1) + ft_strlen(s2) + 1);
+	return (str);
 }
 
 /**

@@ -1,6 +1,6 @@
 NAME 	= minishell
 CC      = cc
-CFLAGS  = -Wall -Werror -Wextra #-ggdb
+CFLAGS  = -Wall -Werror -Wextra -ggdb
 LDFLAGS = -lreadline
 
 GC_SRC = \

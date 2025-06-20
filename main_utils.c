@@ -22,19 +22,19 @@ char	*get_foldername(void)
 	char	*tmp;
 
 	if (getcwd(cwd, 4096) == NULL)
-		return (ft_strdup("\001\033[34m\002minishell\001\033[0m\002 > "));
+		return (gc_strdup("\001\033[34m\002minishell\001\033[0m\002 > "));
 	tmp = strrchr(cwd, '/');
 	if (tmp == NULL || *(tmp + 1) == '\0')
 	{
 		if (g_exit_status != 0)
-			return (ft_strdup("➜ \001\033[31m\002/\001\033[0m\002 "));
-		return (ft_strdup("➜ \001\033[34m\002/\001\033[0m\002 "));
+			return (gc_strdup("➜ \001\033[31m\002/\001\033[0m\002 "));
+		return (gc_strdup("➜ \001\033[34m\002/\001\033[0m\002 "));
 	}
 	if (g_exit_status != 0)
-		return (ft_strjoin(ft_strjoin("➜ \001\033[31m\002",
-					ft_strjoin(tmp + 1, " $")), "\001\033[0m\002 "));
-	return (ft_strjoin(ft_strjoin("➜ \001\033[34m\002",
-				ft_strjoin(tmp + 1, " $")), "\001\033[0m\002 "));
+		return (gc_strjoin(gc_strjoin("➜ \001\033[31m\002",
+					gc_strjoin(tmp + 1, " $")), "\001\033[0m\002 "));
+	return (gc_strjoin(gc_strjoin("➜ \001\033[34m\002",
+				gc_strjoin(tmp + 1, " $")), "\001\033[0m\002 "));
 }
 
 /**
@@ -48,7 +48,7 @@ char	*get_input(void)
 
 	prompt = get_foldername();
 	input = readline(prompt);
-	free (prompt);
+	gc_free(prompt);
 	return (input);
 }
 
