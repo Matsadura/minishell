@@ -70,7 +70,8 @@ EXECUTION_SRC = \
 		execution/execution_redirection.c\
 		execution/execution_signals.c \
 		execution/execution_signals_utils.c \
-		execution/execution_signals_utils2.c
+		execution/execution_signals_utils2.c \
+		execution/execution_cleanup.c
 
 SRC = main.c $(PARSING_SRC) $(BUILTINS_SRC) $(EXECUTION_SRC) $(GC_SRC)
 

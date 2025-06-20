@@ -84,5 +84,6 @@ void	restore_signals(void);
 /* Cleanup functions */
 
 void	cleanup_and_exit(int exit_code);
+void	clean_exit(int exit_code);
 
 #endif /* EXECUTION_H */
