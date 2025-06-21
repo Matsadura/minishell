@@ -64,11 +64,14 @@ int	should_split_export_arg(t_token *token, t_field_context *cntxt)
  * should_split_token - checks if a token needs to be split into fields 
  * @token: the token to evaluate for splitting
  * @cntxt: field context to update with splitting decision
+  * @env: environment list to get IFS from
  * return: 1 if token should be split 0 if it shouldn't
  */
-int	should_split_token(t_token *token, t_token *prev_token,
-		t_field_context *cntxt)
+int	should_split_token_ifs(t_token *token, t_token *prev_token,
+		t_field_context *cntxt, char **env)
 {
+	char	*ifs;
+
 	set_redirect_context(token, prev_token, cntxt);
 	if (token->type == WORD && token->needs_splitting)
 	{
@@ -84,7 +87,8 @@ int	should_split_token(t_token *token, t_token *prev_token,
 			cntxt->needs_splitting = 1;
 			return (1);
 		}
-		if (contains_whitespace(token->value))
+		ifs = get_ifs_value(env);
+		if (contains_ifs_character(token->value, ifs))
 		{
 			cntxt->needs_splitting = 1;
 			return (1);

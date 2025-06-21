@@ -31,7 +31,8 @@ FIELDS_SRC = \
 		parsing/expander/fields/field_splitter.c \
 		parsing/expander/fields/field_list_utils.c \
 		parsing/expander/fields/field_checker.c \
-		parsing/expander/fields/string_splitter.c \
+		parsing/expander/fields/field_splitter_ifs.c \
+		parsing/expander/fields/field_splitter_ifs_utils.c \
 		parsing/expander/fields/ambiguous_redirect_handler.c
 
 PARSER_SRC = \

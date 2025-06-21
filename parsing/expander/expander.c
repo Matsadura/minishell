@@ -40,6 +40,6 @@ t_token	*expander(t_token *tokens, char **env, int exit_status)
 			current->type = WORD;
 		current = current->next;
 	}
-	tokens = field_splitter(tokens);
+	tokens = field_splitter(tokens, env);
 	return (tokens);
 }

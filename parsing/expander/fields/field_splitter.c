@@ -29,14 +29,15 @@ static void	init_field_context(t_field_context *cntxt)
  * @token: the token to be split into multiple fields
  * @new_list: pointer to the new token list being built
  * @cntxt: field context containing splitting state information
+ * @env: environment list for IFS
  * return: 1 on success or 0 on error (ambiguous redirect)
  */
 static int	process_splittable_token(t_token *token, t_token **new_list,
-			t_field_context *cntxt)
+			t_field_context *cntxt, char **env)
 {
 	t_token	*split_tokens;
 
-	split_tokens = split_token(token, cntxt);
+	split_tokens = split_token(token, cntxt, env);
 	if (split_tokens == NULL)
 		return (0);
 	append_token_list(new_list, split_tokens);
@@ -62,7 +63,7 @@ static void	process_regular_token(t_token *token, t_token **new_list)
  * @tokens: linked list of expanded tokens to process for field splitting
  * return: new token list with field splitting applied
  */
-t_token	*field_splitter(t_token *tokens)
+t_token	*field_splitter(t_token *tokens, char **env)
 {
 	t_token			*current;
 	t_token			*prev;
@@ -75,9 +76,10 @@ t_token	*field_splitter(t_token *tokens)
 	init_field_context(&cntxt);
 	while (current != NULL)
 	{
-		if (should_split_token(current, prev, &cntxt))
+		if (should_split_token_ifs(current, prev, &cntxt, env))
 		{
-			if (process_splittable_token(current, &new_list, &cntxt) == 0)
+			if (process_splittable_token(current, &new_list,
+					&cntxt, env) == 0)
 				return (NULL);
 		}
 		else
