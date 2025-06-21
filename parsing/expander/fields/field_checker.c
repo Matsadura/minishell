@@ -35,31 +35,20 @@ int	contains_whitespace(char *str)
  * should_split_export_arg - checks if an export token needs to be split or no
  * @token: the export arg to evaluate for splitting
  * @cntxt: field context to update with splitting decision
- * @env: environment list
  * return: 1 if token should be split 0 if it shouldn't
  */
-static int	should_split_export_arg(t_token *token, t_field_context *cntxt, char **env)
-{
+int	should_split_export_arg(t_token *token, t_field_context *cntxt)
+{	
 	char	*equal_pos;
 	char	*ptr;
-	char	*ifs;
 
-	// ifs = get_ifs_value(env);
-	// if (contains_ifs_character(token->value, ifs))
-	// {
-	// 	cntxt->needs_splitting = 1;
-	// 	return (1);
-	// }
-	// cntxt->needs_splitting = 0;
-	// return (0);
 	equal_pos = ft_strchr(token->value, '=');
-	ifs = get_ifs_value(env);
 	if (equal_pos != NULL)
 	{
 		ptr = token->value;
 		while (ptr < equal_pos)
 		{
-			if (is_ifs_char(*ptr, ifs) == 1)
+			if (is_white_space(*ptr) == 1)
 			{
 				cntxt->needs_splitting = 1;
 				return (1);
@@ -78,13 +67,13 @@ static int	should_split_export_arg(t_token *token, t_field_context *cntxt, char 
  * @env: environment list
  * return: 1 if token should be split, 0 otherwise
  */
-static int	handle_word_splitting(t_token *token,
+static int	handle_word_splitting(t_token *token, t_token *prev_token,
 		t_field_context *cntxt, char **env)
 {
 	char	*ifs;
 
-	if (token->is_export == 1)
-		return (should_split_export_arg(token, cntxt, env));
+	if (prev_token->is_export == 1)
+		return (should_split_export_arg(token, cntxt));
 	if (token->was_quoted == 1)
 	{
 		cntxt->needs_splitting = 0;
@@ -116,7 +105,7 @@ int	should_split_token_ifs(t_token *token, t_token *prev_token,
 {
 	set_redirect_context(token, prev_token, cntxt);
 	if (token->type == WORD && token->needs_splitting)
-		return (handle_word_splitting(token, cntxt, env));
+		return (handle_word_splitting(token, prev_token, cntxt, env));
 	cntxt->needs_splitting = 0;
 	return (0);
 }
