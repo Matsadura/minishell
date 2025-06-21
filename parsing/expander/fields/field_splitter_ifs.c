@@ -1,5 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   field_splitter_ifs.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aberkass <aberkass@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/21 00:15:16 by aberkass          #+#    #+#             */
+/*   Updated: 2025/06/21 08:37:05 by aberkass         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../includes/minishell.h"
 
+/**
+ * handle_empty_ifs - handle the case when IFS is empty
+ * @s: the string to return as single field
+ * return: array containing single string or NULL on failure
+ */
 static char    **handle_empty_ifs(char const *s)
 {
     char    **result;
@@ -17,6 +34,12 @@ static char    **handle_empty_ifs(char const *s)
     return (result);
 }
 
+/**
+ * wc_ifs - count numbers of word in a string using IFS
+ * @s: the string to count words in
+ * @ifs: IFS set containing seperator chars
+ * return: number of words that could result by ifs splitting
+ */
 static int wc_ifs(char const *s, char *ifs)
 {
     int wc;
@@ -43,6 +66,13 @@ static int wc_ifs(char const *s, char *ifs)
     return (wc);
 }
 
+/**
+ * split_words - split string into words based on IFS characters
+ * @s: string to split
+ * @ifs: IFS characters set
+ * @word_count: number of words to allocate for
+ * return: array of split words or NULL on failure
+ */
 static char    **split_words(char const *s, char *ifs, int word_count)
 {
     char    **splited;
@@ -73,6 +103,12 @@ static char    **split_words(char const *s, char *ifs, int word_count)
     return (splited);
 }
 
+/**
+ * split_by_ifs - split string into fields based on IFS characters
+ * @s: string to split
+ * @ifs: IFS characters set
+ * return: array of field strings or NULL on failure
+ */
 char    **split_by_ifs(char const *s, char *ifs)
 {
     int word_count;
