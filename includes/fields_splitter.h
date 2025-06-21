@@ -29,7 +29,7 @@ t_token	*field_splitter(t_token *tokens, char **env);
 //fields splitter utils
 int		contains_whitespace(char *str);
 int		should_split_token_ifs(t_token *token, t_token *prev_token,
-		 t_field_context *cntxt, char **env);
+			t_field_context *cntxt, char **env);
 t_token	*split_token(t_token *token, t_field_context *cntxt, char **env);
 void	append_token_list(t_token **dest, t_token *src);
 void	free_fields_array(char **fields);

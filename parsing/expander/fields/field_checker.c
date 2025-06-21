@@ -38,7 +38,7 @@ int	contains_whitespace(char *str)
  * return: 1 if token should be split 0 if it shouldn't
  */
 int	should_split_export_arg(t_token *token, t_field_context *cntxt)
-{	
+{
 	char	*equal_pos;
 	char	*ptr;
 

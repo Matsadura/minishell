@@ -13,43 +13,6 @@
 #include "includes/minishell.h"
 
 /**
- * get_foldername - generate a prompt based on the cwd
- * return: the formatted prompt
- */
-char	*get_foldername(void)
-{
-	char	cwd[4096];
-	char	*prompt;
-	char	*tmp;
-
-	tmp = getcwd(cwd, 4096);
-	if (tmp == NULL)
-		return (gc_strdup("minishell > "));
-	if (tmp[1] == '\0')
-	{
-		return (gc_strdup("➜ /$ "));
-	}
-	prompt = gc_strjoin("➜ ", tmp + 1);
-	return (gc_strjoin(prompt, "$ "));
-}
-
-/**
- * get_input - displayed the formatted prompt and reads input line
- * return: the input line
- */
-char	*get_input(void)
-{
-	char	*input;
-	//char	*prompt;
-
-	// prompt = get_foldername();
-	//input = readline(prompt);
-	//gc_free(prompt);
-	input = readline("minishell > ");
-	return (input);
-}
-
-/**
  * parse_input - Parses the input string into a pipeline structure.
  * @input: The input string to parse.
  * @env: The environment variables to use during parsing.
@@ -109,7 +72,7 @@ void	main_loop(char **env_copy)
 	{
 		signal(SIGINT, sigint_interactive_handler);
 		signal(SIGQUIT, SIG_IGN);
-		input = get_input();
+		input = readline("minishell $");
 		if (input == NULL)
 		{
 			printf("exit\n");
