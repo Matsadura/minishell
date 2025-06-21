@@ -21,11 +21,11 @@ TOKENISER_SRC = \
 
 EXPANDER_SRC = \
 		parsing/expander/expander.c \
-		parsing/expander/expansion_char_utils.c \
+		parsing/expander/expander_char_utils.c \
 		parsing/expander/token_expansion.c \
 		parsing/expander/quote_processing.c \
 		parsing/expander/variable_expansion.c \
-		parsing/expander/expansion_utils.c
+		parsing/expander/expander_utils.c \
 
 FIELDS_SRC = \
 		parsing/expander/fields/field_splitter.c \
