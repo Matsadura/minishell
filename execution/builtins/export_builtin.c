@@ -103,24 +103,28 @@ static void	set_env_var(char *arg, char **env)
  */
 int	no_arg(char **env)
 {
-	int	i;
+	int		i;
+	int		count;
+	char	**sorted_env;
 
 	if (env == NULL)
-	{
-		ft_dprintf(STDERR, "No environment variables found\n");
+		return (ft_dprintf(STDERR, "No environment variables found\n"), 1);
+	count = env_count(env);
+	sorted_env = (char **)malloc(sizeof(char *) * (count + 1));
+	if (!sorted_env)
 		return (1);
-	}
 	i = 0;
-	while (env[i])
+	while (i < count)
 	{
-		if (ft_strncmp(env[i], "_=", 2) == 0)
-		{
-			i++;
-			continue ;
-		}
-		ft_dprintf(STDOUT, "declare -x %s\n", env[i]);
+		sorted_env[i] = env[i];
 		i++;
 	}
+	sorted_env[count] = NULL;
+	env_bubble_sort(sorted_env, count);
+	i = 0;
+	while (i < count)
+		print_export_var(sorted_env[i++]);
+	free(sorted_env);
 	return (0);
 }
 

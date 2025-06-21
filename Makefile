@@ -54,6 +54,7 @@ PARSING_SRC = $(LEXER_SRC) $(TOKENISER_SRC) $(EXPANDER_SRC) $(FIELDS_SRC) $(PARS
 BUILTINS_SRC = \
 		execution/builtins/env_builtin.c \
 		execution/builtins/export_builtin.c \
+		execution/builtins/export_builtin_utils.c \
 		execution/builtins/unset_builtin.c \
 		execution/builtins/pwd_builtin.c \
 		execution/builtins/echo_builtin.c \

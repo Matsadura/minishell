@@ -66,6 +66,9 @@ int		is_builtin(const char *cmd);
 int		save_and_redirect_builtin(t_cmd *command, int *saved_stdin,
 			int *saved_stdout);
 void	restore_builtin_fds(int saved_stdin, int saved_stdout);
+int		env_count(char **env);
+void	env_bubble_sort(char **env, int count);
+void	print_export_var(char *env_var);
 
 /* Signals functions */
 
