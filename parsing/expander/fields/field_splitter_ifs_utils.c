@@ -6,7 +6,7 @@ char    *get_ifs_value(char **env)
 
     ifs_value = get_env(env, "IFS");
     if (ifs_value == NULL)
-        return (" \t");
+        return (" ");
     if (ifs_value[0] == '\0')
         return ("");
     return (ifs_value);
