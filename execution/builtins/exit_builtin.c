@@ -21,7 +21,8 @@ static int	handle_exit_arg(char **args)
 {
 	if (ft_isnumber(args[1]) == 0)
 	{
-		ft_dprintf(STDERR, "exit\nexit: %s: numeric argument required\n", args[1]);
+		ft_dprintf(STDERR, "exit\nexit: %s: numeric argument required\n",
+			args[1]);
 		g_exit_status = 2;
 	}
 	else
@@ -29,7 +30,8 @@ static int	handle_exit_arg(char **args)
 		g_exit_status = ft_atoi(args[1]);
 		if (g_exit_status < 0 || g_exit_status > 255 || ft_strlen(args[1]) > 20)
 		{
-			ft_dprintf(STDERR, "exit\nexit: %s: numeric argument required\n", args[1]);
+			ft_dprintf(STDERR, "exit\nexit: %s: numeric argument required\n",
+				args[1]);
 			g_exit_status = 2;
 		}
 		else

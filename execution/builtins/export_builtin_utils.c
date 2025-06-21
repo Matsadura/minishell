@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export_builtin_utils.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zzaoui <zzaoui@student.1337.ma>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/21 11:37:49 by zzaoui            #+#    #+#             */
+/*   Updated: 2025/06/21 11:37:50 by zzaoui           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/execution.h"
 
 /**
@@ -7,7 +19,9 @@
  */
 int	env_count(char **env)
 {
-	int count = 0;
+	int	count;
+
+	count = 0;
 	while (env && env[count])
 		count++;
 	return (count);
@@ -25,10 +39,10 @@ void	env_bubble_sort(char **env, int count)
 	char	*tmp;
 
 	i = 0;
-	while ( i < count - 1)
+	while (i < count - 1)
 	{
 		j = 0;
-		while( j < count - i - 1)
+		while (j < count - i - 1)
 		{
 			if (ft_strcmp(env[j], env[j + 1]) > 0)
 			{

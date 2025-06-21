@@ -17,16 +17,16 @@
  * @env: environment list
  * return: IFS value, or " " as default, or empty if it was set to empty
  */
-char    *get_ifs_value(char **env)
+char	*get_ifs_value(char **env)
 {
-    char    *ifs_value;
+	char	*ifs_value;
 
-    ifs_value = get_env(env, "IFS");
-    if (ifs_value == NULL)
-        return (" ");
-    if (ifs_value[0] == '\0')
-        return ("");
-    return (ifs_value);
+	ifs_value = get_env(env, "IFS");
+	if (ifs_value == NULL)
+		return (" ");
+	if (ifs_value[0] == '\0')
+		return ("");
+	return (ifs_value);
 }
 
 /**
@@ -35,20 +35,20 @@ char    *get_ifs_value(char **env)
  * @ifs: the IFS set
  * return: 1 if the character was in the set, 0 otherwise
  */
-int is_ifs_char(char c, char *ifs)
+int	is_ifs_char(char c, char *ifs)
 {
-    int i;
+	int	i;
 
-    if (ifs == NULL)
-        return (0);
-    i = 0;
-    while (ifs[i] != '\0')
-    {
-        if (ifs[i] == c)
-            return (1);
-        i++;
-    }
-    return (0);
+	if (ifs == NULL)
+		return (0);
+	i = 0;
+	while (ifs[i] != '\0')
+	{
+		if (ifs[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 /**
@@ -57,18 +57,18 @@ int is_ifs_char(char c, char *ifs)
  * @ifs: the IFS set
  * return: 1 if the string contains IFS characters, 0 otherwise
  */
-int contains_ifs_character(char *str, char *ifs)
+int	contains_ifs_character(char *str, char *ifs)
 {
-    int i;
+	int	i;
 
-    if (str == NULL || ifs == NULL || ifs[0] == '\0')
-        return (0);
-    i = 0;
-    while (str[i] != '\0')
-    {
-        if (is_ifs_char(str[i], ifs))
-            return (1);
-        i++;
-    }
-    return (0);
+	if (str == NULL || ifs == NULL || ifs[0] == '\0')
+		return (0);
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (is_ifs_char(str[i], ifs))
+			return (1);
+		i++;
+	}
+	return (0);
 }

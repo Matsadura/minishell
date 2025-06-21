@@ -29,17 +29,14 @@ int	handle_heredoc_child(char *temp_file, t_redirect *redirect, char **env)
 	{
 		perror(temp_file);
 		clean_exit(1);
-		//exit(1);
 	}
 	setup_heredoc_signals();
 	result = read_heredoc_input(fd, redirect->filename, env);
 	close(fd);
 	if (result)
 		clean_exit(0);
-		//exit(0);
 	else
 		clean_exit(130);
-		//exit(130);
 	return (1337);
 }
 

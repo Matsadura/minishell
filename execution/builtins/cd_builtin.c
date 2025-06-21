@@ -19,8 +19,9 @@
  */
 static char	*get_home_dir(char **env)
 {
-	char	*home = get_env(env, "HOME");
+	char	*home;
 
+	home = get_env(env, "HOME");
 	if (home == NULL)
 		ft_dprintf(STDERR, "cd: HOME not set\n");
 	return (home);
@@ -33,8 +34,9 @@ static char	*get_home_dir(char **env)
  */
 static char	*get_oldpwd_dir(char **env)
 {
-	char	*oldpwd = get_env(env, "OLDPWD");
+	char	*oldpwd;
 
+	oldpwd = get_env(env, "OLDPWD");
 	if (oldpwd == NULL)
 		ft_dprintf(STDERR, "cd: OLDPWD not set\n");
 	return (oldpwd);
@@ -97,7 +99,7 @@ int	cd_builtin(char **args, char **env)
 
 	target = get_target_directory(args, env);
 	if (target == NULL)
-	return (1);
+		return (1);
 	ft_bzero(&oldpwd, sizeof(oldpwd));
 	ft_bzero(&pwd, sizeof(pwd));
 	getcwd(oldpwd, sizeof(oldpwd));

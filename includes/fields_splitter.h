@@ -35,10 +35,10 @@ void	append_token_list(t_token **dest, t_token *src);
 void	free_fields_array(char **fields);
 
 //ifs utils
-char    **split_by_ifs(char const *s, char *ifs);
-char    *get_ifs_value(char **env);
-int is_ifs_char(char c, char *ifs);
-int contains_ifs_character(char *str, char *ifs);
+char	**split_by_ifs(char const *s, char *ifs);
+char	*get_ifs_value(char **env);
+int		is_ifs_char(char c, char *ifs);
+int		contains_ifs_character(char *str, char *ifs);
 
 //ambiguous redirect handlers
 void	set_redirect_context(t_token *token, t_token *prev_token,

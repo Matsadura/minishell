@@ -16,21 +16,21 @@
  * get_foldername - generate a prompt based on the cwd
  * return: the formatted prompt
  */
-char *get_foldername(void)
+char	*get_foldername(void)
 {
-    char	cwd[4096];
+	char	cwd[4096];
 	char	*prompt;
-    char	*tmp;
-    
+	char	*tmp;
+
 	tmp = getcwd(cwd, 4096);
-    if (tmp == NULL)
-        return (gc_strdup("minishell > "));
-    if (tmp[1] == '\0')
+	if (tmp == NULL)
+		return (gc_strdup("minishell > "));
+	if (tmp[1] == '\0')
 	{
-        return (gc_strdup("➜ /$ "));
+		return (gc_strdup("➜ /$ "));
 	}
 	prompt = gc_strjoin("➜ ", tmp + 1);
-    return (gc_strjoin(prompt, "$ "));
+	return (gc_strjoin(prompt, "$ "));
 }
 
 /**
