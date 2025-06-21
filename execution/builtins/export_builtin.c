@@ -23,7 +23,7 @@ static int	ft_is_valid_identifier(const char *str)
 	char	*eq_pos;
 	int		name_len;
 
-	if (str == NULL || *str == '\0' || ft_isdigit(*str) == 1)
+	if (str == NULL || *str == '\0' || (ft_isalpha(*str) == 0 && *str != '_'))
 		return (0);
 	eq_pos = ft_strchr(str, '=');
 	if (eq_pos == str)
