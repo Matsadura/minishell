@@ -26,7 +26,7 @@ t_token	*expander(t_token *tokens, char **env, int exit_status)
 	t_token			*current;
 
 	init_expansion_context(&cntxt, env, exit_status);
-	set_heredoc_targets(tokens);
+	mark_tokens(tokens);
 	current = tokens;
 	while (current != NULL)
 	{

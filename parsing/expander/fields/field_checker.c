@@ -38,12 +38,20 @@ int	contains_whitespace(char *str)
  * @env: environment list
  * return: 1 if token should be split 0 if it shouldn't
  */
-int	should_split_export_arg(t_token *token, t_field_context *cntxt, char **env)
+static int	should_split_export_arg(t_token *token, t_field_context *cntxt, char **env)
 {
 	char	*equal_pos;
 	char	*ptr;
 	char	*ifs;
 
+	// ifs = get_ifs_value(env);
+	// if (contains_ifs_character(token->value, ifs))
+	// {
+	// 	cntxt->needs_splitting = 1;
+	// 	return (1);
+	// }
+	// cntxt->needs_splitting = 0;
+	// return (0);
 	equal_pos = ft_strchr(token->value, '=');
 	ifs = get_ifs_value(env);
 	if (equal_pos != NULL)
@@ -66,17 +74,16 @@ int	should_split_export_arg(t_token *token, t_field_context *cntxt, char **env)
 /**
  * handle_word_splitting - handle word token splitting logic
  * @token: the token to evaluate
- * @prev_token: the previous token
  * @cntxt: field context
  * @env: environment list
  * return: 1 if token should be split, 0 otherwise
  */
-static int	handle_word_splitting(t_token *token, t_token *prev_token,
+static int	handle_word_splitting(t_token *token,
 		t_field_context *cntxt, char **env)
 {
 	char	*ifs;
 
-	if (prev_token != NULL && ft_strcmp(prev_token->value, "export") == 0)
+	if (token->is_export == 1)
 		return (should_split_export_arg(token, cntxt, env));
 	if (token->was_quoted == 1)
 	{
@@ -98,7 +105,7 @@ static int	handle_word_splitting(t_token *token, t_token *prev_token,
 }
 
 /**
- * should_split_token - checks if a token needs to be split into fields 
+ * should_split_token_ifs - checks if a token needs to be split into fields 
  * @token: the token to evaluate for splitting
  * @cntxt: field context to update with splitting decision
  * @env: environment list to get IFS from
@@ -109,7 +116,7 @@ int	should_split_token_ifs(t_token *token, t_token *prev_token,
 {
 	set_redirect_context(token, prev_token, cntxt);
 	if (token->type == WORD && token->needs_splitting)
-		return (handle_word_splitting(token, prev_token, cntxt, env));
+		return (handle_word_splitting(token, cntxt, env));
 	cntxt->needs_splitting = 0;
 	return (0);
 }

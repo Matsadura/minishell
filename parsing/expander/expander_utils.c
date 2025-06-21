@@ -32,7 +32,7 @@ void	init_expansion_context(t_exp_context *cntxt, char **env,
  * set_heredoc_targets - mark heredoc targets
  * @tokens: token list to process
  */
-void	set_heredoc_targets(t_token *tokens)
+void	mark_tokens(t_token *tokens)
 {
 	t_token	*current;
 
@@ -41,6 +41,8 @@ void	set_heredoc_targets(t_token *tokens)
 	{
 		if (current->type == HEREDOC)
 			current->next->is_heredoc_target = 1;
+		if (ft_strcmp(current->value, "export") == 0)
+			current->is_export = 1;
 		current = current->next;
 	}
 }
