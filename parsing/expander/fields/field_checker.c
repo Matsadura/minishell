@@ -61,6 +61,31 @@ int	should_split_export_arg(t_token *token, t_field_context *cntxt)
 }
 
 /**
+ * check_split_conditions - helper function to check token splitting conditions
+ * @token: the token to evaluate
+ * @prev_token: the previous token
+ * @cntxt: field context
+ * return: 1 if special conditions apply, 0 otherwise
+ */
+static int	check_split_conditions(t_token *token, t_token *prev_token,
+		t_field_context *cntxt)
+{
+	if (prev_token != NULL && ft_strcmp(prev_token->value, "export") == 0)
+		return (should_split_export_arg(token, cntxt));
+	if (token->was_quoted == 1)
+	{
+		cntxt->needs_splitting = 0;
+		return (1);
+	}
+	if (cntxt->is_redirect_target == 1)
+	{
+		cntxt->needs_splitting = 1;
+		return (1);
+	}
+	return (0);
+}
+
+/**
  * should_split_token - checks if a token needs to be split into fields 
  * @token: the token to evaluate for splitting
  * @cntxt: field context to update with splitting decision
@@ -71,22 +96,14 @@ int	should_split_token_ifs(t_token *token, t_token *prev_token,
 		t_field_context *cntxt, char **env)
 {
 	char	*ifs;
+	int		split_condition;
 
 	set_redirect_context(token, prev_token, cntxt);
 	if (token->type == WORD && token->needs_splitting)
 	{
-		if (prev_token != NULL && ft_strcmp(prev_token->value, "export") == 0)
-			return (should_split_export_arg(token, cntxt));
-		if (token->was_quoted == 1)
-		{
-			cntxt->needs_splitting = 0;
-			return (0);
-		}
-		if (cntxt->is_redirect_target == 1)
-		{
-			cntxt->needs_splitting = 1;
-			return (1);
-		}
+		split_condition = check_split_conditions(token, prev_token, cntxt);
+		if (split_condition == 1)
+			return (cntxt->needs_splitting);
 		ifs = get_ifs_value(env);
 		if (contains_ifs_character(token->value, ifs))
 		{

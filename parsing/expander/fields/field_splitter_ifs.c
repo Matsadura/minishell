@@ -67,6 +67,25 @@ static int	wc_ifs(char const *s, char *ifs)
 }
 
 /**
+ * extract_word - extract a single word from string starting at position j
+ * @s: source string
+ * @ifs: IFS characters
+ * @j: pointer to current position (will be updated)
+ * return: extracted word or NULL on failure
+ */
+static char	*extract_word(char const *s, char *ifs, int *j)
+{
+	size_t	start;
+
+	while (is_ifs_char(s[*j], ifs) == 1 && s[*j] != '\0')
+		(*j)++;
+	start = *j;
+	while (is_ifs_char(s[*j], ifs) == 0 && s[*j] != '\0')
+		(*j)++;
+	return (gc_substr(s, start, *j - start));
+}
+
+/**
  * split_words - split string into words based on IFS characters
  * @s: string to split
  * @ifs: IFS characters set
@@ -76,7 +95,6 @@ static int	wc_ifs(char const *s, char *ifs)
 static char	**split_words(char const *s, char *ifs, int word_count)
 {
 	char	**splited;
-	size_t	start;
 	int		i;
 	int		j;
 
@@ -87,14 +105,7 @@ static char	**split_words(char const *s, char *ifs, int word_count)
 	j = 0;
 	while (s[j] != '\0' && i < word_count)
 	{
-		while (is_ifs_char(s[j], ifs) == 1
-			&& s[j] != '\0')
-			j++;
-		start = j;
-		while (is_ifs_char(s[j], ifs) == 0
-			&& s[j] != '\0')
-			j++;
-		splited[i] = gc_substr(s, start, j - start);
+		splited[i] = extract_word(s, ifs, &j);
 		if (splited[i] == NULL)
 			return (free_fields_array(splited), NULL);
 		i++;
