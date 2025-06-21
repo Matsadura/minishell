@@ -151,10 +151,7 @@ int	export_builtin(char **args, char **env)
 			continue ;
 		}
 		if (ft_strchr(args[i], '=') == NULL)
-		{
-			i++;
-			continue ;
-		}
+			export_var_without_value(args[i], env);
 		else
 			set_env_var(args[i], env);
 		i++;

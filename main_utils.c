@@ -40,11 +40,12 @@ char	*get_foldername(void)
 char	*get_input(void)
 {
 	char	*input;
-	char	*prompt;
+	//char	*prompt;
 
-	prompt = get_foldername();
-	input = readline(prompt);
-	gc_free(prompt);
+	// prompt = get_foldername();
+	//input = readline(prompt);
+	//gc_free(prompt);
+	input = readline("minishell > ");
 	return (input);
 }
 

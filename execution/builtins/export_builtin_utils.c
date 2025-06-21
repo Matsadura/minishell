@@ -77,3 +77,26 @@ void	print_export_var(char *env_var)
 			ft_dprintf(STDOUT, "declare -x %s\n", env_var);
 	}
 }
+
+/**
+ * export_var_without_value - Handles export of variable without assignment
+ * @var_name: The variable name to export
+ * @env: The current environment variables
+ */
+void	export_var_without_value(char *var_name, char **env)
+{
+	int		i;
+	size_t	name_len;
+
+	name_len = ft_strlen(var_name);
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], var_name, name_len) == 0
+			&& (env[i][name_len] == '=' || env[i][name_len] == '\0'))
+			return ;
+		i++;
+	}
+	env[i] = gc_strldup(var_name, name_len);
+	env[i + 1] = NULL;
+}
