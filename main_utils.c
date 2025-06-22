@@ -72,7 +72,7 @@ void	main_loop(char **env_copy)
 	{
 		signal(SIGINT, sigint_interactive_handler);
 		signal(SIGQUIT, SIG_IGN);
-		input = readline("minishell $");
+		input = readline("minishell: $ ");
 		if (input == NULL)
 		{
 			printf("exit\n");
