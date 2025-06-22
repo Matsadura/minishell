@@ -48,10 +48,7 @@ static int	handle_exit_arg(char **args)
 int	exit_builtin(char **args)
 {
 	if (args[1] == NULL)
-	{
 		ft_dprintf(STDOUT, "exit\n");
-		g_exit_status = 0;
-	}
 	else if (args[2] != NULL)
 		return (ft_dprintf(STDERR, "exit: too many arguments\n"), 1);
 	else
