@@ -45,8 +45,9 @@ static int	remove_env_var(char *arg, char **env)
 	j = 0;
 	while (env[j])
 	{
-		if (ft_strncmp(env[j], arg, ft_strlen(arg)) == 0
-			&& env[j][ft_strlen(arg)] == '=')
+		if ((ft_strncmp(env[j], arg, ft_strlen(arg)) == 0
+				&& env[j][ft_strlen(arg)] == '=')
+				|| ft_strcmp(env[j], arg) == 0)
 		{
 			found = 1;
 			while (env[j + 1])
