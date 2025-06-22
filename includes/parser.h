@@ -27,7 +27,6 @@ typedef struct s_redirect
 {
 	t_token_type		type;
 	char				*filename;
-	int					fd;
 	char				*temp_file;
 	struct s_redirect	*next;
 }	t_redirect;
@@ -38,7 +37,6 @@ typedef struct s_cmd
 	t_redirect		*redirections;
 	int				input_fd;
 	int				output_fd;
-	pid_t			pid;
 	struct s_cmd	*next;
 }	t_cmd;
 

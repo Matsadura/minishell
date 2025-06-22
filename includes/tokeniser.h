@@ -35,6 +35,7 @@ typedef struct s_token
 	int					was_quoted;
 	int					needs_splitting;
 	int					is_heredoc_target;
+	int					index;
 	struct s_token		*next;
 }	t_token;
 

@@ -62,7 +62,7 @@ pid_t	fork_and_setup(t_cmd *cmd, int *pipe_fd,
 			close(pipe_fd[1]);
 		}
 		execute_command(cmd, env);
-		exit(EXIT_FAILURE);
+		clean_exit(EXIT_FAILURE);
 	}
 	return (pid);
 }

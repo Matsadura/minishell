@@ -23,7 +23,7 @@ static int	ft_is_valid_identifier(const char *str)
 	char	*eq_pos;
 	int		name_len;
 
-	if (str == NULL || *str == '\0' || ft_isdigit(*str) == 1)
+	if (str == NULL || *str == '\0' || (ft_isalpha(*str) == 0 && *str != '_'))
 		return (0);
 	eq_pos = ft_strchr(str, '=');
 	if (eq_pos == str)
@@ -103,24 +103,28 @@ static void	set_env_var(char *arg, char **env)
  */
 int	no_arg(char **env)
 {
-	int	i;
+	int		i;
+	int		count;
+	char	**sorted_env;
 
 	if (env == NULL)
-	{
-		ft_dprintf(STDERR, "No environment variables found\n");
+		return (ft_dprintf(STDERR, "No environment variables found\n"), 1);
+	count = env_count(env);
+	sorted_env = (char **)malloc(sizeof(char *) * (count + 1));
+	if (!sorted_env)
 		return (1);
-	}
 	i = 0;
-	while (env[i])
+	while (i < count)
 	{
-		if (ft_strncmp(env[i], "_=", 2) == 0)
-		{
-			i++;
-			continue ;
-		}
-		ft_dprintf(STDOUT, "declare -x %s\n", env[i]);
+		sorted_env[i] = env[i];
 		i++;
 	}
+	sorted_env[count] = NULL;
+	env_bubble_sort(sorted_env, count);
+	i = 0;
+	while (i < count)
+		print_export_var(sorted_env[i++]);
+	free(sorted_env);
 	return (0);
 }
 
@@ -147,10 +151,7 @@ int	export_builtin(char **args, char **env)
 			continue ;
 		}
 		if (ft_strchr(args[i], '=') == NULL)
-		{
-			i++;
-			continue ;
-		}
+			export_var_without_value(args[i], env);
 		else
 			set_env_var(args[i], env);
 		i++;

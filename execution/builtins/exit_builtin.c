@@ -13,20 +13,13 @@
 #include "../../includes/execution.h"
 
 /**
- * exit_builtin - Handles the exit command
+ * handle_exit_arg - Handles the argument for the exit command
  * @args: The arguments passed to the exit command
- * Return: Always returns 0, as this function does not return to the shell
+ * Return: 0 if the argument is valid, 1 if it is invalid
  */
-int	exit_builtin(char **args)
+static int	handle_exit_arg(char **args)
 {
-	if (args[1] == NULL)
-	{
-		ft_dprintf(STDOUT, "exit\n");
-		g_exit_status = 0;
-	}
-	else if (args[2] != NULL)
-		return (ft_dprintf(STDERR, "exit: too many arguments\n"), 1);
-	else if (ft_isnumber(args[1]) == 0)
+	if (ft_isnumber(args[1]) == 0)
 	{
 		ft_dprintf(STDERR, "exit\nexit: %s: numeric argument required\n",
 			args[1]);
@@ -35,10 +28,31 @@ int	exit_builtin(char **args)
 	else
 	{
 		g_exit_status = ft_atoi(args[1]);
-		if (g_exit_status < 0 || g_exit_status > 255)
-			g_exit_status = 255;
-		ft_dprintf(STDOUT, "exit\n");
+		if (g_exit_status < 0 || g_exit_status > 255 || ft_strlen(args[1]) > 20)
+		{
+			ft_dprintf(STDERR, "exit\nexit: %s: numeric argument required\n",
+				args[1]);
+			g_exit_status = 2;
+		}
+		else
+			ft_dprintf(STDOUT, "exit\n");
 	}
+	return (0);
+}
+
+/**
+ * exit_builtin - Handles the exit command
+ * @args: The arguments passed to the exit command
+ * Return: Always returns 0, as this function does not return to the shell
+ */
+int	exit_builtin(char **args)
+{
+	if (args[1] == NULL)
+		ft_dprintf(STDOUT, "exit\n");
+	else if (args[2] != NULL)
+		return (ft_dprintf(STDERR, "exit: too many arguments\n"), 1);
+	else
+		handle_exit_arg(args);
 	cleanup_and_exit(g_exit_status);
 	return (0);
 }

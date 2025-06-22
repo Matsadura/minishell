@@ -24,16 +24,21 @@ typedef struct s_field_context
 }	t_field_context;
 
 //fields splitter
-t_token	*field_splitter(t_token *tokens);
+t_token	*field_splitter(t_token *tokens, char **env);
 
 //fields splitter utils
 int		contains_whitespace(char *str);
-int		should_split_token(t_token *token, t_token *prev_token,
-			t_field_context *cntxt);
-t_token	*split_token(t_token *token, t_field_context *cntxt);
+int		should_split_token_ifs(t_token *token, t_token *prev_token,
+			t_field_context *cntxt, char **env);
+t_token	*split_token(t_token *token, t_field_context *cntxt, char **env);
 void	append_token_list(t_token **dest, t_token *src);
-char	**ft_split_by_space(char const	*s);
 void	free_fields_array(char **fields);
+
+//ifs utils
+char	**split_by_ifs(char const *s, char *ifs);
+char	*get_ifs_value(char **env);
+int		is_ifs_char(char c, char *ifs);
+int		contains_ifs_character(char *str, char *ifs);
 
 //ambiguous redirect handlers
 void	set_redirect_context(t_token *token, t_token *prev_token,

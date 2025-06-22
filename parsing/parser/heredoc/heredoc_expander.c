@@ -45,7 +45,7 @@ static char	*get_value(char *var_name, char **env, int exit_status)
 
 	if (ft_strcmp(var_name, "?") == 0)
 	{
-		exit_str = ft_itoa(exit_status);
+		exit_str = gc_itoa(exit_status);
 		return (exit_str);
 	}
 	value = get_env(env, var_name);

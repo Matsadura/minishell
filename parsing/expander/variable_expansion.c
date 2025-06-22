@@ -78,26 +78,12 @@ char	*extract_variable_name(char *token, int *indx)
  */
 char	*get_var_value(char *var_name, t_exp_context *cntxt)
 {
-	size_t	name_len;
-	int		i;
-	char	*env_line;
-	char	buff[12];
+	char	*var_value;
 
 	if (ft_strncmp(var_name, "?", 1) == 0)
-	{
-		ft_itoa_buff(buff, cntxt->last_exit_status);
-		return (gc_strldup(buff, ft_strlen(buff)));
-	}
-	name_len = ft_strlen(var_name);
-	i = 0;
-	while (cntxt->env != NULL && cntxt->env[i] != NULL)
-	{
-		env_line = cntxt->env[i];
-		if (ft_strncmp(env_line, var_name, name_len) == 0
-			&& env_line[name_len] == '=')
-			return (gc_strldup(env_line + name_len + 1,
-					ft_strlen(env_line + name_len + 1)));
-		i++;
-	}
-	return (gc_strldup("", 0));
+		return (gc_itoa(cntxt->last_exit_status));
+	var_value = get_env(cntxt->env, var_name);
+	if (var_value == NULL)
+		return (gc_strldup("", 0));
+	return (gc_strldup(var_value, ft_strlen(var_value)));
 }

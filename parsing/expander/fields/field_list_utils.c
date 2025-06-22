@@ -62,16 +62,19 @@ static t_token	*create_field_list(char **fields)
  * split_token - splits a token into multiple tokens based on whitespace
  * @token: the token to potentially split
  * @cntxt: field context containing splitting flags and state
+ * @env: environment list
  * return: single token or list of tokens after splitting
  */
-t_token	*split_token(t_token *token, t_field_context *cntxt)
+t_token	*split_token(t_token *token, t_field_context *cntxt, char **env)
 {
 	char	**fields;
 	t_token	*field_list;
+	char	*ifs;
 
 	if (cntxt->needs_splitting == 0)
 		return (create_token_node(token->value, token->type));
-	fields = ft_split_by_space(token->value);
+	ifs = get_ifs_value(env);
+	fields = split_by_ifs(token->value, ifs);
 	if (is_ambiguous_redirect(fields, cntxt) == 1)
 	{
 		free_fields_array(fields);

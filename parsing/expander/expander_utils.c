@@ -32,15 +32,19 @@ void	init_expansion_context(t_exp_context *cntxt, char **env,
  * set_heredoc_targets - mark heredoc targets
  * @tokens: token list to process
  */
-void	set_heredoc_targets(t_token *tokens)
+void	mark_tokens(t_token *tokens)
 {
 	t_token	*current;
+	int		index;
 
 	current = tokens;
+	index = 0;
 	while (current->next != NULL)
 	{
 		if (current->type == HEREDOC)
 			current->next->is_heredoc_target = 1;
+		current->index = index;
+		index++;
 		current = current->next;
 	}
 }
@@ -55,7 +59,6 @@ char	*process_token_expansion(t_token *token, t_exp_context *cntxt)
 {
 	char	*expanded;
 
-	cntxt->needs_splitting = 1;
 	if ((token->type == D_QUOTE || token->type == S_QUOTE)
 		&& token->is_heredoc_target == 0)
 	{
@@ -64,7 +67,11 @@ char	*process_token_expansion(t_token *token, t_exp_context *cntxt)
 				token->type, cntxt);
 	}
 	else if (token->type == WORD && token->is_heredoc_target == 0)
+	{
 		expanded = expand_token(token->value, cntxt);
+		if (ft_strcmp(expanded, token->value))
+			cntxt->needs_splitting = 1;
+	}
 	else
 	{
 		expanded = NULL;

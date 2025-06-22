@@ -29,7 +29,7 @@ static int	skip_to_matching_quote(t_lexer *lexer, char quote_char)
 		lexer->current++;
 		return (1);
 	}
-	ft_dprintf(2, "syntax error: unclosed quotes\n");
+	ft_dprintf(2, "minishell: syntax error unclosed quotes\n");
 	return (0);
 }
 

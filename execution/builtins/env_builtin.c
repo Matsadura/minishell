@@ -64,7 +64,8 @@ int	env_builtin(char **env)
 	i = 0;
 	while (env[i])
 	{
-		ft_dprintf(STDOUT, "%s\n", env[i]);
+		if (ft_strchr(env[i], '=') != NULL)
+			ft_dprintf(STDOUT, "%s\n", env[i]);
 		i++;
 	}
 	return (0);
