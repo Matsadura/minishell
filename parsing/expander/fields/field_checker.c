@@ -67,12 +67,11 @@ int	should_split_export_arg(t_token *token, t_field_context *cntxt)
  * @env: environment list
  * return: 1 if token should be split, 0 otherwise
  */
-static int	handle_word_splitting(t_token *token, t_token *prev_token,
-		t_field_context *cntxt, char **env)
+static int	handle_word_splitting(t_token *token, t_field_context *cntxt, char **env)
 {
 	char	*ifs;
 
-	if (prev_token->is_export == 1)
+	if (token->index == 0 && ft_strcmp(token->value, "export"))
 		return (should_split_export_arg(token, cntxt));
 	if (token->was_quoted == 1)
 	{
@@ -105,7 +104,7 @@ int	should_split_token_ifs(t_token *token, t_token *prev_token,
 {
 	set_redirect_context(token, prev_token, cntxt);
 	if (token->type == WORD && token->needs_splitting)
-		return (handle_word_splitting(token, prev_token, cntxt, env));
+		return (handle_word_splitting(token,cntxt, env));
 	cntxt->needs_splitting = 0;
 	return (0);
 }

@@ -35,14 +35,16 @@ void	init_expansion_context(t_exp_context *cntxt, char **env,
 void	mark_tokens(t_token *tokens)
 {
 	t_token	*current;
+	int		index;
 
 	current = tokens;
+	index = 0;
 	while (current->next != NULL)
 	{
 		if (current->type == HEREDOC)
 			current->next->is_heredoc_target = 1;
-		if (ft_strcmp(current->value, "export") == 0)
-			current->is_export = 1;
+		current->index = index;
+		index++;
 		current = current->next;
 	}
 }
