@@ -13,6 +13,39 @@
 #include "../../includes/minishell.h"
 
 /**
+ * remove_outer_quotes - removes the outer matching quotes from a string
+ * @token_str: the string potentially enclosed in quotes
+ * @quote_char: the quote character to remove (' or ")
+ * return: new string with outer quotes removed, or original string if no quotes
+ */
+static char	*remove_outer_quotes(char *token_str, char quote_char)
+{
+	char	*res;
+	int		len;
+
+	if (token_str == NULL)
+		return (NULL);
+	if (token_str[0] != quote_char)
+		return (gc_strldup(token_str, ft_strlen(token_str)));
+	len = ft_strlen(token_str);
+	res = gc_strldup(token_str + 1, len - 2);
+	return (res);
+}
+
+/**
+ * remove_single_quotes - removes the outer matching quotes from a string
+ * @token_str: the string potentially enclosed in quotes
+ * return: new string with outer quotes removed, or original string if no quotes
+ */
+static char	*remove_single_quotes(char *token_str)
+{
+	char	*res;
+
+	res = remove_outer_quotes(token_str, '\'');
+	return (res);
+}
+
+/**
  * process_quoted_token - processes tokens that are enclosed in quotes
  * @val: the token value including the quotes
  * @type: the type of token
@@ -39,22 +72,3 @@ char	*process_quoted_token(char *val, t_token_type type, t_exp_context *cntx)
 	return (res);
 }
 
-/**
- * remove_outer_quotes - removes the outer matching quotes from a string
- * @token_str: the string potentially enclosed in quotes
- * @quote_char: the quote character to remove (' or ")
- * return: new string with outer quotes removed, or original string if no quotes
- */
-char	*remove_outer_quotes(char *token_str, char quote_char)
-{
-	char	*res;
-	int		len;
-
-	if (token_str == NULL)
-		return (NULL);
-	if (token_str[0] != quote_char)
-		return (gc_strldup(token_str, ft_strlen(token_str)));
-	len = ft_strlen(token_str);
-	res = gc_strldup(token_str + 1, len - 2);
-	return (res);
-}

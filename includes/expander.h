@@ -52,7 +52,6 @@ int		handle_regular_character(char *token, char **res, int i);
 
 //quotes processing
 char	*process_quoted_token(char *val, t_token_type type, t_exp_context *ctx);
-char	*remove_outer_quotes(char *token_str, char quote_char);
 
 //variable expansion
 int		handle_var_expansion(char *val, char **res, int i, t_exp_context *ctx);
