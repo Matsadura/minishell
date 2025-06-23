@@ -87,4 +87,3 @@ char	*process_quoted_token(char *val, t_token_type type, t_exp_context *cntx)
 	}
 	return (res);
 }
-
