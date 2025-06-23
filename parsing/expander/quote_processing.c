@@ -33,15 +33,31 @@ static char	*remove_outer_quotes(char *token_str, char quote_char)
 }
 
 /**
- * remove_single_quotes - removes the outer matching quotes from a string
+ * remove_single_quotes - removes the single quotes from a string
  * @token_str: the string potentially enclosed in quotes
- * return: new string with outer quotes removed, or original string if no quotes
+ * return: new string with single quotes removed
  */
 static char	*remove_single_quotes(char *token_str)
 {
 	char	*res;
+	int		j;
+	int		i;
 
-	res = remove_outer_quotes(token_str, '\'');
+	res = gc_alloc(ft_strlen(token_str) + 1);
+	if (res == NULL)
+		return (NULL);
+	j = 0;
+	i = 0;
+	while (token_str[i] != '\0')
+	{
+		if (token_str[i] != '\'')
+		{
+			res[j] = token_str[i];
+			j++;
+		}
+		i++;
+	}
+	res[j] = '\0';
 	return (res);
 }
 
@@ -60,7 +76,7 @@ char	*process_quoted_token(char *val, t_token_type type, t_exp_context *cntx)
 	res = NULL;
 	cntx->quote_removal = 1;
 	if (type == S_QUOTE)
-		res = remove_outer_quotes(val, '\'');
+		res = remove_single_quotes(val);
 	else
 	{
 		tmp = remove_outer_quotes(val, '"');
