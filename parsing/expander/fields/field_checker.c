@@ -42,21 +42,19 @@ int	should_split_export_arg(t_token *token, t_field_context *cntxt)
 	char	*equal_pos;
 	char	*ptr;
 
+	cntxt->needs_splitting = 0;
 	equal_pos = ft_strchr(token->value, '=');
-	if (equal_pos != NULL)
+	if (token->was_quoted || equal_pos == NULL)
+		return (0);
+	ptr = token->value;
+	while (ptr < equal_pos)
 	{
-		ptr = token->value;
-		while (ptr < equal_pos)
+		if (is_white_space(*ptr++))
 		{
-			if (is_white_space(*ptr) == 1)
-			{
-				cntxt->needs_splitting = 1;
-				return (1);
-			}
-			ptr++;
+			cntxt->needs_splitting = 1;
+			return (1);
 		}
 	}
-	cntxt->needs_splitting = 0;
 	return (0);
 }
 

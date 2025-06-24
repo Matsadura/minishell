@@ -51,7 +51,7 @@ char	*append_str_to_str(char *dst, char *src);
 int		handle_regular_character(char *token, char **res, int i);
 
 //quotes processing
-char	*process_quoted_token(char *val, t_token_type type, t_exp_context *ctx);
+char	*process_quoted_token(t_token *token, t_exp_context *ctx);
 
 //variable expansion
 int		handle_var_expansion(char *val, char **res, int i, t_exp_context *ctx);

@@ -18,28 +18,32 @@
  */
 static char	*random_name(void)
 {
-	long	n;
-	char	*name;
-	char	*full_name;
+	static int	counter = 0;
+	char		*name;
+	char		*full_name;
 
-	n = 1;
-	name = ft_ltoa((long) &n);
+	counter++;
+	name = gc_itoa(counter);
+	if (name == NULL)
+		return (NULL);
 	while (1)
 	{
-		if (access(name, F_OK) == -1)
+		full_name = gc_strljoin("/tmp/heredoc_", name, ft_strlen(name) + 15);
+		if (full_name == NULL)
+			return (NULL);
+		if (access(full_name, F_OK) == -1)
 			break ;
-		n++;
-		free(name);
-		name = ft_ltoa((long) &n);
+		counter++;
+		name = gc_itoa(counter);
+		if (name == NULL)
+			return (NULL);
 	}
-	full_name = gc_strljoin("/tmp/", name, ft_strlen(name) + 5);
-	free(name);
 	return (full_name);
 }
 
 /**
  * create_temp_file - Creates a temporary file for heredoc redirection.
- * Returns: The file descriptor of the created temporary file, or -1 on failure.
+ * Returns: The file name of the created temporary file, or NULL on failure.
  */
 char	*create_temp_file(void)
 {
@@ -47,12 +51,15 @@ char	*create_temp_file(void)
 	char	*temp_file;
 
 	temp_file = random_name();
+	if (!temp_file)
+		return (NULL);
 	fd = open(temp_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
 	{
 		perror(temp_file);
 		return (NULL);
 	}
+	close(fd);
 	return (temp_file);
 }
 

@@ -20,23 +20,18 @@
  */
 static int	ft_is_valid_identifier(const char *str)
 {
-	char	*eq_pos;
-	int		name_len;
+	int	i;
 
-	if (str == NULL || *str == '\0' || (ft_isalpha(*str) == 0 && *str != '_'))
+	if (str == NULL || *str == '\0')
 		return (0);
-	eq_pos = ft_strchr(str, '=');
-	if (eq_pos == str)
+	if (ft_isalpha(*str) == 0 && *str != '_')
 		return (0);
-	if (eq_pos != NULL)
+	i = 0;
+	while (str[i] != '\0' && str[i] != '=')
 	{
-		name_len = eq_pos - str;
-		while (name_len-- > 0)
-		{
-			if (ft_isalnum(*str) == 0 && *str != '_')
-				return (0);
-			str++;
-		}
+		if (ft_isalnum(str[i]) == 0 && str[i] != '_')
+			return (0);
+		i++;
 	}
 	return (1);
 }
@@ -84,7 +79,8 @@ static void	set_env_var(char *arg, char **env)
 	i = 0;
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], name, name_len) == 0 && env[i][name_len] == '=')
+		if (ft_strncmp(env[i], name, name_len) == 0
+			&& (env[i][name_len] == '=' || env[i][name_len] == '\0'))
 		{
 			env[i] = join_env_var(name, value);
 			return ;

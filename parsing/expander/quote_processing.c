@@ -63,23 +63,23 @@ static char	*remove_single_quotes(char *token_str)
 
 /**
  * process_quoted_token - processes tokens that are enclosed in quotes
- * @val: the token value including the quotes
- * @type: the type of token
+ * @token: the token to remove quotes from
  * @cntxt: expansion context containing state and environment information
  * return: processed string with quotes removed and expansions applied
  */
-char	*process_quoted_token(char *val, t_token_type type, t_exp_context *cntx)
+char	*process_quoted_token(t_token *token, t_exp_context *cntx)
 {
 	char	*res;
 	char	*tmp;
 
 	res = NULL;
 	cntx->quote_removal = 1;
-	if (type == S_QUOTE)
-		res = remove_single_quotes(val);
+	token->was_quoted = 1;
+	if (token->type == S_QUOTE)
+		res = remove_single_quotes(token->value);
 	else
 	{
-		tmp = remove_outer_quotes(val, '"');
+		tmp = remove_outer_quotes(token->value, '"');
 		if (tmp == NULL)
 			return (NULL);
 		cntx->state = DOUBLE_QUOTES;
