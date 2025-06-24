@@ -63,8 +63,7 @@ char	*process_token_expansion(t_token *token, t_exp_context *cntxt)
 		&& token->is_heredoc_target == 0)
 	{
 		cntxt->needs_splitting = 0;
-		expanded = process_quoted_token(token->value,
-				token->type, cntxt);
+		expanded = process_quoted_token(token, cntxt);
 	}
 	else if (token->type == WORD && token->is_heredoc_target == 0)
 	{
