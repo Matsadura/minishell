@@ -79,7 +79,8 @@ static void	set_env_var(char *arg, char **env)
 	i = 0;
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], name, name_len) == 0 && env[i][name_len] == '=')
+		if (ft_strncmp(env[i], name, name_len) == 0
+			&& (env[i][name_len] == '=' || env[i][name_len] == '\0'))
 		{
 			env[i] = join_env_var(name, value);
 			return ;
