@@ -74,7 +74,8 @@ static char	*expand_tilde(char *arg, char **env)
  */
 static char	*get_target_directory(char **args, char **env)
 {
-	if (args[1] == NULL || ft_strcmp(args[1], "~") == 0)
+	if (args[1] == NULL || ft_strcmp(args[1], "~") == 0
+		|| ft_strcmp(args[1], "") == 0)
 		return (get_home_dir(env));
 	else if (ft_strcmp(args[1], "-") == 0)
 		return (get_oldpwd_dir(env));
