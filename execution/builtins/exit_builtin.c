@@ -48,7 +48,7 @@ static long long	ft_atoll(const char *str)
  * @args: The arguments passed to the exit command
  * Return: 0 if the argument is valid, 1 if it is invalid
  */
-static int	handle_exit_arg(char **args)
+static int	handle_exit_arg(char **args, int is_pipe)
 {
 	long long	exit_code;
 
@@ -71,7 +71,8 @@ static int	handle_exit_arg(char **args)
 		g_exit_status = (unsigned char)exit_code % 256;
 		if (g_exit_status < 0)
 			g_exit_status += 256;
-		ft_dprintf(STDOUT, "exit\n");
+		if (!is_pipe)
+			ft_dprintf(STDOUT, "exit\n");
 	}
 	return (0);
 }
@@ -83,12 +84,18 @@ static int	handle_exit_arg(char **args)
  */
 int	exit_builtin(char **args)
 {
+	int		is_pipe;
+
+	is_pipe = !isatty(STDIN) || !isatty(STDOUT);
 	if (args[1] == NULL)
-		ft_dprintf(STDOUT, "exit\n");
+	{
+		if (!is_pipe)
+			ft_dprintf(STDOUT, "exit\n");
+	}
 	else if (args[2] != NULL)
 		return (ft_dprintf(STDERR, "exit: too many arguments\n"), 1);
 	else
-		handle_exit_arg(args);
+		handle_exit_arg(args, is_pipe);
 	cleanup_and_exit(g_exit_status);
 	return (0);
 }
